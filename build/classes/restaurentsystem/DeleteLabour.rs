@@ -1,0 +1,2 @@
+restaurentsystem.DeleteLabour
+restaurentsystem.DltLabour

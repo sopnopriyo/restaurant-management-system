@@ -1,0 +1,22 @@
+Pizza 	2	9.0
+Fried rice 	6	30.0
+	
+Pizza 	5	22.5
+Burger 	5	20.0
+	
+Pizza 	3	13.5
+	
+Roti 	3	6.0
+Nasi Goreng 	1	5.0
+Roso Malay 	1	6.0
+	
+Roso Malay 	2	12.0
+Roti 	6	12.0
+Roti naan 	2	18.0
+	
+Roti 	5	10.0
+Faluda 	3	21.0
+	
+Banana 	5	50.0
+Roti 	2	4.0
+	
