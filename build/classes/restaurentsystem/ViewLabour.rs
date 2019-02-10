@@ -1,2 +1,0 @@
-restaurentsystem.vLabour
-restaurentsystem.ViewLabour

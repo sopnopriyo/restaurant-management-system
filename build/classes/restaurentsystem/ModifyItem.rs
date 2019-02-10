@@ -1,2 +1,0 @@
-restaurentsystem.MdfItem
-restaurentsystem.ModifyItem
