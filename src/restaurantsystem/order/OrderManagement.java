@@ -14,7 +14,7 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
-import restaurantsystem.menu.RestaurentManagement;
+import restaurantsystem.menu.Menu;
 
 /**
  * @author Shahin
@@ -325,7 +325,7 @@ public class OrderManagement extends javax.swing.JFrame {
 
 	private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
 		// TODO add your handling code here:
-		RestaurentManagement im = new RestaurentManagement();
+		Menu im = new Menu();
 		im.setVisible(true);
 		this.setVisible(false);
 	}//GEN-LAST:event_backButtonActionPerformed

@@ -7,17 +7,17 @@ package restaurantsystem.auth;
 
 import javax.swing.JOptionPane;
 
-import restaurantsystem.menu.RestaurentManagement;
+import restaurantsystem.menu.Menu;
 
 /**
  * @author Shahin
  */
-public class LogIn extends javax.swing.JFrame {
+public class Login extends javax.swing.JFrame {
 
 	/**
 	 * Creates new form LogIn
 	 */
-	public LogIn() {
+	public Login() {
 		initComponents();
 	}
 
@@ -121,7 +121,7 @@ public class LogIn extends javax.swing.JFrame {
 
 			JOptionPane.showMessageDialog(this, "Access granted");
 			this.dispose();
-			RestaurentManagement rm = new RestaurentManagement();
+			Menu rm = new Menu();
 			rm.setVisible(true);
 		} else {
 			userName.setText("");
@@ -148,20 +148,20 @@ public class LogIn extends javax.swing.JFrame {
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		}
 		//</editor-fold>
 
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new LogIn().setVisible(true);
+				new Login().setVisible(true);
 			}
 		});
 	}

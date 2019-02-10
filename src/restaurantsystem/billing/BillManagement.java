@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 import restaurantsystem.order.OrderManagement;
 import restaurantsystem.order.OrdrManagement;
-import restaurantsystem.menu.RestaurentManagement;
+import restaurantsystem.menu.Menu;
 
 /**
  * @author Shahin
@@ -192,7 +192,7 @@ public class BillManagement extends javax.swing.JFrame {
 		o.delete();
 		t = new TotalPrice();
 
-		RestaurentManagement rm = new RestaurentManagement();
+		Menu rm = new Menu();
 		rm.setVisible(true);
 		this.dispose();
 		try {

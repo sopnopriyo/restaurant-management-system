@@ -5,7 +5,7 @@
  */
 package restaurantsystem.item;
 
-import restaurantsystem.menu.RestaurentManagement;
+import restaurantsystem.menu.Menu;
 
 
 /**
@@ -192,7 +192,7 @@ public class ItemMngmnt extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        RestaurentManagement rm = new RestaurentManagement();
+        Menu rm = new Menu();
         rm.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed

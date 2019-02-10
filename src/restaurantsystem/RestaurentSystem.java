@@ -5,23 +5,27 @@
  */
 package restaurantsystem;
 
-import restaurantsystem.auth.LogIn;
+import restaurantsystem.auth.Login;
+
 import javax.swing.JFrame;
 
 /**
- *
  * @author Shahin
  */
-public class RestaurentSystem extends JFrame{
+public class RestaurentSystem extends JFrame {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        LogIn im = new LogIn();
-        im.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        im.setVisible(true);
-    }
-    
+	public static void main(String[] args) {
+
+
+		/**
+		 * Boot the application with a Login Page
+		 *
+		 * Enter Username as shahin
+		 * Enter Password as shahin
+		 */
+
+		Login logIn = new Login();
+		logIn.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		logIn.setVisible(true);
+	}
 }
