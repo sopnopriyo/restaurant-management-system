@@ -49,7 +49,7 @@ public class UpdateItem extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         modText = new javax.swing.JTextField();
         view = new javax.swing.JButton();
-        modifyButton = new javax.swing.JButton();
+        updateButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         mName = new javax.swing.JTextField();
@@ -75,10 +75,10 @@ public class UpdateItem extends javax.swing.JFrame {
             }
         });
 
-        modifyButton.setText("Modify");
-        modifyButton.addActionListener(new java.awt.event.ActionListener() {
+        updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                modifyButtonActionPerformed(evt);
+                updateButtonActionPerformed(evt);
             }
         });
 
@@ -105,7 +105,7 @@ public class UpdateItem extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(view)
                         .addGap(96, 96, 96)
-                        .addComponent(modifyButton)
+                        .addComponent(updateButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(backButton)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -155,7 +155,7 @@ public class UpdateItem extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(view)
-                    .addComponent(modifyButton)
+                    .addComponent(updateButton)
                     .addComponent(backButton))
                 .addContainerGap())
         );
@@ -172,7 +172,7 @@ public class UpdateItem extends javax.swing.JFrame {
 
     }//GEN-LAST:event_viewActionPerformed
 
-    private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         // TODO add your handling code here:
         
         srcName=modText.getText();
@@ -190,7 +190,7 @@ public class UpdateItem extends javax.swing.JFrame {
         mQuantity.setText("");
          JOptionPane.showMessageDialog(this, "Item has been Modified");
 
-    }//GEN-LAST:event_modifyButtonActionPerformed
+    }//GEN-LAST:event_updateButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
@@ -246,8 +246,8 @@ public class UpdateItem extends javax.swing.JFrame {
     private javax.swing.JTextField mPrice;
     private javax.swing.JTextField mQuantity;
     private javax.swing.JTextField modText;
-    private javax.swing.JButton modifyButton;
     private javax.swing.JTextArea text;
+    private javax.swing.JButton updateButton;
     private javax.swing.JButton view;
     // End of variables declaration//GEN-END:variables
 }

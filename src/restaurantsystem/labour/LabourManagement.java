@@ -35,10 +35,10 @@ public class LabourManagement extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        addButton = new javax.swing.JButton();
-        viewButton = new javax.swing.JButton();
-        deleteButton = new javax.swing.JButton();
-        modifyButton = new javax.swing.JButton();
+        addLabour = new javax.swing.JButton();
+        viewLabour = new javax.swing.JButton();
+        deleteLabour = new javax.swing.JButton();
+        updateLabour = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -49,31 +49,31 @@ public class LabourManagement extends javax.swing.JFrame {
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setForeground(new java.awt.Color(0, 0, 255));
 
-        addButton.setText("Add Labour");
-        addButton.addActionListener(new java.awt.event.ActionListener() {
+        addLabour.setText("Add Labour");
+        addLabour.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
+                addLabourActionPerformed(evt);
             }
         });
 
-        viewButton.setText("View Labour");
-        viewButton.addActionListener(new java.awt.event.ActionListener() {
+        viewLabour.setText("View Labour");
+        viewLabour.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewButtonActionPerformed(evt);
+                viewLabourActionPerformed(evt);
             }
         });
 
-        deleteButton.setText("Delete Labour");
-        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+        deleteLabour.setText("Delete Labour");
+        deleteLabour.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteButtonActionPerformed(evt);
+                deleteLabourActionPerformed(evt);
             }
         });
 
-        modifyButton.setText("Modify Labour");
-        modifyButton.addActionListener(new java.awt.event.ActionListener() {
+        updateLabour.setText("Update Labour");
+        updateLabour.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                modifyButtonActionPerformed(evt);
+                updateLabourActionPerformed(evt);
             }
         });
 
@@ -84,23 +84,23 @@ public class LabourManagement extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(viewButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(modifyButton, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
+                    .addComponent(viewLabour, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addLabour, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deleteLabour, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(updateLabour, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
                 .addGap(23, 23, 23))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(addButton)
+                .addComponent(addLabour)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(viewButton)
+                .addComponent(viewLabour)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(deleteButton)
+                .addComponent(deleteLabour)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(modifyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(updateLabour, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -155,35 +155,35 @@ public class LabourManagement extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+    private void addLabourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLabourActionPerformed
         // TODO add your handling code here
         AddLabour i = new AddLabour();
         i.setVisible(true);
         this.dispose();
 
-    }//GEN-LAST:event_addButtonActionPerformed
+    }//GEN-LAST:event_addLabourActionPerformed
 
-    private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
+    private void viewLabourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewLabourActionPerformed
         // TODO add your handling code here:
         ViewLabour vl = new ViewLabour();
         vl.setVisible(true);
         this.dispose();
 
-    }//GEN-LAST:event_viewButtonActionPerformed
+    }//GEN-LAST:event_viewLabourActionPerformed
 
-    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+    private void deleteLabourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteLabourActionPerformed
         // TODO add your handling code here:
         DeleteLabour dl= new DeleteLabour();
         dl.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_deleteButtonActionPerformed
+    }//GEN-LAST:event_deleteLabourActionPerformed
 
-    private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
+    private void updateLabourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateLabourActionPerformed
         // TODO add your handling code here:
         UpdateLabour ml = new UpdateLabour();
         ml.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_modifyButtonActionPerformed
+    }//GEN-LAST:event_updateLabourActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
@@ -228,12 +228,12 @@ public class LabourManagement extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addButton;
-    private javax.swing.JButton deleteButton;
+    private javax.swing.JButton addLabour;
+    private javax.swing.JButton deleteLabour;
     private javax.swing.JButton jButton6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JButton modifyButton;
-    private javax.swing.JButton viewButton;
+    private javax.swing.JButton updateLabour;
+    private javax.swing.JButton viewLabour;
     // End of variables declaration//GEN-END:variables
 }

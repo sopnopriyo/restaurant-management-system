@@ -47,7 +47,7 @@ public class ViewItem extends javax.swing.JFrame{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        read = new javax.swing.JButton();
+        viewItem = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         text = new javax.swing.JTextArea();
         backButton = new javax.swing.JButton();
@@ -58,10 +58,10 @@ public class ViewItem extends javax.swing.JFrame{
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 153, 255));
 
-        read.setText("View Item");
-        read.addActionListener(new java.awt.event.ActionListener() {
+        viewItem.setText("View Item");
+        viewItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                readActionPerformed(evt);
+                viewItemActionPerformed(evt);
             }
         });
 
@@ -91,7 +91,7 @@ public class ViewItem extends javax.swing.JFrame{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(164, 164, 164)
-                        .addComponent(read)
+                        .addComponent(viewItem)
                         .addGap(31, 31, 31)
                         .addComponent(backButton))
                     .addGroup(layout.createSequentialGroup()
@@ -119,7 +119,7 @@ public class ViewItem extends javax.swing.JFrame{
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(read)
+                    .addComponent(viewItem)
                     .addComponent(backButton))
                 .addGap(50, 50, 50))
         );
@@ -128,13 +128,13 @@ public class ViewItem extends javax.swing.JFrame{
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void readActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readActionPerformed
+    private void viewItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewItemActionPerformed
         // TODO add your handling code here:
         
             text.setText(t.getFullNames().toString());
         
        
-    }//GEN-LAST:event_readActionPerformed
+    }//GEN-LAST:event_viewItemActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
@@ -184,8 +184,8 @@ public class ViewItem extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton read;
     private javax.swing.JTextArea text;
+    private javax.swing.JButton viewItem;
     // End of variables declaration//GEN-END:variables
 
    

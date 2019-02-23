@@ -44,8 +44,8 @@ public class DeleteItem extends javax.swing.JFrame {
         dlttext = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
-        dltButton = new javax.swing.JButton();
-        view = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        viewButton = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -71,17 +71,17 @@ public class DeleteItem extends javax.swing.JFrame {
             }
         });
 
-        dltButton.setText("Delete");
-        dltButton.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dltButtonActionPerformed(evt);
+                deleteButtonActionPerformed(evt);
             }
         });
 
-        view.setText("View");
-        view.addActionListener(new java.awt.event.ActionListener() {
+        viewButton.setText("View");
+        viewButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewActionPerformed(evt);
+                viewButtonActionPerformed(evt);
             }
         });
 
@@ -101,9 +101,9 @@ public class DeleteItem extends javax.swing.JFrame {
                                 .addComponent(dlttext, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(36, 36, 36)
-                        .addComponent(view)
+                        .addComponent(viewButton)
                         .addGap(32, 32, 32)
-                        .addComponent(dltButton)
+                        .addComponent(deleteButton)
                         .addGap(18, 18, 18)
                         .addComponent(backButton)))
                 .addContainerGap(23, Short.MAX_VALUE))
@@ -118,8 +118,8 @@ public class DeleteItem extends javax.swing.JFrame {
                     .addComponent(dlttext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(view)
-                    .addComponent(dltButton)
+                    .addComponent(viewButton)
+                    .addComponent(deleteButton)
                     .addComponent(backButton))
                 .addGap(0, 64, Short.MAX_VALUE))
         );
@@ -147,25 +147,26 @@ public class DeleteItem extends javax.swing.JFrame {
     {
         d = new DltItem();
     }
-    private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
+    private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
         // TODO add your handling code here:
             d = new DltItem();
             text.setText(d.getFullNames().toString());
         
         
-    }//GEN-LAST:event_viewActionPerformed
+    }//GEN-LAST:event_viewButtonActionPerformed
 
-    private void dltButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dltButtonActionPerformed
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
         
         dltName=dlttext.getText();
         d.setName(dltName);
         d.deleteItem();
-         JOptionPane.showMessageDialog(this, "Item has been removed");
+        
+        JOptionPane.showMessageDialog(this, "Item has been removed");
         
         
         
-    }//GEN-LAST:event_dltButtonActionPerformed
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
@@ -212,7 +213,7 @@ public class DeleteItem extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
-    private javax.swing.JButton dltButton;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JTextField dlttext;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -220,7 +221,7 @@ public class DeleteItem extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea text;
-    private javax.swing.JButton view;
+    private javax.swing.JButton viewButton;
     // End of variables declaration//GEN-END:variables
 }
 

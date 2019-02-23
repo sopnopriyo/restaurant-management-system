@@ -98,10 +98,10 @@
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="viewButton" alignment="0" max="32767" attributes="0"/>
-                          <Component id="addButton" alignment="0" max="32767" attributes="0"/>
-                          <Component id="deleteButton" alignment="0" max="32767" attributes="0"/>
-                          <Component id="modifyButton" alignment="0" pref="141" max="32767" attributes="0"/>
+                          <Component id="viewLabour" alignment="0" max="32767" attributes="0"/>
+                          <Component id="addLabour" alignment="0" max="32767" attributes="0"/>
+                          <Component id="deleteLabour" alignment="0" max="32767" attributes="0"/>
+                          <Component id="updateLabour" alignment="0" pref="141" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   </Group>
@@ -111,49 +111,49 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="addButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="addLabour" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="viewButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="viewLabour" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="deleteButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="deleteLabour" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="modifyButton" min="-2" pref="23" max="-2" attributes="0"/>
+                      <Component id="updateLabour" min="-2" pref="23" max="-2" attributes="0"/>
                       <EmptySpace pref="20" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="addButton">
+            <Component class="javax.swing.JButton" name="addLabour">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Add Labour"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addButtonActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addLabourActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="viewButton">
+            <Component class="javax.swing.JButton" name="viewLabour">
               <Properties>
                 <Property name="text" type="java.lang.String" value="View Labour"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewButtonActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewLabourActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="deleteButton">
+            <Component class="javax.swing.JButton" name="deleteLabour">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Delete Labour"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteButtonActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteLabourActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="modifyButton">
+            <Component class="javax.swing.JButton" name="updateLabour">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Modify Labour"/>
+                <Property name="text" type="java.lang.String" value="Update Labour"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="modifyButtonActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateLabourActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

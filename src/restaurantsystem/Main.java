@@ -6,7 +6,7 @@
 package restaurantsystem;
 
 import javax.swing.JFrame;
-import restaurantsystem.auth.LogIn;
+import restaurantsystem.auth.Login;
 /**
  *
  * @author Shahin
@@ -17,7 +17,10 @@ public class Main extends JFrame{
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        LogIn im = new LogIn();
+        
+        // At first, show the login page and show menu after - 
+        // the authentication process completed
+        Login im = new Login();
         im.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         im.setVisible(true);
     }

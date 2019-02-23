@@ -32,22 +32,22 @@ public class AddLabour extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        nameText = new javax.swing.JTextField();
-        idText = new javax.swing.JTextField();
-        salaryText = new javax.swing.JTextField();
+        labourNameField = new javax.swing.JTextField();
+        labourIdField = new javax.swing.JTextField();
+        labourSalaryField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 102, 255));
 
-        jButton1.setText("Insert");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                addButtonActionPerformed(evt);
             }
         });
 
@@ -64,9 +64,9 @@ public class AddLabour extends javax.swing.JFrame {
 
         jLabel3.setText("Labour Salary");
 
-        idText.addActionListener(new java.awt.event.ActionListener() {
+        labourIdField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idTextActionPerformed(evt);
+                labourIdFieldActionPerformed(evt);
             }
         });
 
@@ -74,26 +74,27 @@ public class AddLabour extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(56, 56, 56)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(salaryText)
-                    .addComponent(nameText)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(idText, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(172, 172, 172))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(128, 128, 128)
-                .addComponent(backButton)
-                .addGap(61, 61, 61))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(backButton)
+                        .addGap(104, 104, 104)
+                        .addComponent(addButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(56, 56, 56)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labourSalaryField)
+                            .addComponent(labourNameField)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labourIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addGap(172, 172, 172))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,16 +108,16 @@ public class AddLabour extends javax.swing.JFrame {
                         .addGap(4, 4, 4))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(idText)
+                        .addComponent(labourIdField)
                         .addGap(18, 18, 18)
-                        .addComponent(nameText)))
+                        .addComponent(labourNameField)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(salaryText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labourSalaryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(addButton)
                     .addComponent(backButton))
                 .addGap(141, 141, 141))
         );
@@ -125,16 +126,16 @@ public class AddLabour extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
         try {
             PrintWriter pw = new PrintWriter(new FileOutputStream("labour.txt",true));
             System.out.println("file created");
-            String itemName = idText.getText();
+            String itemName = labourIdField.getText();
 
-            String itemPrice = nameText.getText();
+            String itemPrice = labourNameField.getText();
 
-            String itemQuantity = salaryText.getText();
+            String itemQuantity = labourSalaryField.getText();
 
             pw.println(itemName);
             pw.println(itemPrice);
@@ -146,11 +147,11 @@ public class AddLabour extends javax.swing.JFrame {
         catch(Exception e){
 
         }
-        idText.setText("");
-        nameText.setText("");
-        salaryText.setText("");
+        labourIdField.setText("");
+        labourNameField.setText("");
+        labourSalaryField.setText("");
          JOptionPane.showMessageDialog(this, "Item has been added");
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_addButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
@@ -159,9 +160,9 @@ public class AddLabour extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed
 
-    private void idTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTextActionPerformed
+    private void labourIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_labourIdFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_idTextActionPerformed
+    }//GEN-LAST:event_labourIdFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,13 +201,13 @@ public class AddLabour extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addButton;
     private javax.swing.JButton backButton;
-    private javax.swing.JTextField idText;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField nameText;
-    private javax.swing.JTextField salaryText;
+    private javax.swing.JTextField labourIdField;
+    private javax.swing.JTextField labourNameField;
+    private javax.swing.JTextField labourSalaryField;
     // End of variables declaration//GEN-END:variables
 }

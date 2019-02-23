@@ -73,8 +73,8 @@ public class BillingManagement extends javax.swing.JFrame {
         text = new javax.swing.JTextArea();
         totalPriceArea = new javax.swing.JTextField();
         backButton = new javax.swing.JButton();
-        payment = new javax.swing.JButton();
-        printB = new javax.swing.JButton();
+        paymentButton = new javax.swing.JButton();
+        printReciptButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 51, 255));
@@ -97,17 +97,17 @@ public class BillingManagement extends javax.swing.JFrame {
             }
         });
 
-        payment.setText("Payment");
-        payment.addActionListener(new java.awt.event.ActionListener() {
+        paymentButton.setText("Payment");
+        paymentButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                paymentActionPerformed(evt);
+                paymentButtonActionPerformed(evt);
             }
         });
 
-        printB.setText("Print");
-        printB.addActionListener(new java.awt.event.ActionListener() {
+        printReciptButton.setText("Print Recipt");
+        printReciptButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                printBActionPerformed(evt);
+                printReciptButtonActionPerformed(evt);
             }
         });
 
@@ -116,20 +116,21 @@ public class BillingManagement extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(totalPriceArea, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(totalPriceArea, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addComponent(printB)
-                        .addGap(18, 18, 18)
-                        .addComponent(payment)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(47, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(printReciptButton)
+                                .addGap(26, 26, 26)
+                                .addComponent(paymentButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,9 +141,9 @@ public class BillingManagement extends javax.swing.JFrame {
                 .addComponent(totalPriceArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(payment)
+                    .addComponent(paymentButton)
                     .addComponent(backButton)
-                    .addComponent(printB))
+                    .addComponent(printReciptButton))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
@@ -173,7 +174,7 @@ public class BillingManagement extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_backButtonActionPerformed
 
-    private void paymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentActionPerformed
+    private void paymentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentButtonActionPerformed
         // TODO add your handling code here:
         o.delete();
         t = new BillingHelper();
@@ -192,9 +193,9 @@ public class BillingManagement extends javax.swing.JFrame {
             pw3.close();
         } catch (Exception e) {
         }
-    }//GEN-LAST:event_paymentActionPerformed
+    }//GEN-LAST:event_paymentButtonActionPerformed
 
-    private void printBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printBActionPerformed
+    private void printReciptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printReciptButtonActionPerformed
         // TODO add your handling code here:
         try {
             
@@ -208,7 +209,7 @@ public class BillingManagement extends javax.swing.JFrame {
             }
         } catch (Exception e) {
         }
-    }//GEN-LAST:event_printBActionPerformed
+    }//GEN-LAST:event_printReciptButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -250,8 +251,8 @@ public class BillingManagement extends javax.swing.JFrame {
     private javax.swing.JButton backButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton payment;
-    private javax.swing.JButton printB;
+    private javax.swing.JButton paymentButton;
+    private javax.swing.JButton printReciptButton;
     public javax.swing.JTextArea text;
     private javax.swing.JTextField totalPriceArea;
     // End of variables declaration//GEN-END:variables
