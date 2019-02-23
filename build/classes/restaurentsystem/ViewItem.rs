@@ -1,2 +1,0 @@
-restaurentsystem.ViewItem
-restaurentsystem.Names

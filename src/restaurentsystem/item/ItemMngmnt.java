@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurentsystem;
+package restaurentsystem.item;
 
-
-
+import restaurantsystem.RestaurentManagement;
+import restaurentsystem.item.InsertItem;
+import restaurentsystem.item.ViewItem;
+import restaurentsystem.item.ModifyItem;
+import restaurentsystem.item.DeleteItem;
 /**
  *
  * @author Shahin

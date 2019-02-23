@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurentsystem;
+package restaurentsystem.billing;
 
 import java.io.*;
 import java.io.FileInputStream;
@@ -13,7 +13,7 @@ import java.util.Scanner;
  *
  * @author Shahin
  */
-class ReciptFile {
+public class ReciptFile {
     private Scanner sc;
     private Scanner scan;
     private String name;
@@ -25,25 +25,22 @@ class ReciptFile {
     private double multi;
     private double sum=0;
     private PrintWriter pw;
-    public ReciptFile()
-    {
-        fullnames = new StringBuilder();
+    
+    public ReciptFile() {
+        this.fullnames = new StringBuilder();
         openFile();
         readFile();
         closeFile();
     }
 
-    public StringBuilder getFullNames()
-    {
+    public StringBuilder getFullNames() {
         return fullnames;
     }
-    public String getSum(){
-    
+    public String getSum() {
         return String.valueOf(sum);
     }
 
-    private void openFile()
-    {
+    private void openFile() {
         try
         {
             pw = new PrintWriter(new FileOutputStream("order.txt",true));
@@ -58,8 +55,7 @@ class ReciptFile {
         }
     }
 
-    private void readFile()
-    {
+    private void readFile() {
         try{
             while(scan.hasNextLine())
             {
@@ -108,18 +104,6 @@ class ReciptFile {
         pw.close();
     }
     
-    /*public void write(){
-        try {
-               pw = new PrintWriter(new FileOutputStream("order.txt",true));
-                pw.println(name);
-                pw.println(quantity);
-                pw.println(multi);
-                pw.close();
-        } catch (Exception e) {
-        }
-    }
-    */
-
     public String getName() {
         return name;
     }

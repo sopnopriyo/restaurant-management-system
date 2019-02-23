@@ -3,7 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurentsystem;
+package restaurentsystem.labour;
+
+import restaurentsystem.labour.DeleteLabour;
+import restaurentsystem.labour.InserLabour;
+import restaurentsystem.labour.ModifyLabour;
+import restaurantsystem.RestaurentManagement;
+import restaurentsystem.labour.ViewLabour;
 
 /**
  *

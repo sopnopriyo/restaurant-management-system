@@ -1,2 +1,0 @@
-restaurentsystem.ModifyLabour
-restaurentsystem.MdfLabour

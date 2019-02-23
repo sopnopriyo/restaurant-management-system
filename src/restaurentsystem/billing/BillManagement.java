@@ -3,11 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurentsystem;
+package restaurentsystem.billing;
 
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import javax.swing.JOptionPane;
+import restaurentsystem.order.OrderManagement;
+import restaurentsystem.order.OrdrManagement;
+import restaurantsystem.RestaurentManagement;
+import restaurentsystem.billing.TotalPrice;
+import restaurentsystem.billing.inTotal;
 
 /**
  *
@@ -15,8 +20,8 @@ import javax.swing.JOptionPane;
  */
 public class BillManagement extends javax.swing.JFrame {
     private inTotal it ;
-   private OrdrManagement  o;
-   private TotalPrice t;
+    private OrdrManagement  o;
+    private TotalPrice t;
     private String name;
     private String quantity ;
     private double totalPrice=0;
@@ -40,6 +45,8 @@ public class BillManagement extends javax.swing.JFrame {
      * Creates new form BillManagement
      */
     public BillManagement() {
+        
+        
         initComponents();
         
         

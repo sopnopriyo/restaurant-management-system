@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurentsystem;
+package restaurentsystem.billing;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
@@ -88,9 +86,7 @@ public class TotalPrice {
         
     }
 
-    private void closeFile()
-    {
+    private void closeFile() {
         scan.close();
-        
     }   
 }

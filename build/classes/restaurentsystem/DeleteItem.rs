@@ -1,2 +1,0 @@
-restaurentsystem.DltItem
-restaurentsystem.DeleteItem

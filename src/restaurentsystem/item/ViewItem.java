@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurentsystem;
+package restaurentsystem.item;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
