@@ -52,7 +52,6 @@ public class OrderManagement extends javax.swing.JFrame {
         backButton = new javax.swing.JButton();
         billingButton = new javax.swing.JButton();
         orderButton = new javax.swing.JButton();
-        view = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         itemOrderQuantityField = new javax.swing.JTextField();
@@ -102,13 +101,6 @@ public class OrderManagement extends javax.swing.JFrame {
         orderButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 orderButtonActionPerformed(evt);
-            }
-        });
-
-        view.setText("View");
-        view.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewActionPerformed(evt);
             }
         });
 
@@ -171,8 +163,6 @@ public class OrderManagement extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(view)
-                .addGap(18, 18, 18)
                 .addComponent(orderButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(billingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -191,7 +181,6 @@ public class OrderManagement extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(view)
                     .addComponent(orderButton)
                     .addComponent(billingButton)
                     .addComponent(backButton))
@@ -298,19 +287,12 @@ public class OrderManagement extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-     private void performFileRelatedTask()
+    private void performFileRelatedTask()
     {
         o = new OrderHelper();
-       
+        text.setText(o.getFullNames().toString());
     }
     
-    private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
-            // TODO add your handling code here:
-            o = new OrderHelper();
-            text.setText(o.getFullNames().toString());
-        
-    }//GEN-LAST:event_viewActionPerformed
-
     private void orderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderButtonActionPerformed
         
        // o.delete();
@@ -456,7 +438,6 @@ public class OrderManagement extends javax.swing.JFrame {
     private javax.swing.JTextArea reciptArea;
     private javax.swing.JTextArea text;
     private javax.swing.JTextField totalPriceField;
-    private javax.swing.JButton view;
     // End of variables declaration//GEN-END:variables
 }
 

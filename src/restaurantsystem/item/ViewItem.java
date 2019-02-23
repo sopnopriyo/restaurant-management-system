@@ -37,6 +37,7 @@ public class ViewItem extends javax.swing.JFrame{
  private void performFileRelatedTask()
     {
         t = new Names();
+        text.setText(t.getFullNames().toString());
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -47,7 +48,6 @@ public class ViewItem extends javax.swing.JFrame{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        viewItem = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         text = new javax.swing.JTextArea();
         backButton = new javax.swing.JButton();
@@ -57,13 +57,6 @@ public class ViewItem extends javax.swing.JFrame{
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 153, 255));
-
-        viewItem.setText("View Item");
-        viewItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewItemActionPerformed(evt);
-            }
-        });
 
         text.setEditable(false);
         text.setColumns(20);
@@ -90,9 +83,7 @@ public class ViewItem extends javax.swing.JFrame{
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(164, 164, 164)
-                        .addComponent(viewItem)
-                        .addGap(31, 31, 31)
+                        .addGap(300, 300, 300)
                         .addComponent(backButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(53, 53, 53)
@@ -118,23 +109,13 @@ public class ViewItem extends javax.swing.JFrame{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(viewItem)
-                    .addComponent(backButton))
+                .addComponent(backButton)
                 .addGap(50, 50, 50))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void viewItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewItemActionPerformed
-        // TODO add your handling code here:
-        
-            text.setText(t.getFullNames().toString());
-        
-       
-    }//GEN-LAST:event_viewItemActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
@@ -185,7 +166,6 @@ public class ViewItem extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea text;
-    private javax.swing.JButton viewItem;
     // End of variables declaration//GEN-END:variables
 
    

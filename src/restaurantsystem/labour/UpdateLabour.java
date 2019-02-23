@@ -49,7 +49,6 @@ public class UpdateLabour extends javax.swing.JFrame {
         newLabourSalaryField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         oldLabourIdField = new javax.swing.JTextField();
-        view = new javax.swing.JButton();
         updateButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -68,13 +67,6 @@ public class UpdateLabour extends javax.swing.JFrame {
         jLabel4.setText("Enter New Salary");
 
         jLabel1.setText("Which labour id want to modify");
-
-        view.setText("View");
-        view.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewActionPerformed(evt);
-            }
-        });
 
         updateButton.setText("Update");
         updateButton.addActionListener(new java.awt.event.ActionListener() {
@@ -103,9 +95,7 @@ public class UpdateLabour extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(view)
-                                .addGap(96, 96, 96)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 174, Short.MAX_VALUE)
                                 .addComponent(updateButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(backButton))
@@ -152,7 +142,6 @@ public class UpdateLabour extends javax.swing.JFrame {
                     .addComponent(newLabourSalaryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(view)
                     .addComponent(updateButton)
                     .addComponent(backButton))
                 .addContainerGap(35, Short.MAX_VALUE))
@@ -164,15 +153,9 @@ public class UpdateLabour extends javax.swing.JFrame {
     private void performFileRelatedTask()
     {
         m = new MdfLabour();
-    }
-    private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
-        // TODO add your handling code here:
-        m = new MdfLabour();
-                
-            text.setText(m.getFullNames().toString());
+        text.setText(m.getFullNames().toString());
         
-    }//GEN-LAST:event_viewActionPerformed
-
+    }
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         // TODO add your handling code here:
         
@@ -248,7 +231,6 @@ public class UpdateLabour extends javax.swing.JFrame {
     private javax.swing.JTextField oldLabourIdField;
     private javax.swing.JTextArea text;
     private javax.swing.JButton updateButton;
-    private javax.swing.JButton view;
     // End of variables declaration//GEN-END:variables
 }
 class MdfLabour {

@@ -38,7 +38,7 @@ public class AddItem extends javax.swing.JFrame {
         itemPriceField = new javax.swing.JTextField();
         itemNameField = new javax.swing.JTextField();
         itemQuantityField = new javax.swing.JTextField();
-        insertButton = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -50,11 +50,11 @@ public class AddItem extends javax.swing.JFrame {
 
         jLabel3.setText("Item Quantity");
 
-        insertButton.setBackground(new java.awt.Color(0, 255, 153));
-        insertButton.setText("Insert");
-        insertButton.addActionListener(new java.awt.event.ActionListener() {
+        addButton.setBackground(new java.awt.Color(0, 255, 153));
+        addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                insertButtonActionPerformed(evt);
+                addButtonActionPerformed(evt);
             }
         });
 
@@ -75,7 +75,7 @@ public class AddItem extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(backButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(insertButton))
+                        .addComponent(addButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -114,7 +114,7 @@ public class AddItem extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(backButton)
-                    .addComponent(insertButton))
+                    .addComponent(addButton))
                 .addGap(148, 148, 148))
         );
 
@@ -122,7 +122,7 @@ public class AddItem extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void insertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertButtonActionPerformed
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
         try {
             PrintWriter pw = new PrintWriter(new FileOutputStream("item.txt",true));
@@ -153,7 +153,7 @@ public class AddItem extends javax.swing.JFrame {
         itemPriceField.setText("");
         itemQuantityField.setText("");
         JOptionPane.showMessageDialog(this, "Item has been added");
-    }//GEN-LAST:event_insertButtonActionPerformed
+    }//GEN-LAST:event_addButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
@@ -168,8 +168,8 @@ public class AddItem extends javax.swing.JFrame {
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addButton;
     private javax.swing.JButton backButton;
-    private javax.swing.JButton insertButton;
     private javax.swing.JTextField itemNameField;
     private javax.swing.JTextField itemPriceField;
     private javax.swing.JTextField itemQuantityField;

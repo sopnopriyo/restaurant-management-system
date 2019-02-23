@@ -32,7 +32,6 @@ public class ViewLabour extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        read = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         text = new javax.swing.JTextArea();
         backButton = new javax.swing.JButton();
@@ -42,13 +41,6 @@ public class ViewLabour extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 153, 204));
-
-        read.setText("View Labour");
-        read.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                readActionPerformed(evt);
-            }
-        });
 
         text.setEditable(false);
         text.setColumns(20);
@@ -75,9 +67,7 @@ public class ViewLabour extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(164, 164, 164)
-                        .addComponent(read)
-                        .addGap(31, 31, 31)
+                        .addGap(315, 315, 315)
                         .addComponent(backButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(54, 54, 54)
@@ -101,9 +91,7 @@ public class ViewLabour extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(read)
-                    .addComponent(backButton))
+                .addComponent(backButton)
                 .addGap(50, 50, 50))
         );
 
@@ -113,15 +101,8 @@ public class ViewLabour extends javax.swing.JFrame {
      private void performFileRelatedTask()
     {
         v = new vLabour();
+        text.setText(v.getFullNames().toString());
     }
-    private void readActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readActionPerformed
-        // TODO add your handling code here:
-       
-            text.setText(v.getFullNames().toString());
-        
-
-    }//GEN-LAST:event_readActionPerformed
-
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
         LabourManagement lm = new LabourManagement();
@@ -170,7 +151,6 @@ public class ViewLabour extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton read;
     private javax.swing.JTextArea text;
     // End of variables declaration//GEN-END:variables
 }

@@ -19,6 +19,9 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        
+        // Since we are not maintaining any user profile so - 
+        // let's set the default user and password
         setDefaultUserName();
     }
     
@@ -27,6 +30,7 @@ public class Login extends javax.swing.JFrame {
      */
     private void setDefaultUserName() {
         this.userNameField.setText("shahin");
+        this.passwordField.setText("shahin");
     }
 
     /**

@@ -31,6 +31,7 @@ public class DeleteLabour extends javax.swing.JFrame {
     private void performFileRelatedTask()
     {
         d = new DltLabour();
+        text.setText(d.getFullNames().toString());
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -47,7 +48,6 @@ public class DeleteLabour extends javax.swing.JFrame {
         text = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         labourIDField = new javax.swing.JTextField();
-        view = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 102, 255));
@@ -73,21 +73,12 @@ public class DeleteLabour extends javax.swing.JFrame {
 
         jLabel1.setText("Which Labour ID  want to Delete");
 
-        view.setText("View");
-        view.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(view)
-                .addGap(32, 32, 32)
                 .addComponent(deleteButton)
                 .addGap(18, 18, 18)
                 .addComponent(backButton)
@@ -115,7 +106,6 @@ public class DeleteLabour extends javax.swing.JFrame {
                     .addComponent(labourIDField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(view)
                     .addComponent(deleteButton)
                     .addComponent(backButton))
                 .addContainerGap(45, Short.MAX_VALUE))
@@ -142,14 +132,6 @@ public class DeleteLabour extends javax.swing.JFrame {
         lm.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed
-
-    private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
-        // TODO add your handling code here:
-            d = new DltLabour();
-            text.setText(d.getFullNames().toString());
-        
-
-    }//GEN-LAST:event_viewActionPerformed
     
     /**
      * @param args the command line arguments
@@ -193,7 +175,6 @@ public class DeleteLabour extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField labourIDField;
     private javax.swing.JTextArea text;
-    private javax.swing.JButton view;
     // End of variables declaration//GEN-END:variables
 }
 class DltLabour {
