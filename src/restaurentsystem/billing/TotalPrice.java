@@ -1,11 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package restaurentsystem.billing;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
@@ -31,12 +32,35 @@ public class TotalPrice {
         readFile();
         closeFile();
     }
-
+    
     public StringBuilder getFullNames()
     {
         return fullnames;
     }
-
+    
+    public String getTotal() {
+        
+        double totalPrice = 0;
+        
+        try{
+            scan = new Scanner(new FileInputStream("order.txt"));
+            while(scan.hasNextLine())
+            {
+                
+                
+                scan.nextLine();
+                scan.nextLine();
+                price = scan.nextLine();
+                totalPrice+=Double.valueOf(price);
+                
+            }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return String.valueOf("Total Price is : "+totalPrice);
+    }
+    
     private void openFile()
     {
         try
@@ -46,13 +70,13 @@ public class TotalPrice {
             
             System.out.println("File found!");
         }
-
+        
         catch(Exception e)
         {
             System.out.println("File not found");
         }
     }
-
+    
     private void readFile()
     {
         try{
@@ -66,7 +90,7 @@ public class TotalPrice {
                 
                 
                 quantity=scan.nextLine();
-               // dQuantity=Integer.decode(quantity);
+                // dQuantity=Integer.decode(quantity);
                 //multi=dPrice*dQuantity;
                 price =scan.nextLine();
                 fullnames.append(name + " \t"+quantity+"\t"+price+ "\n");
@@ -82,11 +106,11 @@ public class TotalPrice {
         }
         
         
-                
+        
         
     }
-
+    
     private void closeFile() {
         scan.close();
-    }   
+    }
 }

@@ -11,15 +11,12 @@ import javax.swing.JOptionPane;
 import restaurentsystem.order.OrderManagement;
 import restaurentsystem.order.OrdrManagement;
 import restaurantsystem.RestaurentManagement;
-import restaurentsystem.billing.TotalPrice;
-import restaurentsystem.billing.inTotal;
 
 /**
  *
  * @author Shahin
  */
 public class BillManagement extends javax.swing.JFrame {
-    private inTotal it ;
     private OrdrManagement  o;
     private TotalPrice t;
     private String name;
@@ -45,24 +42,17 @@ public class BillManagement extends javax.swing.JFrame {
      * Creates new form BillManagement
      */
     public BillManagement() {
-        
-        
         initComponents();
-        
-        
         display();
         performFileRelatedTask();
     }
     public void display(){
-         t = new TotalPrice();
-         it = new inTotal();
-            text.setText(t.getFullNames().toString());
-            
-       totalPriceArea.setText(it.getTotal());
+        t = new TotalPrice();
+        text.setText(t.getFullNames().toString());    
+        totalPriceArea.setText(t.getTotal());
     
     }
-     private void performFileRelatedTask()
-    {
+    private void performFileRelatedTask() {
         o = new OrdrManagement();
       //  RestaurentManagement r= new RestaurentManagement();
        // r.setVisible(true);
