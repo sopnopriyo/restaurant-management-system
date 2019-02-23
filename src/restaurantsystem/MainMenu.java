@@ -144,27 +144,23 @@ public class MainMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void itemManagementButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemManagementButtonActionPerformed
-        // TODO add your handling code here:
         ItemManagement im = new ItemManagement();
         im.setVisible(true);
         this.dispose();
-              
+
     }//GEN-LAST:event_itemManagementButtonActionPerformed
 
     private void labourManagementButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_labourManagementButtonActionPerformed
-        // TODO add your handling code here:
-       LabourManagement l = new LabourManagement();
-       l.setVisible(true);
+        LabourManagement l = new LabourManagement();
+        l.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_labourManagementButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-        // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void orderManagementButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderManagementButtonActionPerformed
-        // TODO add your handling code here:
         OrderManagement om = new OrderManagement();
         om.setVisible(true);
         this.dispose();

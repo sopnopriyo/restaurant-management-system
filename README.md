@@ -4,7 +4,7 @@ This is a restaurant management software which I developed for one of the assign
 ## Features !
  - Intuitive user interface
  - Desktop application
- - File Based storage
+ - File Based Data storage
  - Easy to modify design
  - Multiple modules
     - Basic Authentication  
@@ -13,7 +13,7 @@ This is a restaurant management software which I developed for one of the assign
     - Labour Management
     - Billing Management
 
-## How to edit the project 
+## How to edit this project ?
 Best way to open and edit the project is to use Netbeans IDE. It allows very easy way to modify the design (Drag and Drop)
 
 ## Screenshots

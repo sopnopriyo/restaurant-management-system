@@ -14,7 +14,9 @@ import restaurantsystem.labour.LabourManagement;
  * @author Shahin
  */
 public class ViewLabour extends javax.swing.JFrame {
-     private vLabour v ;
+
+    private vLabour v;
+
     /**
      * Creates new form ViewLabour
      */
@@ -98,13 +100,11 @@ public class ViewLabour extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-     private void performFileRelatedTask()
-    {
+     private void performFileRelatedTask() {
         v = new vLabour();
         text.setText(v.getFullNames().toString());
     }
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
         LabourManagement lm = new LabourManagement();
         lm.setVisible(true);
         this.setVisible(false);
@@ -154,6 +154,7 @@ public class ViewLabour extends javax.swing.JFrame {
     private javax.swing.JTextArea text;
     // End of variables declaration//GEN-END:variables
 }
+
 class vLabour {
 
     private Scanner scan;
@@ -162,53 +163,41 @@ class vLabour {
     private String quantity;
     private StringBuilder fullnames;
 
-    public vLabour()
-    {
+    public vLabour() {
         fullnames = new StringBuilder();
         openFile();
         readFile();
         closeFile();
     }
 
-    public StringBuilder getFullNames()
-    {
+    public StringBuilder getFullNames() {
         return fullnames;
     }
 
-    private void openFile()
-    {
-        try
-        {
+    private void openFile() {
+        try {
             scan = new Scanner(new File("labour.txt"));
             System.out.println("File found!");
-        }
-
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("File not found");
         }
     }
 
-    private void readFile()
-    {
-        try{
-        while(scan.hasNextLine())
-        {
-            name = scan.nextLine();
-            price = scan.nextLine();
-            quantity=scan.nextLine();
-            fullnames.append(name + " \t" + price + " \t"+quantity+"\n");
-        }
-        
-    }
-        catch(Exception e){
+    private void readFile() {
+        try {
+            while (scan.hasNextLine()) {
+                name = scan.nextLine();
+                price = scan.nextLine();
+                quantity = scan.nextLine();
+                fullnames.append(name + " \t" + price + " \t" + quantity + "\n");
+            }
+
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    private void closeFile()
-    {
+    private void closeFile() {
         scan.close();
     }
 }
-

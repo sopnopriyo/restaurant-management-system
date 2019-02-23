@@ -10,6 +10,7 @@ import restaurantsystem.item.AddItem;
 import restaurantsystem.item.ViewItem;
 import restaurantsystem.item.UpdateItem;
 import restaurantsystem.item.DeleteItem;
+
 /**
  *
  * @author Shahin
@@ -162,38 +163,32 @@ public class ItemManagement extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
-        // TODO add your handling code here:
         UpdateItem mi = new UpdateItem();
         mi.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_modifyButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        // TODO add your handling code here
         AddItem i = new AddItem();
         i.setVisible(true);
         this.dispose();
-        
-        
+
+
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
-        // TODO add your handling code here:
         ViewItem vm = new ViewItem();
         vm.setVisible(true);
         this.dispose();
-        
     }//GEN-LAST:event_viewButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        // TODO add your handling code here:
-        DeleteItem d= new DeleteItem();
+        DeleteItem d = new DeleteItem();
         d.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
         MainMenu rm = new MainMenu();
         rm.setVisible(true);
         this.dispose();
@@ -202,7 +197,6 @@ public class ItemManagement extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

@@ -2,7 +2,7 @@
 * To change this license header, choose License Headers in Project Properties.
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
-*/
+ */
 package restaurantsystem.item;
 
 import java.io.File;
@@ -17,8 +17,10 @@ import javax.swing.JOptionPane;
  * @author Shahin
  */
 public class DeleteItem extends javax.swing.JFrame {
+
     private DltItem d;
     private String dltName;
+
     /**
      * Creates new form DeleteItem
      */
@@ -26,7 +28,7 @@ public class DeleteItem extends javax.swing.JFrame {
         initComponents();
         performFileRelatedTask();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -129,31 +131,24 @@ public class DeleteItem extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    private void performFileRelatedTask()
-    {
+    private void performFileRelatedTask() {
         d = new DltItem();
         text.setText(d.getFullNames().toString());
     }
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        // TODO add your handling code here:
-        
-        dltName=dlttext.getText();
+        dltName = dlttext.getText();
         d.setName(dltName);
         d.deleteItem();
-        
+
         JOptionPane.showMessageDialog(this, "Item has been removed");
-        
-        
-        
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
         ItemManagement im = new ItemManagement();
         im.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backButtonActionPerformed
-    
+
     /**
      * @param args the command line arguments
      */
@@ -162,7 +157,7 @@ public class DeleteItem extends javax.swing.JFrame {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-        */
+         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -181,7 +176,7 @@ public class DeleteItem extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -204,131 +199,105 @@ public class DeleteItem extends javax.swing.JFrame {
 }
 
 class DltItem {
-    
+
     private Scanner scan;
     private String name;
     private String price;
     private String quantity;
     private StringBuilder fullnames;
-    private String itemName [];
-    
-    public DltItem()
-    {
+    private String itemName[];
+
+    public DltItem() {
         fullnames = new StringBuilder();
         openFile();
         readFile();
-        
         closeFile();
-        
     }
-    
-    public StringBuilder getFullNames()
-    {
+
+    public StringBuilder getFullNames() {
         return fullnames;
     }
-    
-    private void openFile()
-    {
-        try
-        {
+
+    private void openFile() {
+        try {
             scan = new Scanner(new File("item.txt"));
             System.out.println("File found!");
-        }
-        
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("File not found");
         }
     }
+
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public String getName() {
         return name;
     }
-    
-    private void readFile()
-    {
-        try{
-            while(scan.hasNextLine())
-        {
-            name = scan.nextLine();
-            price = scan.nextLine();
-            quantity=scan.nextLine();
-            fullnames.append(name + " \t" + price + " \t"+quantity+"\n");
-        }
-        }
-        catch(Exception e){
+
+    private void readFile() {
+        try {
+            while (scan.hasNextLine()) {
+                name = scan.nextLine();
+                price = scan.nextLine();
+                quantity = scan.nextLine();
+                fullnames.append(name + " \t" + price + " \t" + quantity + "\n");
+            }
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
-    private void closeFile()
-    {
+
+    private void closeFile() {
         scan.close();
     }
-    
-    public  void deleteItem(){
-        
+
+    public void deleteItem() {
+
         String dlt = getName();
-        
-        System.out.println(dlt+"will be deleted");
-        
-        
-        int c=0,track, cnt=0,temp=0;
-        
-        try{
+
+        System.out.println(dlt + "will be deleted");
+
+        int c = 0, track, cnt = 0, temp = 0;
+
+        try {
             Scanner sc = new Scanner(new FileInputStream("item.txt"));
-            while(sc.hasNextLine()){
+            while (sc.hasNextLine()) {
                 cnt++;
                 sc.nextLine();
-                
+
             }
-            itemName= new String[cnt];
+            itemName = new String[cnt];
             sc.close();
             sc = new Scanner(new FileInputStream("item.txt"));
-            while(sc.hasNextLine()){
-                itemName[c]=sc.nextLine();
-                if(itemName[c].equalsIgnoreCase(dlt)){
-                    temp=c;
-                    System.out.println("Index will be deleted" +c);
+            while (sc.hasNextLine()) {
+                itemName[c] = sc.nextLine();
+                if (itemName[c].equalsIgnoreCase(dlt)) {
+                    temp = c;
+                    System.out.println("Index will be deleted" + c);
                 }
                 c++;
-                
+
             }
-            
-            
-        }
-        catch(Exception e){
+
+        } catch (Exception e) {
             System.out.println(e);
-            
+
         }
-        
+
         try {
             PrintWriter pw = new PrintWriter(new FileOutputStream("item.txt"));
             for (int i = 0; i < c; i++) {
-                if(i==temp ||i==temp+1 ||i==temp+2){
-                    
-                }
-                else{
+                if (i == temp || i == temp + 1 || i == temp + 2) {
+
+                } else {
                     pw.println(itemName[i]);
                 }
-                
+
             }
             System.out.println("Your item has been deleted.");
             pw.close();
+        } catch (Exception e) {
         }
-        catch (Exception e) {
-        }
-        
-        
-        
-        
-        
     }
-    
-    
-    
-    
 }
-

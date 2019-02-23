@@ -14,13 +14,13 @@ import javax.swing.*;
  * @author Shahin
  */
 public class AddItem extends javax.swing.JFrame {
-    
+
     /**
      * Creates new form InsertItem
      */
     public AddItem() {
         initComponents();
-        
+
     }
 
     /**
@@ -125,29 +125,22 @@ public class AddItem extends javax.swing.JFrame {
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
         try {
-            PrintWriter pw = new PrintWriter(new FileOutputStream("item.txt",true));
-            
+            PrintWriter pw = new PrintWriter(new FileOutputStream("item.txt", true));
+
             String itemName = itemNameField.getText();
-           
+
             String itemPrice = itemPriceField.getText();
-            
+
             String itemQuantity = itemQuantityField.getText();
-            
+
             pw.println(itemName);
             pw.println(itemPrice);
             pw.println(itemQuantity);
-            
-            
-                  
-            
-            
+
             pw.close();
-            
-            
-            
-        }
-        catch(Exception e){
-            
+
+        } catch (Exception e) {
+
         }
         itemNameField.setText("");
         itemPriceField.setText("");
@@ -156,7 +149,6 @@ public class AddItem extends javax.swing.JFrame {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
         ItemManagement im = new ItemManagement();
         im.setVisible(true);
         this.setVisible(false);
@@ -165,7 +157,6 @@ public class AddItem extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

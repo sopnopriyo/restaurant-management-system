@@ -173,7 +173,7 @@ public class LabourManagement extends javax.swing.JFrame {
 
     private void deleteLabourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteLabourActionPerformed
         // TODO add your handling code here:
-        DeleteLabour dl= new DeleteLabour();
+        DeleteLabour dl = new DeleteLabour();
         dl.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_deleteLabourActionPerformed

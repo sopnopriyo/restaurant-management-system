@@ -6,39 +6,28 @@
 package restaurantsystem.item;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.util.Scanner;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
 /**
  *
  * @author Shahin
  */
-public class ViewItem extends javax.swing.JFrame{
-   private Names t ;
-   
-    
+public class ViewItem extends javax.swing.JFrame {
+
+    private Names t;
 
     public ViewItem() {
         initComponents();
         performFileRelatedTask();
-        
-   
-        
-       
-        
+
     }
-   
- private void performFileRelatedTask()
-    {
+
+    private void performFileRelatedTask() {
         t = new Names();
         text.setText(t.getFullNames().toString());
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -118,7 +107,6 @@ public class ViewItem extends javax.swing.JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
         ItemManagement im = new ItemManagement();
         im.setVisible(true);
         this.setVisible(false);
@@ -168,11 +156,11 @@ public class ViewItem extends javax.swing.JFrame{
     private javax.swing.JTextArea text;
     // End of variables declaration//GEN-END:variables
 
-   
     public void actionPerformed(ActionEvent e) {
-       
-         }
+
+    }
 }
+
 class Names {
 
     private Scanner scan;
@@ -181,54 +169,41 @@ class Names {
     private String quantity;
     private StringBuilder fullnames;
 
-    public Names()
-    {
+    public Names() {
         fullnames = new StringBuilder();
         openFile();
         readFile();
         closeFile();
     }
 
-    public StringBuilder getFullNames()
-    {
+    public StringBuilder getFullNames() {
         return fullnames;
     }
 
-    private void openFile()
-    {
-        try
-        {
+    private void openFile() {
+        try {
             scan = new Scanner(new File("item.txt"));
             System.out.println("File found!");
-        }
-
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("File not found");
         }
     }
 
-    private void readFile()
-    {
-        try{
-            while(scan.hasNextLine())
-        {
-            name = scan.nextLine();
-            price = scan.nextLine();
-            quantity=scan.nextLine();
-            fullnames.append(name + " \t" + price + " \t"+quantity+"\n");
-        }
-        }
-        catch(Exception e){
+    private void readFile() {
+        try {
+            while (scan.hasNextLine()) {
+                name = scan.nextLine();
+                price = scan.nextLine();
+                quantity = scan.nextLine();
+                fullnames.append(name + " \t" + price + " \t" + quantity + "\n");
+            }
+        } catch (Exception e) {
             System.out.println(e);
         }
-        
-                
-        
+
     }
 
-    private void closeFile()
-    {
+    private void closeFile() {
         scan.close();
     }
 }

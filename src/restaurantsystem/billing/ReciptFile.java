@@ -14,6 +14,7 @@ import java.util.Scanner;
  * @author Shahin
  */
 public class ReciptFile {
+
     private Scanner sc;
     private Scanner scan;
     private String name;
@@ -23,9 +24,9 @@ public class ReciptFile {
     private double dPrice;
     private int dQuantity;
     private double multi;
-    private double sum=0;
+    private double sum = 0;
     private PrintWriter pw;
-    
+
     public ReciptFile() {
         this.fullnames = new StringBuilder();
         openFile();
@@ -36,74 +37,63 @@ public class ReciptFile {
     public StringBuilder getFullNames() {
         return fullnames;
     }
+
     public String getSum() {
         return String.valueOf(sum);
     }
 
     private void openFile() {
-        try
-        {
-            pw = new PrintWriter(new FileOutputStream("order.txt",true));
+        try {
+            pw = new PrintWriter(new FileOutputStream("order.txt", true));
             scan = new Scanner(new File("temp.txt"));
             sc = new Scanner(new FileInputStream("item.txt"));
             System.out.println("File found!");
-        }
-
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("File not found");
         }
     }
 
     private void readFile() {
-        try{
-            while(scan.hasNextLine())
-            {
+        try {
+            while (scan.hasNextLine()) {
                 sc = new Scanner(new FileInputStream("item.txt"));
-                
+
                 name = scan.nextLine();
                 System.out.println(name);
                 // price = scan.nextLine();
-                while(sc.hasNextLine()){
-                    multi=1;
-                    if(name.equalsIgnoreCase(sc.nextLine())){
-                        price=sc.nextLine();
-                        dPrice=Double.valueOf(price);
+                while (sc.hasNextLine()) {
+                    multi = 1;
+                    if (name.equalsIgnoreCase(sc.nextLine())) {
+                        price = sc.nextLine();
+                        dPrice = Double.valueOf(price);
                         System.out.println(dPrice);
                         sc.nextLine();
                     }
-                    
+
                 }
                 sc.close();
-                
-                quantity=scan.nextLine();
-                dQuantity=Integer.decode(quantity);
-                multi=dPrice*dQuantity;
-                sum+=multi;
-              
-                fullnames.append(name + " \t"+quantity+"\t"+multi+ "\n");
-               
-             //   write();
-                
-                
+
+                quantity = scan.nextLine();
+                dQuantity = Integer.decode(quantity);
+                multi = dPrice * dQuantity;
+                sum += multi;
+
+                fullnames.append(name + " \t" + quantity + "\t" + multi + "\n");
+
+                //   write();
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
-        
-        
-                
-        
+
     }
 
-    private void closeFile()
-    {
+    private void closeFile() {
         scan.close();
         sc.close();
         pw.close();
     }
-    
+
     public String getName() {
         return name;
     }
@@ -115,5 +105,5 @@ public class ReciptFile {
     public double getMulti() {
         return multi;
     }
-    
+
 }

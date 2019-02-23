@@ -17,27 +17,30 @@ import restaurantsystem.MainMenu;
  * @author Shahin
  */
 public class BillingManagement extends javax.swing.JFrame {
-    private OrderHelper  o;
+
+    private OrderHelper o;
     private BillingHelper t;
     private String name;
-    private String quantity ;
-    private double totalPrice=0;
-    private double sum=0;
-    
+    private String quantity;
+    private double totalPrice = 0;
+    private double sum = 0;
+
     public void setName(String name) {
         this.name = name;
     }
+
     public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
+
     public String getName() {
         return name;
     }
+
     public String getQuantity() {
         return quantity;
     }
-    
-    
+
     /**
      * Creates new form BillManagement
      */
@@ -46,18 +49,19 @@ public class BillingManagement extends javax.swing.JFrame {
         display();
         performFileRelatedTask();
     }
-    public void display(){
+
+    public void display() {
         t = new BillingHelper();
-        text.setText(t.getFullNames().toString());    
+        text.setText(t.getFullNames().toString());
         totalPriceArea.setText(t.getTotal());
     }
+
     private void performFileRelatedTask() {
         o = new OrderHelper();
-      //  RestaurentManagement r= new RestaurentManagement();
-       // r.setVisible(true);
-       // this.dispose();
+        //  RestaurentManagement r= new RestaurentManagement();
+        // r.setVisible(true);
+        // this.dispose();
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -169,7 +173,7 @@ public class BillingManagement extends javax.swing.JFrame {
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
-        
+
         OrderManagement om = new OrderManagement();
         om.setVisible(true);
         this.dispose();
@@ -179,16 +183,16 @@ public class BillingManagement extends javax.swing.JFrame {
         // TODO add your handling code here:
         o.delete();
         t = new BillingHelper();
-        
+
         MainMenu rm = new MainMenu();
         rm.setVisible(true);
         this.dispose();
         try {
             PrintWriter pw1 = new PrintWriter(new FileOutputStream("temp.txt"));
             PrintWriter pw2 = new PrintWriter(new FileOutputStream("order.txt"));
-            PrintWriter pw3 = new PrintWriter(new FileOutputStream("totalBill.txt",true));
-            pw3.println(t.getFullNames()+"\t");
-            
+            PrintWriter pw3 = new PrintWriter(new FileOutputStream("totalBill.txt", true));
+            pw3.println(t.getFullNames() + "\t");
+
             pw1.close();;
             pw2.close();
             pw3.close();
@@ -199,14 +203,13 @@ public class BillingManagement extends javax.swing.JFrame {
     private void printReciptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printReciptButtonActionPerformed
         // TODO add your handling code here:
         try {
-            
+
             boolean complete = text.print();
-            if(complete){
-            
+            if (complete) {
+
                 JOptionPane.showMessageDialog(null, "Done printing");
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Printing cancel","Printer",JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Printing cancel", "Printer", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception e) {
         }

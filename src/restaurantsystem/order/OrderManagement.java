@@ -19,6 +19,7 @@ import restaurantsystem.MainMenu;
  * @author Shahin
  */
 public class OrderManagement extends javax.swing.JFrame {
+
     private OrderHelper o;
     private ReciptFile r;
     private String srcName;
@@ -28,6 +29,7 @@ public class OrderManagement extends javax.swing.JFrame {
     private int pass;
     protected BillingManagement b;
     private PrintWriter pw;
+
     /**
      * Creates new form OrderManagement
      */
@@ -287,98 +289,75 @@ public class OrderManagement extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    private void performFileRelatedTask()
-    {
+    private void performFileRelatedTask() {
         o = new OrderHelper();
         text.setText(o.getFullNames().toString());
     }
-    
+
     private void orderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderButtonActionPerformed
-        
-       // o.delete();
         BillingManagement b = new BillingManagement();
         this.dispose();
         b.setVisible(true);
-        
     }//GEN-LAST:event_orderButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
         MainMenu im = new MainMenu();
         im.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void billingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_billingButtonActionPerformed
-            // TODO add your handling code here:
-        
-        b= new BillingManagement();
+        b = new BillingManagement();
         b.setVisible(true);
-          this.dispose();
-        
+        this.dispose();
+
     }//GEN-LAST:event_billingButtonActionPerformed
-    
-     public void reciptArea(){
-         String n,q;
-       try {
-           Scanner sc= new Scanner(new FileInputStream("temp.txt"));
-            while(sc.hasNextLine()){
-                n=sc.nextLine();
-                q =sc.nextLine();
-               // setSrchName(n);
-               // setQuantity(quantity);
-                
-              reciptArea.setText(n+"\t"+ q+"\n");
-                
-                
-            
-            }
+
+    public void reciptArea() {
+        String n, q;
+        try {
+            Scanner sc = new Scanner(new FileInputStream("temp.txt"));
+            while (sc.hasNextLine()) {
+                n = sc.nextLine();
+                q = sc.nextLine();
+                reciptArea.setText(n + "\t" + q + "\n");
+}
             System.out.println("End of reading temp file");
             sc.close();
         } catch (Exception e) {
         }
     }
     private void nextItemFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextItemFieldActionPerformed
-        // TODO add your handling code here:
-        srcName=itemIDToOrderField.getText(); //ID
-       // o.setSrchName(srcName);
-        ModQuantity=itemOrderQuantityField.getText(); // Quantity
-        //o.setQuantity(ModQuantity);
-        if(Integer.decode(ModQuantity)>o.checkQuantity(Integer.decode(srcName))){
-        
-        JOptionPane.showMessageDialog(this, "Sorry , This item is not in stock");
-        itemOrderQuantityField.setText("");
-        
+        srcName = itemIDToOrderField.getText(); //ID
+        ModQuantity = itemOrderQuantityField.getText(); // Quantity
+        if (Integer.decode(ModQuantity) > o.checkQuantity(Integer.decode(srcName))) {
+
+            JOptionPane.showMessageDialog(this, "Sorry , This item is not in stock");
+            itemOrderQuantityField.setText("");
+
         } else {
-            pass =Integer.decode(ModQuantity);
-            o.temp(Integer.decode(srcName),pass);
+            pass = Integer.decode(ModQuantity);
+            o.temp(Integer.decode(srcName), pass);
             itemIDToOrderField.setText("");
 
             itemOrderQuantityField.setText("");
-            System.out.println("will be modified "+srcName);
-            System.out.println("will be modified "+pass);
-            
-           
-             r = new ReciptFile();
+            System.out.println("will be modified " + srcName);
+            System.out.println("will be modified " + pass);
+
+            r = new ReciptFile();
             reciptArea.setText(r.getFullNames().toString());
-            totalPriceField.setText("Total price : "+r.getSum().toString());
+            totalPriceField.setText("Total price : " + r.getSum().toString());
             try {
-               pw = new PrintWriter(new FileOutputStream("order.txt",true));
+                pw = new PrintWriter(new FileOutputStream("order.txt", true));
                 pw.println(r.getName());
                 pw.println(r.getQuantity());
                 pw.println(r.getMulti());
                 pw.close();
             } catch (Exception e) {
             }
-            //JOptionPane.showMessageDialog(this, "Order ");
-        //}
-        
-        
-        
-        
-        
     }//GEN-LAST:event_nextItemFieldActionPerformed
     }
+
     /**
      * @param args the command line arguments
      */
@@ -440,4 +419,3 @@ public class OrderManagement extends javax.swing.JFrame {
     private javax.swing.JTextField totalPriceField;
     // End of variables declaration//GEN-END:variables
 }
-

@@ -129,7 +129,7 @@ public class AddLabour extends javax.swing.JFrame {
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
         try {
-            PrintWriter pw = new PrintWriter(new FileOutputStream("labour.txt",true));
+            PrintWriter pw = new PrintWriter(new FileOutputStream("labour.txt", true));
             System.out.println("file created");
             String itemName = labourIdField.getText();
 
@@ -143,14 +143,13 @@ public class AddLabour extends javax.swing.JFrame {
 
             pw.close();
 
-        }
-        catch(Exception e){
+        } catch (Exception e) {
 
         }
         labourIdField.setText("");
         labourNameField.setText("");
         labourSalaryField.setText("");
-         JOptionPane.showMessageDialog(this, "Item has been added");
+        JOptionPane.showMessageDialog(this, "Item has been added");
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
