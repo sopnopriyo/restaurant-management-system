@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurentsystem.labour;
+package restaurantsystem.labour;
 
 import java.io.File;
 import java.util.Scanner;
-import restaurentsystem.labour.LabourManagement;
+import restaurantsystem.labour.LabourManagement;
 
 /**
  *

@@ -6,7 +6,7 @@
 package restaurantsystem;
 
 import javax.swing.JFrame;
-import restaurentsystem.auth.LogIn;
+import restaurantsystem.auth.LogIn;
 /**
  *
  * @author Shahin
@@ -20,7 +20,6 @@ public class Main extends JFrame{
         LogIn im = new LogIn();
         im.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         im.setVisible(true);
-        
     }
     
 }

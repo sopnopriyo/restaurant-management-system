@@ -3,7 +3,7 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
 */
-package restaurentsystem.item;
+package restaurantsystem.item;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author Shahin
  */
-public class ModifyItem extends javax.swing.JFrame {
+public class UpdateItem extends javax.swing.JFrame {
     private MdfItem m;
     private String srcName;
     private String modName;
@@ -26,7 +26,7 @@ public class ModifyItem extends javax.swing.JFrame {
     /**
      * Creates new form ModifyItem
      */
-    public ModifyItem() {
+    public UpdateItem() {
         initComponents();
         performFileRelatedTask();
     }
@@ -194,7 +194,7 @@ public class ModifyItem extends javax.swing.JFrame {
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
-        ItemMngmnt im = new ItemMngmnt();
+        ItemManagement im = new ItemManagement();
         im.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed
@@ -216,20 +216,21 @@ public class ModifyItem extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ModifyItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ModifyItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ModifyItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ModifyItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ModifyItem().setVisible(true);
+                new UpdateItem().setVisible(true);
             }
         });
     }

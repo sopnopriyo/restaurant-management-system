@@ -3,7 +3,7 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
 */
-package restaurentsystem.item;
+package restaurantsystem.labour;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,22 +11,27 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
+import restaurantsystem.labour.LabourManagement;
 
 /**
  *
  * @author Shahin
  */
-public class DeleteItem extends javax.swing.JFrame {
-    private DltItem d;
+public class DeleteLabour extends javax.swing.JFrame {
+    private DltLabour d;
     private String dltName;
+    
     /**
-     * Creates new form DeleteItem
+     * Creates new form DeleteLabour
      */
-    public DeleteItem() {
+    public DeleteLabour() {
         initComponents();
         performFileRelatedTask();
     }
-    
+    private void performFileRelatedTask()
+    {
+        d = new DltLabour();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,40 +41,16 @@ public class DeleteItem extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jPanel1 = new javax.swing.JPanel();
+        dltButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         text = new javax.swing.JTextArea();
-        dlttext = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        backButton = new javax.swing.JButton();
-        dltButton = new javax.swing.JButton();
+        dlttext = new javax.swing.JTextField();
         view = new javax.swing.JButton();
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 102, 255));
-
-        jPanel1.setBackground(new java.awt.Color(0, 153, 255));
-
-        text.setEditable(false);
-        text.setBackground(new java.awt.Color(204, 255, 204));
-        text.setColumns(20);
-        text.setRows(5);
-        jScrollPane1.setViewportView(text);
-
-        jLabel1.setText("Which Item You want to Delete");
-
-        backButton.setText("Back");
-        backButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backButtonActionPerformed(evt);
-            }
-        });
 
         dltButton.setText("Delete");
         dltButton.addActionListener(new java.awt.event.ActionListener() {
@@ -78,6 +59,20 @@ public class DeleteItem extends javax.swing.JFrame {
             }
         });
 
+        backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
+
+        text.setEditable(false);
+        text.setColumns(20);
+        text.setRows(5);
+        jScrollPane1.setViewportView(text);
+
+        jLabel1.setText("Which Labour ID  want to Delete");
+
         view.setText("View");
         view.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -85,75 +80,49 @@ public class DeleteItem extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(dlttext, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(view)
-                        .addGap(32, 32, 32)
-                        .addComponent(dltButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(backButton)))
-                .addContainerGap(23, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dlttext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(view)
-                    .addComponent(dltButton)
-                    .addComponent(backButton))
-                .addGap(0, 64, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
+                .addComponent(dlttext, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(91, 91, 91))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(view)
+                .addGap(32, 32, 32)
+                .addComponent(dltButton)
+                .addGap(18, 18, 18)
+                .addComponent(backButton)
+                .addGap(57, 57, 57))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(60, 60, 60)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(dlttext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(view)
+                    .addComponent(dltButton)
+                    .addComponent(backButton))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    private void performFileRelatedTask()
-    {
-        d = new DltItem();
-    }
-    private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
-        // TODO add your handling code here:
-            d = new DltItem();
-            text.setText(d.getFullNames().toString());
-        
-        
-    }//GEN-LAST:event_viewActionPerformed
 
     private void dltButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dltButtonActionPerformed
         // TODO add your handling code here:
@@ -161,18 +130,25 @@ public class DeleteItem extends javax.swing.JFrame {
         dltName=dlttext.getText();
         d.setName(dltName);
         d.deleteItem();
-         JOptionPane.showMessageDialog(this, "Item has been removed");
-        
-        
-        
+        dlttext.setText("");
+        JOptionPane.showMessageDialog(this, "Labour has been Deleted");
+
     }//GEN-LAST:event_dltButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
-        ItemMngmnt im = new ItemMngmnt();
-        im.setVisible(true);
-        this.dispose();
+        LabourManagement lm = new LabourManagement();
+        lm.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
+        // TODO add your handling code here:
+            d = new DltLabour();
+            text.setText(d.getFullNames().toString());
+        
+
+    }//GEN-LAST:event_viewActionPerformed
     
     /**
      * @param args the command line arguments
@@ -191,21 +167,20 @@ public class DeleteItem extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DeleteItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeleteLabour.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DeleteItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeleteLabour.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DeleteItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeleteLabour.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DeleteItem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeleteLabour.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DeleteItem().setVisible(true);
+                new DeleteLabour().setVisible(true);
             }
         });
     }
@@ -215,16 +190,12 @@ public class DeleteItem extends javax.swing.JFrame {
     private javax.swing.JButton dltButton;
     private javax.swing.JTextField dlttext;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea text;
     private javax.swing.JButton view;
     // End of variables declaration//GEN-END:variables
 }
-
-class DltItem {
+class DltLabour {
     
     private Scanner scan;
     private String name;
@@ -233,7 +204,7 @@ class DltItem {
     private StringBuilder fullnames;
     private String itemName [];
     
-    public DltItem()
+    public DltLabour()
     {
         fullnames = new StringBuilder();
         openFile();
@@ -252,7 +223,7 @@ class DltItem {
     {
         try
         {
-            scan = new Scanner(new File("item.txt"));
+            scan = new Scanner(new File("labour.txt"));
             System.out.println("File found!");
         }
         
@@ -273,17 +244,17 @@ class DltItem {
     {
         try{
             while(scan.hasNextLine())
-        {
-            name = scan.nextLine();
-            price = scan.nextLine();
-            quantity=scan.nextLine();
-            fullnames.append(name + " \t" + price + " \t"+quantity+"\n");
-        }
+            {
+                name = scan.nextLine();
+                price = scan.nextLine();
+                quantity=scan.nextLine();
+                fullnames.append(name + " \t" + price + " \t"+quantity+"\n");
+            }
+            
         }
         catch(Exception e){
             System.out.println(e);
-        }
-    }
+        }    }
     private void closeFile()
     {
         scan.close();
@@ -299,7 +270,7 @@ class DltItem {
         int c=0,track, cnt=0,temp=0;
         
         try{
-            Scanner sc = new Scanner(new FileInputStream("item.txt"));
+            Scanner sc = new Scanner(new FileInputStream("labour.txt"));
             while(sc.hasNextLine()){
                 cnt++;
                 sc.nextLine();
@@ -307,7 +278,7 @@ class DltItem {
             }
             itemName= new String[cnt];
             sc.close();
-            sc = new Scanner(new FileInputStream("item.txt"));
+            sc = new Scanner(new FileInputStream("labour.txt"));
             while(sc.hasNextLine()){
                 itemName[c]=sc.nextLine();
                 if(itemName[c].equalsIgnoreCase(dlt)){
@@ -326,7 +297,7 @@ class DltItem {
         }
         
         try {
-            PrintWriter pw = new PrintWriter(new FileOutputStream("item.txt"));
+            PrintWriter pw = new PrintWriter(new FileOutputStream("labour.txt"));
             for (int i = 0; i < c; i++) {
                 if(i==temp ||i==temp+1 ||i==temp+2){
                     
@@ -352,4 +323,5 @@ class DltItem {
     
     
 }
+
 

@@ -3,31 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurentsystem.order;
+package restaurantsystem.order;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
-import restaurentsystem.billing.BillManagement;
-import restaurentsystem.billing.ReciptFile;
-import restaurantsystem.RestaurentManagement;
+import restaurantsystem.billing.BillingManagement;
+import restaurantsystem.billing.ReciptFile;
+import restaurantsystem.MainMenu;
 
 /**
  *
  * @author Shahin
  */
 public class OrderManagement extends javax.swing.JFrame {
-    private OrdrManagement o;
+    private OrderHelper o;
     private ReciptFile r;
     private String srcName;
     private String modName;
     private String modPrice;
     private String ModQuantity;
     private int pass;
-    protected BillManagement b;
+    protected BillingManagement b;
     private PrintWriter pw;
     /**
      * Creates new form OrderManagement
@@ -300,13 +299,13 @@ public class OrderManagement extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
      private void performFileRelatedTask()
     {
-        o = new OrdrManagement();
+        o = new OrderHelper();
        
     }
     
     private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
             // TODO add your handling code here:
-            o = new OrdrManagement();
+            o = new OrderHelper();
             text.setText(o.getFullNames().toString());
         
     }//GEN-LAST:event_viewActionPerformed
@@ -314,7 +313,7 @@ public class OrderManagement extends javax.swing.JFrame {
     private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
         
        // o.delete();
-        BillManagement b = new BillManagement();
+        BillingManagement b = new BillingManagement();
         this.dispose();
         b.setVisible(true);
         
@@ -322,7 +321,7 @@ public class OrderManagement extends javax.swing.JFrame {
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
-        RestaurentManagement im = new RestaurentManagement();
+        MainMenu im = new MainMenu();
         im.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed
@@ -330,7 +329,7 @@ public class OrderManagement extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
             // TODO add your handling code here:
         
-        b= new BillManagement();
+        b= new BillingManagement();
         b.setVisible(true);
           this.dispose();
         

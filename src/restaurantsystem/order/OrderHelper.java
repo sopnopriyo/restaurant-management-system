@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurentsystem.order;
+package restaurantsystem.order;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +16,7 @@ import java.util.Scanner;
  * @author Sopnopriyo
  */
 
-public class OrdrManagement {
+public class OrderHelper {
   //  protected OrderManagement o = new OrderManagement();
     private Scanner scan;
     private String srchName;
@@ -30,7 +30,7 @@ public class OrdrManagement {
     private StringBuilder fullnames;
     private String itemName [];
     private StringBuilder reciptName;
-    public OrdrManagement()
+    public OrderHelper()
     {
         fullnames = new StringBuilder();
         openFile();

@@ -3,7 +3,7 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
 */
-package restaurentsystem.billing;
+package restaurantsystem.billing;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,7 +14,7 @@ import java.util.Scanner;
  *
  * @author Shahin
  */
-public class TotalPrice {
+public class BillingHelper {
     private Scanner sc;
     private Scanner scan;
     private String name;
@@ -25,7 +25,7 @@ public class TotalPrice {
     private int dQuantity;
     private double multi;
     private PrintWriter pw;
-    public TotalPrice()
+    public BillingHelper()
     {
         fullnames = new StringBuilder();
         openFile();
@@ -42,17 +42,13 @@ public class TotalPrice {
         
         double totalPrice = 0;
         
-        try{
+        try {
             scan = new Scanner(new FileInputStream("order.txt"));
-            while(scan.hasNextLine())
-            {
-                
-                
+            while(scan.hasNextLine()) {
                 scan.nextLine();
                 scan.nextLine();
                 price = scan.nextLine();
-                totalPrice+=Double.valueOf(price);
-                
+                totalPrice += Double.valueOf(price);
             }
         }
         catch(Exception e){
@@ -61,8 +57,7 @@ public class TotalPrice {
         return String.valueOf("Total Price is : "+totalPrice);
     }
     
-    private void openFile()
-    {
+    private void openFile() {
         try
         {
             
@@ -77,37 +72,23 @@ public class TotalPrice {
         }
     }
     
-    private void readFile()
-    {
-        try{
-            while(scan.hasNextLine())
-            {
-                
-                
+    private void readFile() {
+        try {
+            while(scan.hasNextLine()) {
                 name = scan.nextLine();
                 System.out.println(name);
                 // price = scan.nextLine();
-                
-                
+               
                 quantity=scan.nextLine();
                 // dQuantity=Integer.decode(quantity);
                 //multi=dPrice*dQuantity;
                 price =scan.nextLine();
                 fullnames.append(name + " \t"+quantity+"\t"+price+ "\n");
-                
-                
-                
-                
-                
-            }
+              }
         }
-        catch(Exception e){
+        catch(Exception e) {
             System.out.println(e);
         }
-        
-        
-        
-        
     }
     
     private void closeFile() {

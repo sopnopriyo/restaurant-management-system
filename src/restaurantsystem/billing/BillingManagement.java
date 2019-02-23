@@ -3,22 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurentsystem.billing;
+package restaurantsystem.billing;
 
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import javax.swing.JOptionPane;
-import restaurentsystem.order.OrderManagement;
-import restaurentsystem.order.OrdrManagement;
-import restaurantsystem.RestaurentManagement;
+import restaurantsystem.order.OrderManagement;
+import restaurantsystem.order.OrderHelper;
+import restaurantsystem.MainMenu;
 
 /**
  *
  * @author Shahin
  */
-public class BillManagement extends javax.swing.JFrame {
-    private OrdrManagement  o;
-    private TotalPrice t;
+public class BillingManagement extends javax.swing.JFrame {
+    private OrderHelper  o;
+    private BillingHelper t;
     private String name;
     private String quantity ;
     private double totalPrice=0;
@@ -41,23 +41,21 @@ public class BillManagement extends javax.swing.JFrame {
     /**
      * Creates new form BillManagement
      */
-    public BillManagement() {
+    public BillingManagement() {
         initComponents();
         display();
         performFileRelatedTask();
     }
     public void display(){
-        t = new TotalPrice();
+        t = new BillingHelper();
         text.setText(t.getFullNames().toString());    
         totalPriceArea.setText(t.getTotal());
-    
     }
     private void performFileRelatedTask() {
-        o = new OrdrManagement();
+        o = new OrderHelper();
       //  RestaurentManagement r= new RestaurentManagement();
        // r.setVisible(true);
        // this.dispose();
-       
     }
 
 
@@ -178,9 +176,9 @@ public class BillManagement extends javax.swing.JFrame {
     private void paymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentActionPerformed
         // TODO add your handling code here:
         o.delete();
-        t = new TotalPrice();
+        t = new BillingHelper();
         
-        RestaurentManagement rm = new RestaurentManagement();
+        MainMenu rm = new MainMenu();
         rm.setVisible(true);
         this.dispose();
         try {
@@ -188,8 +186,6 @@ public class BillManagement extends javax.swing.JFrame {
             PrintWriter pw2 = new PrintWriter(new FileOutputStream("order.txt"));
             PrintWriter pw3 = new PrintWriter(new FileOutputStream("totalBill.txt",true));
             pw3.println(t.getFullNames()+"\t");
-            
-            
             
             pw1.close();;
             pw2.close();
@@ -231,20 +227,21 @@ public class BillManagement extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BillManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BillingManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BillManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BillingManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BillManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BillingManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BillManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BillingManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BillManagement().setVisible(true);
+                new BillingManagement().setVisible(true);
             }
         });
     }

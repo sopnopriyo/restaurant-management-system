@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurentsystem.item;
+package restaurantsystem.item;
 
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
@@ -13,12 +13,12 @@ import javax.swing.*;
  *
  * @author Shahin
  */
-public class InsertItem extends javax.swing.JFrame {
+public class AddItem extends javax.swing.JFrame {
     
     /**
      * Creates new form InsertItem
      */
-    public InsertItem() {
+    public AddItem() {
         initComponents();
         
     }
@@ -157,7 +157,7 @@ public class InsertItem extends javax.swing.JFrame {
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
-        ItemMngmnt im = new ItemMngmnt();
+        ItemManagement im = new ItemManagement();
         im.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed

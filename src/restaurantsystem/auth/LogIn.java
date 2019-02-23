@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurentsystem.auth;
+package restaurantsystem.auth;
 
 import javax.swing.JOptionPane;
-import restaurantsystem.RestaurentManagement;
+import restaurantsystem.MainMenu;
 
 /**
  *
@@ -127,7 +127,7 @@ public class LogIn extends javax.swing.JFrame {
             
             JOptionPane.showMessageDialog(this, "Access granted");
             this.dispose();
-            RestaurentManagement rm = new RestaurentManagement();
+            MainMenu rm = new MainMenu();
             rm.setVisible(true);
         }
         else{

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurentsystem.item;
+package restaurantsystem.item;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -138,7 +138,7 @@ public class ViewItem extends javax.swing.JFrame{
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
-        ItemMngmnt im = new ItemMngmnt();
+        ItemManagement im = new ItemManagement();
         im.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed
