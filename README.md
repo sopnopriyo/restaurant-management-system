@@ -16,5 +16,12 @@ This is a restaurant management software which I developed for one of the assign
 ## How to edit this project ?
 Best way to open and edit the project is to use Netbeans IDE. It allows very easy way to modify the design (Drag and Drop)
 
+## Authentication
+There is no standard authentication has been added yet. Currently, it is hardcoded.
+
+```
+Username : shahin
+Password : shahin
+```
 ## Screenshots
  [Uploading soon]
