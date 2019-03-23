@@ -6,7 +6,7 @@
 package restaurantsystem;
 
 import javax.swing.JFrame;
-import restaurantsystem.auth.Login;
+import restaurantsystem.component.auth.Login;
 
 /**
  *

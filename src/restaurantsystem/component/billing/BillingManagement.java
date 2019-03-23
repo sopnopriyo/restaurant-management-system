@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurantsystem.billing;
+package restaurantsystem.component.billing;
 
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import javax.swing.JOptionPane;
-import restaurantsystem.order.OrderManagement;
-import restaurantsystem.order.OrderHelper;
+import restaurantsystem.component.order.OrderManagement;
+import restaurantsystem.component.order.OrderHelper;
 import restaurantsystem.MainMenu;
 
 /**

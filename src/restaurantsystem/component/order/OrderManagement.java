@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurantsystem.order;
+package restaurantsystem.component.order;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,8 +12,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
-import restaurantsystem.billing.BillingManagement;
-import restaurantsystem.billing.ReciptFile;
+import restaurantsystem.component.billing.BillingManagement;
+import restaurantsystem.component.billing.ReciptFile;
 import restaurantsystem.MainMenu;
 
 /**

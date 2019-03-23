@@ -5,9 +5,9 @@
  */
 package restaurantsystem;
 
-import restaurantsystem.item.ItemManagement;
-import restaurantsystem.labour.LabourManagement;
-import restaurantsystem.order.OrderManagement;
+import restaurantsystem.component.item.ItemManagement;
+import restaurantsystem.component.labour.LabourManagement;
+import restaurantsystem.component.order.OrderManagement;
 
 /**
  *

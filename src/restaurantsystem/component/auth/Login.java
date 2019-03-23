@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurantsystem.auth;
+package restaurantsystem.component.auth;
 
 import javax.swing.JOptionPane;
 import restaurantsystem.MainMenu;

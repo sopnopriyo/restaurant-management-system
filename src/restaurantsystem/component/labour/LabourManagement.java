@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurantsystem.labour;
+package restaurantsystem.component.labour;
 
-import restaurantsystem.labour.DeleteLabour;
-import restaurantsystem.labour.AddLabour;
-import restaurantsystem.labour.UpdateLabour;
+import restaurantsystem.component.labour.DeleteLabour;
+import restaurantsystem.component.labour.AddLabour;
+import restaurantsystem.component.labour.UpdateLabour;
 import restaurantsystem.MainMenu;
-import restaurantsystem.labour.ViewLabour;
+import restaurantsystem.component.labour.ViewLabour;
 
 /**
  *

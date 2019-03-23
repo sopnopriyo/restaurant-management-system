@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restaurantsystem.labour;
+package restaurantsystem.component.labour;
 
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import javax.swing.JOptionPane;
-import restaurantsystem.labour.LabourManagement;
+import restaurantsystem.component.labour.LabourManagement;
 
 /**
  *
