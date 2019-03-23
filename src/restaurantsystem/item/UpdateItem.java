@@ -5,11 +5,18 @@
  */
 package restaurantsystem.item;
 
-import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,7 +25,7 @@ import javax.swing.JOptionPane;
  */
 public class UpdateItem extends javax.swing.JFrame {
 
-    private MdfItem m;
+    
     private String srcName;
     private String modName;
     private String modPrice;
@@ -39,8 +46,25 @@ public class UpdateItem extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     private void performFileRelatedTask() {
-        m = new MdfItem();
-        text.setText(m.getFullNames().toString());
+        Scanner scanner;
+        try {
+            scanner = new Scanner(new FileInputStream("item.txt"));
+            StringBuilder fullnames = new StringBuilder();
+            while (scanner.hasNextLine()) {
+                String itemLine =  scanner.nextLine();
+                
+                String itemInfo[] = itemLine.split(",");
+               
+                Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
+                        Integer.parseInt(itemInfo[2]));
+                
+                fullnames.append(item.getName() + "\t" + item.getPrice() + " \t" + item.getQuantity() + "\n");
+            }
+            text.setText(fullnames.toString());
+            scanner.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ViewItem.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -172,15 +196,50 @@ public class UpdateItem extends javax.swing.JFrame {
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         srcName = modText.getText();
-        m.setSrchName(srcName);
         modName = mName.getText();
-        m.setName(modName);
         modPrice = mPrice.getText();
-        m.setPrice(modPrice);
         ModQuantity = mQuantity.getText();
-        m.setQuantity(ModQuantity);
         
-        m.ModifyItem();
+        Item updatedItem = new Item(modName, Double.parseDouble(modPrice), Integer.parseInt(ModQuantity));
+        
+        try {
+            // Read all the items
+            Scanner scanner = new Scanner(new FileInputStream("item.txt"));
+            List<Item> itemList = new ArrayList<Item>();
+            
+            while(scanner.hasNextLine()) {
+                 String itemLine =  scanner.nextLine();
+                
+                String itemInfo[] = itemLine.split(",");
+               
+                Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
+                        Integer.parseInt(itemInfo[2]));
+                itemList.add(item);
+            }
+            
+            for (int i = 0; i < itemList.size(); i++) {
+                Item item = itemList.get(i);
+                
+                if (item.getName().equalsIgnoreCase(srcName)) {
+                    itemList.set(i, updatedItem);
+                }
+            }
+            
+            Files.delete(Paths.get("item.txt"));
+            
+            PrintWriter pw = new PrintWriter(new FileOutputStream("item.txt"));
+            
+            itemList.forEach(item -> {
+                pw.println(item.getName() + "," + item.getPrice() + "," + item.getQuantity());
+            });
+            
+            pw.close();
+    
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(IOException ioe) {
+            
+        }
         
         // Reset the modify fields
         modText.setText("");
@@ -254,140 +313,4 @@ public class UpdateItem extends javax.swing.JFrame {
     private javax.swing.JTextArea text;
     private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
-}
-
-class MdfItem {
-
-    private Scanner scan;
-    private String srchName;
-
-    private String name;
-
-    private String price;
-    private String quantity;
-    private StringBuilder fullnames;
-    private String itemName[];
-
-    public MdfItem() {
-        fullnames = new StringBuilder();
-        openFile();
-        readFile();
-
-        closeFile();
-
-    }
-
-    public StringBuilder getFullNames() {
-        return fullnames;
-    }
-
-    private void openFile() {
-        try {
-            scan = new Scanner(new File("item.txt"));
-            System.out.println("File found!");
-        } catch (Exception e) {
-            System.out.println("File not found");
-        }
-    }
-
-    public void setSrchName(String srchName) {
-        this.srchName = srchName;
-    }
-
-    public String getSrchName() {
-        return srchName;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public String getQuantity() {
-        return quantity;
-    }
-
-    private void readFile() {
-        try {
-            while (scan.hasNextLine()) {
-                name = scan.nextLine();
-                price = scan.nextLine();
-                quantity = scan.nextLine();
-                fullnames.append(name + " \t\t\t" + price + " \t" + quantity + "\n");
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    private void closeFile() {
-        scan.close();
-    }
-
-    public void ModifyItem() {
-
-        String srcKey = getSrchName();
-
-        System.out.println(srcKey + "will be modified");
-
-        int c = 0, track, cnt = 0, temp = 0;
-
-        try {
-            Scanner sc = new Scanner(new FileInputStream("item.txt"));
-            while (sc.hasNextLine()) {
-                cnt++;
-                sc.nextLine();
-
-            }
-            itemName = new String[cnt];
-            sc.close();
-            sc = new Scanner(new FileInputStream("item.txt"));
-            while (sc.hasNextLine()) {
-                itemName[c] = sc.nextLine();
-                if (itemName[c].equalsIgnoreCase(srcKey)) {
-                    temp = c;
-                    System.out.println("Index will be deleted" + c);
-                }
-                c++;
-
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-
-        }
-
-        try {
-            PrintWriter pw = new PrintWriter(new FileOutputStream("item.txt"));
-            for (int i = 0; i < c; i++) {
-                if (i == temp || i == temp + 1 || i == temp + 2) {
-                    pw.println(getName());
-                    pw.println(getPrice());
-                    pw.println(getQuantity());
-                    i += 2;
-                } else {
-                    pw.println(itemName[i]);
-                }
-
-            }
-            System.out.println("Your item has been deleted.");
-            pw.close();
-        } catch (Exception e) {
-        }
-    }
 }

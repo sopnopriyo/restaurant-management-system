@@ -20,7 +20,6 @@ public class AddItem extends javax.swing.JFrame {
      */
     public AddItem() {
         initComponents();
-
     }
 
     /**
@@ -123,22 +122,15 @@ public class AddItem extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        // TODO add your handling code here:
         try {
             PrintWriter pw = new PrintWriter(new FileOutputStream("item.txt", true));
 
-            String itemName = itemNameField.getText();
-
-            String itemPrice = itemPriceField.getText();
-
-            String itemQuantity = itemQuantityField.getText();
-
-            pw.println(itemName);
-            pw.println(itemPrice);
-            pw.println(itemQuantity);
-
+            Item item = new Item(itemNameField.getText(),
+                    Double.parseDouble(itemPriceField.getText()),
+                    Integer.parseInt(itemQuantityField.getText()));
+            
+            pw.println(item.getName() + ","+ item.getPrice() +"," +item.getQuantity());
             pw.close();
-
         } catch (Exception e) {
 
         }

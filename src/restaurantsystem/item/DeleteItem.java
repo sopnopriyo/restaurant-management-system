@@ -5,11 +5,18 @@
  */
 package restaurantsystem.item;
 
-import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,8 +24,7 @@ import javax.swing.JOptionPane;
  * @author Shahin
  */
 public class DeleteItem extends javax.swing.JFrame {
-
-    private DltItem d;
+    
     private String dltName;
 
     /**
@@ -156,15 +162,76 @@ public class DeleteItem extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     private void performFileRelatedTask() {
-        d = new DltItem();
-        text.setText(d.getFullNames().toString());
+        Scanner scanner;
+        try {
+            scanner = new Scanner(new FileInputStream("item.txt"));
+            StringBuilder fullnames = new StringBuilder();
+            while (scanner.hasNextLine()) {
+                String itemLine =  scanner.nextLine();
+                
+                String itemInfo[] = itemLine.split(",");
+               
+                Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
+                        Integer.parseInt(itemInfo[2]));
+                
+                fullnames.append(item.getName() + "\t" + item.getPrice() + " \t" + item.getQuantity() + "\n");
+            }
+            text.setText(fullnames.toString());
+            scanner.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ViewItem.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        dltName = dlttext.getText();
-        d.setName(dltName);
-        d.deleteItem();
-
+        dltName = dlttext.getText();      
+        try {
+            // Read all the items
+            Scanner scanner = new Scanner(new FileInputStream("item.txt"));
+            List<Item> itemList = new ArrayList<Item>();
+            
+            while(scanner.hasNextLine()) {
+                 String itemLine =  scanner.nextLine();
+                
+                String itemInfo[] = itemLine.split(",");
+               
+                Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
+                        Integer.parseInt(itemInfo[2]));
+                itemList.add(item);
+            }
+            
+            // find the item to be deleted
+            for (int i = 0; i < itemList.size(); i++) {
+                Item item = itemList.get(i);
+                
+                if (item.getName().equalsIgnoreCase(dltName)) {
+                    itemList.remove(i);
+                }
+            }
+            
+            // Delete the entire file
+            Files.delete(Paths.get("item.txt"));
+            
+            // Create a new file and write new data into the file
+            PrintWriter pw = new PrintWriter(new FileOutputStream("item.txt"));
+            
+            itemList.forEach(item -> {
+                pw.println(item.getName() + "," + item.getPrice() + "," + item.getQuantity());
+            });
+            
+            // close the printwriter
+            pw.close();
+    
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(IOException ioe) {
+            
+        }
+        
+        // Show confirmation pop up
         JOptionPane.showMessageDialog(this, "Item has been removed");
+        
+        // Reset the deleted text field
+        dlttext.setText("");
         
         // Reinitilize the form with updated data
         performFileRelatedTask();
@@ -226,109 +293,4 @@ public class DeleteItem extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea text;
     // End of variables declaration//GEN-END:variables
-}
-
-class DltItem {
-
-    private Scanner scan;
-    private String name;
-    private String price;
-    private String quantity;
-    private StringBuilder fullnames;
-    private String itemName[];
-
-    public DltItem() {
-        fullnames = new StringBuilder();
-        openFile();
-        readFile();
-        closeFile();
-    }
-
-    public StringBuilder getFullNames() {
-        return fullnames;
-    }
-
-    private void openFile() {
-        try {
-            scan = new Scanner(new File("item.txt"));
-            System.out.println("File found!");
-        } catch (Exception e) {
-            System.out.println("File not found");
-        }
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    private void readFile() {
-        try {
-            while (scan.hasNextLine()) {
-                name = scan.nextLine();
-                price = scan.nextLine();
-                quantity = scan.nextLine();
-                fullnames.append(name + " \t\t" + price + " \t" + quantity + "\n");
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    private void closeFile() {
-        scan.close();
-    }
-
-    public void deleteItem() {
-
-        String dlt = getName();
-
-        System.out.println(dlt + "will be deleted");
-
-        int c = 0, track, cnt = 0, temp = 0;
-
-        try {
-            Scanner sc = new Scanner(new FileInputStream("item.txt"));
-            while (sc.hasNextLine()) {
-                cnt++;
-                sc.nextLine();
-
-            }
-            itemName = new String[cnt];
-            sc.close();
-            sc = new Scanner(new FileInputStream("item.txt"));
-            while (sc.hasNextLine()) {
-                itemName[c] = sc.nextLine();
-                if (itemName[c].equalsIgnoreCase(dlt)) {
-                    temp = c;
-                    System.out.println("Index will be deleted" + c);
-                }
-                c++;
-
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-
-        }
-
-        try {
-            PrintWriter pw = new PrintWriter(new FileOutputStream("item.txt"));
-            for (int i = 0; i < c; i++) {
-                if (i == temp || i == temp + 1 || i == temp + 2) {
-
-                } else {
-                    pw.println(itemName[i]);
-                }
-
-            }
-            System.out.println("Your item has been deleted.");
-            pw.close();
-        } catch (Exception e) {
-            System.out.println("Failed to delete the item");
-        }
-    }
 }

@@ -6,8 +6,11 @@
 package restaurantsystem.item;
 
 import java.awt.event.ActionEvent;
-import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -15,17 +18,31 @@ import java.util.Scanner;
  */
 public class ViewItem extends javax.swing.JFrame {
 
-    private Names t;
-
     public ViewItem() {
         initComponents();
         performFileRelatedTask();
-
     }
 
     private void performFileRelatedTask() {
-        t = new Names();
-        text.setText(t.getFullNames().toString());
+        Scanner scanner;
+        try {
+            scanner = new Scanner(new FileInputStream("item.txt"));
+            StringBuilder fullnames = new StringBuilder();
+            while (scanner.hasNextLine()) {
+                String itemLine =  scanner.nextLine();
+                
+                String itemInfo[] = itemLine.split(",");
+               
+                Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
+                        Integer.parseInt(itemInfo[2]));
+                
+                fullnames.append(item.getName() + "\t" + item.getPrice() + " \t" + item.getQuantity() + "\n");
+            }
+            text.setText(fullnames.toString());
+            scanner.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ViewItem.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -158,52 +175,5 @@ public class ViewItem extends javax.swing.JFrame {
 
     public void actionPerformed(ActionEvent e) {
 
-    }
-}
-
-class Names {
-
-    private Scanner scan;
-    private String name;
-    private String price;
-    private String quantity;
-    private StringBuilder fullnames;
-
-    public Names() {
-        fullnames = new StringBuilder();
-        openFile();
-        readFile();
-        closeFile();
-    }
-
-    public StringBuilder getFullNames() {
-        return fullnames;
-    }
-
-    private void openFile() {
-        try {
-            scan = new Scanner(new File("item.txt"));
-            System.out.println("File found!");
-        } catch (Exception e) {
-            System.out.println("File not found");
-        }
-    }
-
-    private void readFile() {
-        try {
-            while (scan.hasNextLine()) {
-                name = scan.nextLine();
-                price = scan.nextLine();
-                quantity = scan.nextLine();
-                fullnames.append(name + " \t" + price + " \t" + quantity + "\n");
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-    }
-
-    private void closeFile() {
-        scan.close();
     }
 }

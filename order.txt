@@ -1,6 +1,0 @@
-Burger
-5
-20.0
-Fried rice
-1
-5.0
