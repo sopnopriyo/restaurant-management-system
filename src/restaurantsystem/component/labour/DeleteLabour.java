@@ -5,22 +5,29 @@
  */
 package restaurantsystem.component.labour;
 
-import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import restaurantsystem.component.labour.LabourManagement;
+import restaurantsystem.component.item.UpdateItem;
+import restaurantsystem.model.Labour;
 
 /**
  *
  * @author Shahin
  */
 public class DeleteLabour extends javax.swing.JFrame {
-
-    private DltLabour d;
-    private String dltName;
+    
+    private String deleteLabourID;
 
     /**
      * Creates new form DeleteLabour
@@ -31,8 +38,27 @@ public class DeleteLabour extends javax.swing.JFrame {
     }
 
     private void performFileRelatedTask() {
-        d = new DltLabour();
-        text.setText(d.getFullNames().toString());
+          StringBuilder stringBuilder = new StringBuilder();
+        
+         try {
+                Scanner scanner = new Scanner(new FileInputStream("labour.txt"));
+                while (scanner.hasNextLine()) {
+                  
+                    String labourLine = scanner.nextLine();
+                  
+                    String labourInfo[] = labourLine.split(",");
+                  
+                    Labour labour = new Labour(labourInfo[0], labourInfo[1],Double.parseDouble(labourInfo[0]));
+                  
+                    stringBuilder.append(labour.getId() + "\t" + labour.getName() + "\t" + labour.getSalary() + "\n");
+                }
+                
+             scanner.close();
+         } catch (Exception e) {
+             System.out.println(e);
+         }
+         
+         text.setText(stringBuilder.toString());
     }
 
     /**
@@ -118,13 +144,60 @@ public class DeleteLabour extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        // TODO add your handling code here:
-
-        dltName = labourIDField.getText();
-        d.setName(dltName);
-        d.deleteItem();
+        deleteLabourID = labourIDField.getText();
+        
+        try {
+            // Read all the items
+            Scanner scanner = new Scanner(new FileInputStream("labour.txt"));
+            List<Labour> labourList = new ArrayList<Labour>();
+            
+            while(scanner.hasNextLine()) {
+                String labourLine =  scanner.nextLine();
+                
+                String labourInfo[] = labourLine.split(",");
+               
+                Labour labour = new Labour(labourInfo[0], labourInfo[1],
+                        Double.parseDouble(labourInfo[2]));
+                labourList.add(labour);
+            }
+            
+            // find the labour to be deleted
+            for (int i = 0; i < labourList.size(); i++) {
+                
+                Labour labour = labourList.get(i);
+                
+                if (labour.getId().equalsIgnoreCase(deleteLabourID)) {
+                    labourList.remove(labour);
+                }
+            }
+            
+            // Delete the entire file
+            Files.delete(Paths.get("labour.txt"));
+            
+            // Create a new file and write new data into the file
+            PrintWriter pw = new PrintWriter(new FileOutputStream("labour.txt"));
+            
+            labourList.forEach(labour -> {
+                pw.println(labour.getId() + "," + labour.getName() + "," + labour.getSalary());
+            });
+            
+            // close the printwriter
+            pw.close();
+    
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(IOException ioe) {
+            
+        }
+        
+        // Show confirmation pop up
+        JOptionPane.showMessageDialog(this, "Labour has been deleted");
+        
+        // Reset the deleted text field
         labourIDField.setText("");
-        JOptionPane.showMessageDialog(this, "Labour has been Deleted");
+        
+        // Reinitilize the form with updated data
+        performFileRelatedTask();
 
     }//GEN-LAST:event_deleteButtonActionPerformed
 
@@ -178,113 +251,4 @@ public class DeleteLabour extends javax.swing.JFrame {
     private javax.swing.JTextField labourIDField;
     private javax.swing.JTextArea text;
     // End of variables declaration//GEN-END:variables
-}
-
-class DltLabour {
-
-    private Scanner scan;
-    private String name;
-    private String price;
-    private String quantity;
-    private StringBuilder fullnames;
-    private String itemName[];
-
-    public DltLabour() {
-        fullnames = new StringBuilder();
-        openFile();
-        readFile();
-
-        closeFile();
-
-    }
-
-    public StringBuilder getFullNames() {
-        return fullnames;
-    }
-
-    private void openFile() {
-        try {
-            scan = new Scanner(new File("labour.txt"));
-            System.out.println("File found!");
-        } catch (Exception e) {
-            System.out.println("File not found");
-        }
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    private void readFile() {
-        try {
-            while (scan.hasNextLine()) {
-                name = scan.nextLine();
-                price = scan.nextLine();
-                quantity = scan.nextLine();
-                fullnames.append(name + " \t" + price + " \t" + quantity + "\n");
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    private void closeFile() {
-        scan.close();
-    }
-
-    public void deleteItem() {
-
-        String dlt = getName();
-
-        System.out.println(dlt + "will be deleted");
-
-        int c = 0, track, cnt = 0, temp = 0;
-
-        try {
-            Scanner sc = new Scanner(new FileInputStream("labour.txt"));
-            while (sc.hasNextLine()) {
-                cnt++;
-                sc.nextLine();
-
-            }
-            itemName = new String[cnt];
-            sc.close();
-            sc = new Scanner(new FileInputStream("labour.txt"));
-            while (sc.hasNextLine()) {
-                itemName[c] = sc.nextLine();
-                if (itemName[c].equalsIgnoreCase(dlt)) {
-                    temp = c;
-                    System.out.println("Index will be deleted" + c);
-                }
-                c++;
-
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-
-        }
-
-        try {
-            PrintWriter pw = new PrintWriter(new FileOutputStream("labour.txt"));
-            for (int i = 0; i < c; i++) {
-                if (i == temp || i == temp + 1 || i == temp + 2) {
-
-                } else {
-                    pw.println(itemName[i]);
-                }
-
-            }
-            System.out.println("Your item has been deleted.");
-            pw.close();
-        } catch (Exception e) {
-        }
-
-    }
-
 }

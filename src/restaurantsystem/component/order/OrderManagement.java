@@ -5,16 +5,21 @@
  */
 package restaurantsystem.component.order;
 
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import restaurantsystem.component.billing.BillingManagement;
-import restaurantsystem.component.billing.ReciptFile;
 import restaurantsystem.MainMenu;
+import restaurantsystem.component.item.ViewItem;
+import restaurantsystem.model.Cart;
+import restaurantsystem.model.CartItem;
+import restaurantsystem.model.Item;
 
 /**
  *
@@ -22,22 +27,23 @@ import restaurantsystem.MainMenu;
  */
 public class OrderManagement extends javax.swing.JFrame {
 
-    private OrderHelper o;
-    private ReciptFile r;
-    private String srcName;
-    private String modName;
-    private String modPrice;
-    private String ModQuantity;
-    private int pass;
+    private String newItemId;
+    private int newItemQuantity;
     protected BillingManagement b;
-    private PrintWriter pw;
+    
+    private Cart cart;
+    private List<CartItem> items;
+    private double totalPrice;
 
     /**
      * Creates new form OrderManagement
      */
     public OrderManagement() {
-        initComponents();
-        performFileRelatedTask();
+        this.initComponents();
+        this.performFileRelatedTask();
+        this.items = new ArrayList<CartItem>();
+        this.totalPrice = 0;
+        this.cart = new Cart(items, totalPrice);
     }
 
     /**
@@ -55,13 +61,13 @@ public class OrderManagement extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         backButton = new javax.swing.JButton();
         billingButton = new javax.swing.JButton();
-        orderButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         itemOrderQuantityField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        nextItemField = new javax.swing.JButton();
+        addToCartButton = new javax.swing.JButton();
         itemIDToOrderField = new javax.swing.JTextField();
+        orderButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         reciptArea = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
@@ -72,7 +78,7 @@ public class OrderManagement extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        clearCartButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,13 +108,6 @@ public class OrderManagement extends javax.swing.JFrame {
             }
         });
 
-        orderButton.setText("Order");
-        orderButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                orderButtonActionPerformed(evt);
-            }
-        });
-
         jPanel2.setBackground(new java.awt.Color(102, 204, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -116,10 +115,17 @@ public class OrderManagement extends javax.swing.JFrame {
 
         jLabel4.setText("Enter  Quantity");
 
-        nextItemField.setText("Next Item");
-        nextItemField.addActionListener(new java.awt.event.ActionListener() {
+        addToCartButton.setText("Add to cart");
+        addToCartButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nextItemFieldActionPerformed(evt);
+                addToCartButtonActionPerformed(evt);
+            }
+        });
+
+        orderButton.setText("Order");
+        orderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                orderButtonActionPerformed(evt);
             }
         });
 
@@ -132,34 +138,38 @@ public class OrderManagement extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(nextItemField))
+                        .addComponent(addToCartButton))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(28, 28, 28)))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(itemIDToOrderField, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
-                            .addComponent(itemOrderQuantityField))))
-                .addGap(58, 58, 58))
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(itemOrderQuantityField, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(itemIDToOrderField, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(39, 39, 39)
+                .addComponent(orderButton)
+                .addGap(24, 24, 24))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(itemIDToOrderField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(itemOrderQuantityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nextItemField)
-                .addGap(12, 12, 12))
+                .addContainerGap(52, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(itemIDToOrderField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(itemOrderQuantityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(orderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)))
+                .addComponent(addToCartButton)
+                .addGap(20, 20, 20))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -167,17 +177,16 @@ public class OrderManagement extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(orderButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(billingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(backButton)
-                .addGap(108, 108, 108))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(43, 43, 43)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(backButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(billingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(201, 201, 201))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(12, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,7 +195,6 @@ public class OrderManagement extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(orderButton)
                     .addComponent(billingButton)
                     .addComponent(backButton))
                 .addGap(23, 23, 23))
@@ -214,10 +222,10 @@ public class OrderManagement extends javax.swing.JFrame {
 
         jLabel10.setText("Name");
 
-        jButton1.setText("Cancel");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        clearCartButton.setText("Cancel");
+        clearCartButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                clearCartButtonActionPerformed(evt);
             }
         });
 
@@ -242,18 +250,20 @@ public class OrderManagement extends javax.swing.JFrame {
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                    .addGap(2, 2, 2)
                                     .addComponent(jLabel10)
-                                    .addGap(18, 18, 18)
+                                    .addGap(40, 40, 40)
                                     .addComponent(jLabel7)
-                                    .addGap(32, 32, 32)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(28, 28, 28))
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(totalPriceField, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)))
+                                .addComponent(clearCartButton)))
                         .addGap(40, 40, 40)))
                 .addGap(25, 25, 25))
         );
@@ -267,21 +277,20 @@ public class OrderManagement extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel6))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel10))
                         .addGap(6, 6, 6)
                         .addComponent(jScrollPane1))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel8)
-                                .addComponent(jLabel10)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(totalPriceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))))
+                            .addComponent(clearCartButton))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -307,14 +316,43 @@ public class OrderManagement extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     private void performFileRelatedTask() {
-        o = new OrderHelper();
-        text.setText(o.getFullNames().toString());
+      
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            Scanner scanner = new Scanner(new File("item.txt"));
+            int num = 1;
+            while (scanner.hasNextLine()) {
+                String itemLine = scanner.nextLine();
+                String itemInfo [] = itemLine.split(",");
+                
+                String name = itemInfo[0];
+                double price = Double.parseDouble(itemInfo[1]);
+                int quantity = Integer.parseInt(itemInfo[2]);
+                
+                Item item = new Item(name, price, quantity);
+                
+                stringBuilder.append(num)
+                        .append("\t")
+                        .append(item.getName())
+                        .append(" \t")
+                        .append(item.getPrice())
+                        .append(" \t")
+                        .append(item.getQuantity())
+                        .append("\n");
+                num++;
+            }
+            scanner.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(OrderManagement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        text.setText(stringBuilder.toString());
     }
 
     private void orderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderButtonActionPerformed
-        BillingManagement b = new BillingManagement();
+        BillingManagement billingManagement;
+        billingManagement = new BillingManagement();
         this.dispose();
-        b.setVisible(true);
+        billingManagement.setVisible(true);
     }//GEN-LAST:event_orderButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -330,59 +368,100 @@ public class OrderManagement extends javax.swing.JFrame {
 
     }//GEN-LAST:event_billingButtonActionPerformed
 
-    public void reciptArea() {
-        String n, q;
-        try {
-            Scanner sc = new Scanner(new FileInputStream("temp.txt"));
-            while (sc.hasNextLine()) {
-                n = sc.nextLine();
-                q = sc.nextLine();
-                reciptArea.setText(n + "\t" + q + "\n");
-}
-            System.out.println("End of reading temp file");
-            sc.close();
-        } catch (Exception e) {
+    private void addToCartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartButtonActionPerformed
+        
+        // new item index
+        newItemId = itemIDToOrderField.getText();
+        
+        // new item quantity
+        newItemQuantity = Integer.parseInt(itemOrderQuantityField.getText());
+        
+        Item newItem = getItemById(Integer.parseInt(newItemId));
+        
+        if (newItem == null) {
+            JOptionPane.showMessageDialog(this, "Sorry , Please enter a valid Item ID");
+            return;
         }
-    }
-    private void nextItemFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextItemFieldActionPerformed
-        srcName = itemIDToOrderField.getText(); //ID
-        ModQuantity = itemOrderQuantityField.getText(); // Quantity
-        if (Integer.decode(ModQuantity) > o.checkQuantity(Integer.decode(srcName))) {
+        
+        if (newItemQuantity > newItem.getQuantity()) {
 
-            JOptionPane.showMessageDialog(this, "Sorry , This item is not in stock");
+            JOptionPane.showMessageDialog(this, "Sorry , This item is out of stock");
             itemOrderQuantityField.setText("");
-
-        } else {
-            pass = Integer.decode(ModQuantity);
-            o.temp(Integer.decode(srcName), pass);
             itemIDToOrderField.setText("");
 
+        } else {
+            
+            CartItem cartItem = new CartItem(newItem, newItemQuantity, newItem.getPrice()*newItemQuantity);
+            this.cart.addItemToCart(cartItem);
+            
+            reciptArea.setText(getReciptStringByCart());
+            totalPriceField.setText(String.valueOf(this.cart.getTotalPrice()));
+            
+            JOptionPane.showMessageDialog(this, "Item has been added to cart");
+            
+            itemIDToOrderField.setText("");
             itemOrderQuantityField.setText("");
-            System.out.println("will be modified " + srcName);
-            System.out.println("will be modified " + pass);
-
-            r = new ReciptFile();
-            reciptArea.setText(r.getFullNames().toString());
-            totalPriceField.setText("Total price : " + r.getSum().toString());
-            try {
-                pw = new PrintWriter(new FileOutputStream("order.txt", true));
-                pw.println(r.getName());
-                pw.println(r.getQuantity());
-                pw.println(r.getMulti());
-                pw.close();
-            } catch (Exception e) {
-            }
-    }//GEN-LAST:event_nextItemFieldActionPerformed
-    }
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-          Files.deleteIfExists(Paths.get("order.txt"));
-          Files.deleteIfExists(Paths.get("temp.txt"));  
-        } catch (Exception e) {
-            System.out.println("Unable to delete file");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_addToCartButtonActionPerformed
 
+    private void clearCartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearCartButtonActionPerformed
+        this.items = new ArrayList<CartItem>();
+        this.totalPrice = 0;
+        this.cart = new Cart(items, totalPrice);
+        this.reciptArea.setText("");
+        this.totalPriceField.setText("");
+        
+    }//GEN-LAST:event_clearCartButtonActionPerformed
+    private List<Item> getAllItems() {
+    
+        List<Item> items = new ArrayList<>();
+        
+        Scanner scanner;
+        try {
+            scanner = new Scanner(new FileInputStream("item.txt"));
+            while (scanner.hasNextLine()) {
+                String itemLine =  scanner.nextLine();
+                
+                String itemInfo[] = itemLine.split(",");
+               
+                Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
+                        Integer.parseInt(itemInfo[2]));
+                
+                items.add(item);
+            }
+            scanner.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ViewItem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return items;
+    }
+    
+    private Item getItemById(int index) {
+        List<Item> listOfItem = getAllItems();
+        
+        if(listOfItem.size() >= index) {
+            return listOfItem.get(index-1);
+        }
+        
+        return null;
+    };
+    
+    public String getReciptStringByCart() {
+        
+        StringBuilder stringBuilder = new StringBuilder();
+        
+        for (CartItem item : items) {
+            stringBuilder.append(item.getItem().getName())
+                        .append(" \t")
+                        .append(item.getQuantity())
+                        .append("\t")
+                        .append(item.getPrice())
+                        .append("\n");
+        }
+        
+        return stringBuilder.toString();
+    }
 
     /**
      * @param args the command line arguments
@@ -420,11 +499,12 @@ public class OrderManagement extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addToCartButton;
     private javax.swing.JButton backButton;
     private javax.swing.JButton billingButton;
+    private javax.swing.JButton clearCartButton;
     private javax.swing.JTextField itemIDToOrderField;
     private javax.swing.JTextField itemOrderQuantityField;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -439,7 +519,6 @@ public class OrderManagement extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JButton nextItemField;
     private javax.swing.JButton orderButton;
     private javax.swing.JTextArea reciptArea;
     private javax.swing.JTextArea text;

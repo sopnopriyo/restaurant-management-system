@@ -5,13 +5,21 @@
  */
 package restaurantsystem.component.labour;
 
-import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import restaurantsystem.component.labour.LabourManagement;
+import restaurantsystem.component.item.UpdateItem;
+import restaurantsystem.model.Labour;
 
 /**
  *
@@ -19,11 +27,10 @@ import restaurantsystem.component.labour.LabourManagement;
  */
 public class UpdateLabour extends javax.swing.JFrame {
 
-    private MdfLabour m;
-    private String srcName;
-    private String modName;
-    private String modPrice;
-    private String ModQuantity;
+    private String sourceId;
+    private String id;
+    private String name;
+    private double salary;
 
     /**
      * Creates new form ModifyLabour
@@ -152,24 +159,88 @@ public class UpdateLabour extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     private void performFileRelatedTask() {
-        m = new MdfLabour();
-        text.setText(m.getFullNames().toString());
+        StringBuilder stringBuilder = new StringBuilder();
+        
+         try {
+                Scanner scanner = new Scanner(new FileInputStream("labour.txt"));
+                while (scanner.hasNextLine()) {
+                  
+                    String labourLine = scanner.nextLine();
+                  
+                    String labourInfo[] = labourLine.split(",");
+                  
+                    Labour labour = new Labour(labourInfo[0], labourInfo[1],Double.parseDouble(labourInfo[2]));
+                  
+                    stringBuilder.append(labour.getId() + "\t" + labour.getName() + "\t" + labour.getSalary() + "\n");
+                }
+                
+             scanner.close();
+         } catch (Exception e) {
+             System.out.println(e);
+         }
+         
+         text.setText(stringBuilder.toString());
     }
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        srcName = oldLabourIdField.getText();
-        m.setSrchName(srcName);
-        modName = newLabourIDField.getText();
-        m.setName(modName);
-        modPrice = newLabourNameField.getText();
-        m.setPrice(modPrice);
-        ModQuantity = newLabourSalaryField.getText();
-        m.setQuantity(ModQuantity);
-        m.ModifyItem();
+        
+        sourceId = oldLabourIdField.getText();
+        
+        id = newLabourIDField.getText();
+        name = newLabourNameField.getText();
+        salary = Double.parseDouble(newLabourSalaryField.getText());
+       
+        Labour updatedLabour = new Labour(id, name, salary);
+        
+        try {
+            // Read all the items
+            Scanner scanner = new Scanner(new FileInputStream("labour.txt"));
+            List<Labour> labourList = new ArrayList<Labour>();
+            
+            while(scanner.hasNextLine()) {
+                String labourLine =  scanner.nextLine();
+                
+                String labourInfo[] = labourLine.split(",");
+               
+                Labour labour = new Labour(labourInfo[0], labourInfo[1],
+                        Double.parseDouble(labourInfo[2]));
+                labourList.add(labour);
+            }
+            
+            for (int i = 0; i < labourList.size(); i++) {
+                Labour labour = labourList.get(i);
+                
+                if (labour.getId().equalsIgnoreCase(sourceId)) {
+                    labourList.set(i, updatedLabour);
+                }
+            }
+            
+            Files.delete(Paths.get("labour.txt"));
+            
+            PrintWriter pw = new PrintWriter(new FileOutputStream("labour.txt"));
+            
+            labourList.forEach(labour -> {
+                pw.println(labour.getId() + "," + labour.getName() + "," + labour.getSalary());
+            });
+            
+            pw.close();
+    
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(IOException ioe) {
+            
+        }
+        
+        // Reset the modify fields
         oldLabourIdField.setText("");
         newLabourIDField.setText("");
         newLabourNameField.setText("");
         newLabourSalaryField.setText("");
-        JOptionPane.showMessageDialog(this, "Item has been Modified");
+        
+        // Show confirmation pop up
+        JOptionPane.showMessageDialog(this, "Labour info has been Updated");
+        
+        // Update display information
+         performFileRelatedTask();
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -228,143 +299,4 @@ public class UpdateLabour extends javax.swing.JFrame {
     private javax.swing.JTextArea text;
     private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
-}
-
-class MdfLabour {
-
-    private Scanner scan;
-    private String srchName;
-
-    private String name;
-
-    private String price;
-    private String quantity;
-    private StringBuilder fullnames;
-    private String itemName[];
-
-    public MdfLabour() {
-        fullnames = new StringBuilder();
-        openFile();
-        readFile();
-
-        closeFile();
-
-    }
-
-    public StringBuilder getFullNames() {
-        return fullnames;
-    }
-
-    private void openFile() {
-        try {
-            scan = new Scanner(new File("labour.txt"));
-            System.out.println("File found!");
-        } catch (Exception e) {
-            System.out.println("File not found");
-        }
-    }
-
-    public void setSrchName(String srchName) {
-        this.srchName = srchName;
-    }
-
-    public String getSrchName() {
-        return srchName;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public String getQuantity() {
-        return quantity;
-    }
-
-    private void readFile() {
-        try {
-            while (scan.hasNextLine()) {
-                name = scan.nextLine();
-                price = scan.nextLine();
-                quantity = scan.nextLine();
-                fullnames.append(name + " \t" + price + " \t" + quantity + "\n");
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    private void closeFile() {
-        scan.close();
-    }
-
-    public void ModifyItem() {
-
-        String srcKey = getSrchName();
-
-        System.out.println(srcKey + "will be modified");
-
-        int c = 0, track, cnt = 0, temp = 0;
-
-        try {
-            Scanner sc = new Scanner(new FileInputStream("labour.txt"));
-            while (sc.hasNextLine()) {
-                cnt++;
-                sc.nextLine();
-
-            }
-            itemName = new String[cnt];
-            sc.close();
-            sc = new Scanner(new FileInputStream("labour.txt"));
-            while (sc.hasNextLine()) {
-                itemName[c] = sc.nextLine();
-                if (itemName[c].equalsIgnoreCase(srcKey)) {
-                    temp = c;
-                    System.out.println("Index will be deleted" + c);
-                }
-                c++;
-
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-
-        }
-
-        try {
-            PrintWriter pw = new PrintWriter(new FileOutputStream("labour.txt"));
-            for (int i = 0; i < c; i++) {
-                if (i == temp || i == temp + 1 || i == temp + 2) {
-                    pw.println(getName());
-                    pw.println(getPrice());
-                    pw.println(getQuantity());
-                    i += 2;
-                } else {
-                    pw.println(itemName[i]);
-                }
-
-            }
-            System.out.println("Your item has been deleted.");
-            pw.close();
-        } catch (Exception e) {
-        }
-
-    }
-
 }

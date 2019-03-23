@@ -9,7 +9,6 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import javax.swing.JOptionPane;
 import restaurantsystem.component.order.OrderManagement;
-import restaurantsystem.component.order.OrderHelper;
 import restaurantsystem.MainMenu;
 
 /**
@@ -18,7 +17,6 @@ import restaurantsystem.MainMenu;
  */
 public class BillingManagement extends javax.swing.JFrame {
 
-    private OrderHelper o;
     private BillingHelper t;
     private String name;
     private String quantity;
@@ -57,7 +55,6 @@ public class BillingManagement extends javax.swing.JFrame {
     }
 
     private void performFileRelatedTask() {
-        o = new OrderHelper();
         //  RestaurentManagement r= new RestaurentManagement();
         // r.setVisible(true);
         // this.dispose();
@@ -181,7 +178,7 @@ public class BillingManagement extends javax.swing.JFrame {
 
     private void paymentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentButtonActionPerformed
         // TODO add your handling code here:
-        o.delete();
+       
         t = new BillingHelper();
 
         MainMenu rm = new MainMenu();

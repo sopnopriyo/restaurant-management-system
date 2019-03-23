@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import javax.swing.JOptionPane;
 import restaurantsystem.component.labour.LabourManagement;
+import restaurantsystem.model.Labour;
 
 /**
  *
@@ -127,29 +128,31 @@ public class AddLabour extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        // TODO add your handling code here:
         try {
             PrintWriter pw = new PrintWriter(new FileOutputStream("labour.txt", true));
-            System.out.println("file created");
-            String itemName = labourIdField.getText();
-
-            String itemPrice = labourNameField.getText();
-
-            String itemQuantity = labourSalaryField.getText();
-
-            pw.println(itemName);
-            pw.println(itemPrice);
-            pw.println(itemQuantity);
+              
+            String id = labourIdField.getText();
+            
+            String name = labourNameField.getText();
+            
+            String salary = labourSalaryField.getText();
+            
+            Labour labour = new Labour(id, id, Double.parseDouble(salary));
+            
+            pw.println(labour.getId() + "," + labour.getName() + "," +labour.getSalary());
 
             pw.close();
 
         } catch (Exception e) {
 
         }
+        
+        JOptionPane.showMessageDialog(this, "Item has been added");
+        
+        // Reset input fields
         labourIdField.setText("");
         labourNameField.setText("");
         labourSalaryField.setText("");
-        JOptionPane.showMessageDialog(this, "Item has been added");
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed

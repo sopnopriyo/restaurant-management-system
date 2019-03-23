@@ -5,18 +5,15 @@
  */
 package restaurantsystem.component.labour;
 
-import java.io.File;
+import java.io.FileInputStream;
 import java.util.Scanner;
-import restaurantsystem.component.labour.LabourManagement;
+import restaurantsystem.model.Labour;
 
 /**
  *
  * @author Shahin
  */
 public class ViewLabour extends javax.swing.JFrame {
-
-    private vLabour v;
-
     /**
      * Creates new form ViewLabour
      */
@@ -101,8 +98,28 @@ public class ViewLabour extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
      private void performFileRelatedTask() {
-        v = new vLabour();
-        text.setText(v.getFullNames().toString());
+         
+        StringBuilder stringBuilder = new StringBuilder();
+        
+         try {
+                Scanner scanner = new Scanner(new FileInputStream("labour.txt"));
+                while (scanner.hasNextLine()) {
+                  
+                    String labourLine = scanner.nextLine();
+                  
+                    String labourInfo[] = labourLine.split(",");
+                  
+                    Labour labour = new Labour(labourInfo[0], labourInfo[1],Double.parseDouble(labourInfo[0]));
+                  
+                    stringBuilder.append(labour.getId() + "\t" + labour.getName() + "\t" + labour.getSalary() + "\n");
+                }
+                
+             scanner.close();
+         } catch (Exception e) {
+             System.out.println(e);
+         }
+         
+         text.setText(stringBuilder.toString());
     }
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         LabourManagement lm = new LabourManagement();
@@ -153,51 +170,4 @@ public class ViewLabour extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea text;
     // End of variables declaration//GEN-END:variables
-}
-
-class vLabour {
-
-    private Scanner scan;
-    private String name;
-    private String price;
-    private String quantity;
-    private StringBuilder fullnames;
-
-    public vLabour() {
-        fullnames = new StringBuilder();
-        openFile();
-        readFile();
-        closeFile();
-    }
-
-    public StringBuilder getFullNames() {
-        return fullnames;
-    }
-
-    private void openFile() {
-        try {
-            scan = new Scanner(new File("labour.txt"));
-            System.out.println("File found!");
-        } catch (Exception e) {
-            System.out.println("File not found");
-        }
-    }
-
-    private void readFile() {
-        try {
-            while (scan.hasNextLine()) {
-                name = scan.nextLine();
-                price = scan.nextLine();
-                quantity = scan.nextLine();
-                fullnames.append(name + " \t" + price + " \t" + quantity + "\n");
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    private void closeFile() {
-        scan.close();
-    }
 }
