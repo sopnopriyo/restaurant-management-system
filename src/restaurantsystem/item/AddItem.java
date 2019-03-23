@@ -88,7 +88,7 @@ public class AddItem extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(itemNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(192, 192, 192))
+                .addGap(68, 68, 68))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,7 +115,7 @@ public class AddItem extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(backButton)
                     .addComponent(addButton))
-                .addGap(148, 148, 148))
+                .addGap(34, 34, 34))
         );
 
         pack();

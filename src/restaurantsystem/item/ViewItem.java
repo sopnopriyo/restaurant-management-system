@@ -47,7 +47,7 @@ public class ViewItem extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 153, 255));
 
-        text.setEditable(false);
+        text.setBackground(new java.awt.Color(204, 255, 204));
         text.setColumns(20);
         text.setRows(5);
         jScrollPane1.setViewportView(text);

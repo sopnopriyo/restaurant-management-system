@@ -58,9 +58,7 @@ public class BillingHelper {
 
     private void openFile() {
         try {
-
             scan = new Scanner(new File("order.txt"));
-
             System.out.println("File found!");
         } catch (Exception e) {
             System.out.println("File not found");
@@ -71,12 +69,7 @@ public class BillingHelper {
         try {
             while (scan.hasNextLine()) {
                 name = scan.nextLine();
-                System.out.println(name);
-                // price = scan.nextLine();
-
                 quantity = scan.nextLine();
-                // dQuantity=Integer.decode(quantity);
-                //multi=dPrice*dQuantity;
                 price = scan.nextLine();
                 fullnames.append(name + " \t" + quantity + "\t" + price + "\n");
             }

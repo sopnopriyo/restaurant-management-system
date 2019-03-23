@@ -79,7 +79,9 @@
       <SubComponents>
         <Component class="javax.swing.JTextArea" name="text">
           <Properties>
-            <Property name="editable" type="boolean" value="false"/>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cc" green="ff" red="cc" type="rgb"/>
+            </Property>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
           </Properties>

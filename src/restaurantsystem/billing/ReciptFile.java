@@ -59,8 +59,6 @@ public class ReciptFile {
                 sc = new Scanner(new FileInputStream("item.txt"));
 
                 name = scan.nextLine();
-                System.out.println(name);
-                // price = scan.nextLine();
                 while (sc.hasNextLine()) {
                     multi = 1;
                     if (name.equalsIgnoreCase(sc.nextLine())) {
@@ -79,8 +77,6 @@ public class ReciptFile {
                 sum += multi;
 
                 fullnames.append(name + " \t" + quantity + "\t" + multi + "\n");
-
-                //   write();
             }
         } catch (Exception e) {
             System.out.println(e);

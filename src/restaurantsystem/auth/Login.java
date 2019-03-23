@@ -26,7 +26,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     /**
-     * Set default username
+     * Set default username and password
      */
     private void setDefaultUserName() {
         this.userNameField.setText("shahin");
