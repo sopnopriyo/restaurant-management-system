@@ -1,14 +1,21 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
  */
 package restaurantsystem.component.order;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -16,6 +23,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import restaurantsystem.component.billing.BillingManagement;
 import restaurantsystem.MainMenu;
+import restaurantsystem.component.item.UpdateItem;
 import restaurantsystem.component.item.ViewItem;
 import restaurantsystem.model.Cart;
 import restaurantsystem.model.CartItem;
@@ -30,7 +38,7 @@ public class OrderManagement extends javax.swing.JFrame {
     private String newItemId;
     private int newItemQuantity;
     protected BillingManagement b;
-    
+
     private Cart cart;
     private List<CartItem> items;
     private double totalPrice;
@@ -316,21 +324,21 @@ public class OrderManagement extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     private void performFileRelatedTask() {
-      
+
         StringBuilder stringBuilder = new StringBuilder();
         try {
             Scanner scanner = new Scanner(new File("item.txt"));
             int num = 1;
             while (scanner.hasNextLine()) {
                 String itemLine = scanner.nextLine();
-                String itemInfo [] = itemLine.split(",");
-                
+                String itemInfo[] = itemLine.split(",");
+
                 String name = itemInfo[0];
                 double price = Double.parseDouble(itemInfo[1]);
                 int quantity = Integer.parseInt(itemInfo[2]);
-                
+
                 Item item = new Item(name, price, quantity);
-                
+
                 stringBuilder.append(num)
                         .append("\t")
                         .append(item.getName())
@@ -349,10 +357,53 @@ public class OrderManagement extends javax.swing.JFrame {
     }
 
     private void orderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderButtonActionPerformed
-        BillingManagement billingManagement;
-        billingManagement = new BillingManagement();
-        this.dispose();
-        billingManagement.setVisible(true);
+        
+        int lastOrderNumber = 0;
+        
+        // Scan the order file and get the last order number
+        try (Scanner scanner = new Scanner(new FileInputStream("orderLine.txt"))) {
+            while (scanner.hasNextLine()) {
+                String orderLine = scanner.nextLine();
+                if (orderLine.length() > 0) {
+                    String orderParts[] = orderLine.split(",");
+                    lastOrderNumber = Integer.parseInt(orderParts[0]);
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(OrderManagement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+        // new order number
+        int orderNumber = ++lastOrderNumber;
+        
+        // create order line line with unique order number - incremental
+        try (PrintWriter pw = new PrintWriter(new FileOutputStream("orderLine.txt", true))) {
+            for (int i = 0; i < cart.getCartItems().size(); i++) {
+                CartItem cartItem = cart.getCartItems().get(i);
+                pw.println((orderNumber) + "," + cartItem.getItem().getName() + "," + cartItem.getQuantity() + "," + cartItem.getPrice());
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(OrderManagement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        // create order with the same order number as order line
+        try (PrintWriter pw = new PrintWriter(new FileOutputStream("order.txt", true))) {
+           SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = new Date();
+           pw.println((orderNumber + ",") + cart.getTotalPrice() + "," + sdf.format(date));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(OrderManagement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        items.forEach((item) -> {
+            reduceItemQuantityByItemName(item.getItem().getName(), item.getQuantity());
+        });
+        
+        // Reduce the quantity from item file
+        this.clearCartButtonActionPerformed(evt);
+        this.performFileRelatedTask();
+        JOptionPane.showMessageDialog(this, "Order has been created successfully !");
+
     }//GEN-LAST:event_orderButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -369,20 +420,20 @@ public class OrderManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_billingButtonActionPerformed
 
     private void addToCartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartButtonActionPerformed
-        
+
         // new item index
         newItemId = itemIDToOrderField.getText();
-        
+
         // new item quantity
         newItemQuantity = Integer.parseInt(itemOrderQuantityField.getText());
-        
+
         Item newItem = getItemById(Integer.parseInt(newItemId));
-        
+
         if (newItem == null) {
             JOptionPane.showMessageDialog(this, "Sorry , Please enter a valid Item ID");
             return;
         }
-        
+
         if (newItemQuantity > newItem.getQuantity()) {
 
             JOptionPane.showMessageDialog(this, "Sorry , This item is out of stock");
@@ -390,15 +441,15 @@ public class OrderManagement extends javax.swing.JFrame {
             itemIDToOrderField.setText("");
 
         } else {
-            
-            CartItem cartItem = new CartItem(newItem, newItemQuantity, newItem.getPrice()*newItemQuantity);
+
+            CartItem cartItem = new CartItem(newItem, newItemQuantity, newItem.getPrice() * newItemQuantity);
             this.cart.addItemToCart(cartItem);
-            
+
             reciptArea.setText(getReciptStringByCart());
             totalPriceField.setText(String.valueOf(this.cart.getTotalPrice()));
-            
+
             JOptionPane.showMessageDialog(this, "Item has been added to cart");
-            
+
             itemIDToOrderField.setText("");
             itemOrderQuantityField.setText("");
         }
@@ -410,47 +461,49 @@ public class OrderManagement extends javax.swing.JFrame {
         this.cart = new Cart(items, totalPrice);
         this.reciptArea.setText("");
         this.totalPriceField.setText("");
-        
+
     }//GEN-LAST:event_clearCartButtonActionPerformed
     private List<Item> getAllItems() {
-    
+
         List<Item> allItems = new ArrayList<>();
-        
+
         Scanner scanner;
         try {
             scanner = new Scanner(new FileInputStream("item.txt"));
             while (scanner.hasNextLine()) {
-                String itemLine =  scanner.nextLine();
-                
+                String itemLine = scanner.nextLine();
+
                 String itemInfo[] = itemLine.split(",");
-               
+
                 Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
                         Integer.parseInt(itemInfo[2]));
-                
+
                 allItems.add(item);
             }
             scanner.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ViewItem.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return allItems;
     }
-    
+
     private Item getItemById(int index) {
         List<Item> listOfItem = getAllItems();
-        
-        if(listOfItem.size() >= index) {
-            return listOfItem.get(index-1);
+
+        if (listOfItem.size() >= index) {
+            return listOfItem.get(index - 1);
         }
-        
+
         return null;
-    };
+    }
+
+    ;
     
     public String getReciptStringByCart() {
-        
+
         StringBuilder stringBuilder = new StringBuilder();
-        
+
         items.forEach((item) -> {
             stringBuilder.append(item.getItem().getName())
                     .append(" \t")
@@ -459,8 +512,50 @@ public class OrderManagement extends javax.swing.JFrame {
                     .append(item.getPrice())
                     .append("\n");
         });
-        
+
         return stringBuilder.toString();
+    }
+    
+    private void reduceItemQuantityByItemName(String itemName, int reduceNumber) {
+        try {
+            List<Item> itemList;
+            // Read all the items
+            try (Scanner scanner = new Scanner(new FileInputStream("item.txt"))) {
+                itemList = new ArrayList<>();
+                while(scanner.hasNextLine()) {
+                    String itemLine =  scanner.nextLine();
+                    
+                    String itemInfo[] = itemLine.split(",");
+                    
+                    Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
+                            Integer.parseInt(itemInfo[2]));
+                    itemList.add(item);
+                }
+            }
+            
+            for (int i = 0; i < itemList.size(); i++) {
+                
+                Item item = itemList.get(i);
+                
+                if (item.getName().equalsIgnoreCase(itemName)) {
+                    item.setQuantity(Math.max(0, item.getQuantity() - reduceNumber));
+                    itemList.set(i, item);
+                }
+            }
+            
+            Files.delete(Paths.get("item.txt"));
+            
+            try (PrintWriter pw = new PrintWriter(new FileOutputStream("item.txt"))) {
+                itemList.forEach(item -> {
+                    pw.println(item.getName() + "," + item.getPrice() + "," + item.getQuantity());
+                });
+            }
+    
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(IOException ioe) {
+            Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ioe);
+        }
     }
 
     /**
@@ -470,7 +565,7 @@ public class OrderManagement extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+        * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

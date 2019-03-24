@@ -209,18 +209,19 @@ public class UpdateItem extends javax.swing.JFrame {
         Item updatedItem = new Item(modName, Double.parseDouble(modPrice), Integer.parseInt(ModQuantity));
         
         try {
+            List<Item> itemList;
             // Read all the items
-            Scanner scanner = new Scanner(new FileInputStream("item.txt"));
-            List<Item> itemList = new ArrayList<>();
-            
-            while(scanner.hasNextLine()) {
-                 String itemLine =  scanner.nextLine();
-                
-                String itemInfo[] = itemLine.split(",");
-               
-                Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
-                        Integer.parseInt(itemInfo[2]));
-                itemList.add(item);
+            try (Scanner scanner = new Scanner(new FileInputStream("item.txt"))) {
+                itemList = new ArrayList<>();
+                while(scanner.hasNextLine()) {
+                    String itemLine =  scanner.nextLine();
+                    
+                    String itemInfo[] = itemLine.split(",");
+                    
+                    Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
+                            Integer.parseInt(itemInfo[2]));
+                    itemList.add(item);
+                }
             }
             
             for (int i = 0; i < itemList.size(); i++) {
@@ -242,7 +243,7 @@ public class UpdateItem extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ex);
         } catch(IOException ioe) {
-            
+            Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ioe);
         }
         
         // Reset the modify fields
