@@ -5,9 +5,12 @@
  */
 package restaurantsystem.component.item;
 
+import java.io.FileNotFoundException;
 import restaurantsystem.model.Item;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -124,16 +127,17 @@ public class AddItem extends javax.swing.JFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         try {
-            PrintWriter pw = new PrintWriter(new FileOutputStream("item.txt", true));
-
-            Item item = new Item(itemNameField.getText(),
-                    Double.parseDouble(itemPriceField.getText()),
-                    Integer.parseInt(itemQuantityField.getText()));
-            
-            pw.println(item.getName() + ","+ item.getPrice() +"," +item.getQuantity());
-            pw.close();
-        } catch (Exception e) {
-
+            try (PrintWriter pw = new PrintWriter(new FileOutputStream("item.txt", true))) {
+                Item item = new Item(itemNameField.getText(),
+                        Double.parseDouble(itemPriceField.getText()),
+                        Integer.parseInt(itemQuantityField.getText()));
+                
+                pw.println(item.getName() + ","+ item.getPrice() +"," +item.getQuantity());
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(AddItem.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (NumberFormatException e) {
+            Logger.getLogger(AddItem.class.getName()).log(Level.SEVERE, null, e);
         }
         itemNameField.setText("");
         itemPriceField.setText("");

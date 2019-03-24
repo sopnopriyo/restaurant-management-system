@@ -162,7 +162,7 @@ public class UpdateLabour extends javax.swing.JFrame {
         StringBuilder stringBuilder = new StringBuilder();
         
          try {
-                Scanner scanner = new Scanner(new FileInputStream("labour.txt"));
+            try (Scanner scanner = new Scanner(new FileInputStream("labour.txt"))) {
                 while (scanner.hasNextLine()) {
                   
                     String labourLine = scanner.nextLine();
@@ -171,10 +171,14 @@ public class UpdateLabour extends javax.swing.JFrame {
                   
                     Labour labour = new Labour(labourInfo[0], labourInfo[1],Double.parseDouble(labourInfo[2]));
                   
-                    stringBuilder.append(labour.getId() + "\t" + labour.getName() + "\t" + labour.getSalary() + "\n");
+                    stringBuilder.append(labour.getId())
+                            .append("\t")
+                            .append(labour.getName())
+                            .append("\t")
+                            .append(labour.getSalary())
+                            .append("\n");
                 }
-                
-             scanner.close();
+            }
          } catch (Exception e) {
              System.out.println(e);
          }
@@ -194,7 +198,7 @@ public class UpdateLabour extends javax.swing.JFrame {
         try {
             // Read all the items
             Scanner scanner = new Scanner(new FileInputStream("labour.txt"));
-            List<Labour> labourList = new ArrayList<Labour>();
+            List<Labour> labourList = new ArrayList<>();
             
             while(scanner.hasNextLine()) {
                 String labourLine =  scanner.nextLine();
@@ -216,13 +220,11 @@ public class UpdateLabour extends javax.swing.JFrame {
             
             Files.delete(Paths.get("labour.txt"));
             
-            PrintWriter pw = new PrintWriter(new FileOutputStream("labour.txt"));
-            
-            labourList.forEach(labour -> {
-                pw.println(labour.getId() + "," + labour.getName() + "," + labour.getSalary());
-            });
-            
-            pw.close();
+            try (PrintWriter pw = new PrintWriter(new FileOutputStream("labour.txt"))) {
+                labourList.forEach(labour -> {
+                    pw.println(labour.getId() + "," + labour.getName() + "," + labour.getSalary());
+                });
+            }
     
         } catch (FileNotFoundException ex) {
             Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ex);

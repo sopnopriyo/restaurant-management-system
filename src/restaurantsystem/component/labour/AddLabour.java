@@ -5,8 +5,11 @@
  */
 package restaurantsystem.component.labour;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import restaurantsystem.component.labour.LabourManagement;
 import restaurantsystem.model.Labour;
@@ -128,25 +131,21 @@ public class AddLabour extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        try {
-            PrintWriter pw = new PrintWriter(new FileOutputStream("labour.txt", true));
-              
+   
+        try (PrintWriter pw = new PrintWriter(new FileOutputStream("labour.txt", true))) {
             String id = labourIdField.getText();
-            
+                
             String name = labourNameField.getText();
-            
+                
             String salary = labourSalaryField.getText();
-            
+                
             Labour labour = new Labour(id, id, Double.parseDouble(salary));
-            
+                
             pw.println(labour.getId() + "," + labour.getName() + "," +labour.getSalary());
-
-            pw.close();
-
-        } catch (Exception e) {
-
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(AddLabour.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         JOptionPane.showMessageDialog(this, "Item has been added");
         
         // Reset input fields

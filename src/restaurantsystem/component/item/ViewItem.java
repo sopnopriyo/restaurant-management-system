@@ -37,7 +37,12 @@ public class ViewItem extends javax.swing.JFrame {
                 Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
                         Integer.parseInt(itemInfo[2]));
                 
-                fullnames.append(item.getName() + "\t" + item.getPrice() + " \t" + item.getQuantity() + "\n");
+                fullnames.append(item.getName())
+                        .append("\t")
+                        .append(item.getPrice())
+                        .append(" \t")
+                        .append(item.getQuantity())
+                        .append("\n");
             }
             text.setText(fullnames.toString());
             scanner.close();

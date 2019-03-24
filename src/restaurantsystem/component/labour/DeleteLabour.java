@@ -40,23 +40,27 @@ public class DeleteLabour extends javax.swing.JFrame {
     private void performFileRelatedTask() {
           StringBuilder stringBuilder = new StringBuilder();
         
-         try {
-                Scanner scanner = new Scanner(new FileInputStream("labour.txt"));
-                while (scanner.hasNextLine()) {
-                  
-                    String labourLine = scanner.nextLine();
-                  
-                    String labourInfo[] = labourLine.split(",");
-                  
-                    Labour labour = new Labour(labourInfo[0], labourInfo[1],Double.parseDouble(labourInfo[0]));
-                  
-                    stringBuilder.append(labour.getId() + "\t" + labour.getName() + "\t" + labour.getSalary() + "\n");
-                }
-                
-             scanner.close();
-         } catch (Exception e) {
-             System.out.println(e);
-         }
+      
+              try (Scanner scanner = new Scanner(new FileInputStream("labour.txt"))) {
+                  while (scanner.hasNextLine()) {
+                      
+                      String labourLine = scanner.nextLine();
+                      
+                      String labourInfo[] = labourLine.split(",");
+                      
+                      Labour labour = new Labour(labourInfo[0], labourInfo[1],Double.parseDouble(labourInfo[0]));
+                      
+                      stringBuilder.append(labour.getId())
+                              .append("\t")
+                              .append(labour.getName())
+                              .append("\t")
+                              .append(labour.getSalary())
+                              .append("\n");
+                  }
+              } catch (FileNotFoundException ex) {
+            Logger.getLogger(DeleteLabour.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
          
          text.setText(stringBuilder.toString());
     }
@@ -149,7 +153,7 @@ public class DeleteLabour extends javax.swing.JFrame {
         try {
             // Read all the items
             Scanner scanner = new Scanner(new FileInputStream("labour.txt"));
-            List<Labour> labourList = new ArrayList<Labour>();
+            List<Labour> labourList = new ArrayList<>();
             
             while(scanner.hasNextLine()) {
                 String labourLine =  scanner.nextLine();
@@ -175,14 +179,11 @@ public class DeleteLabour extends javax.swing.JFrame {
             Files.delete(Paths.get("labour.txt"));
             
             // Create a new file and write new data into the file
-            PrintWriter pw = new PrintWriter(new FileOutputStream("labour.txt"));
-            
-            labourList.forEach(labour -> {
-                pw.println(labour.getId() + "," + labour.getName() + "," + labour.getSalary());
-            });
-            
-            // close the printwriter
-            pw.close();
+            try (PrintWriter pw = new PrintWriter(new FileOutputStream("labour.txt"))) {
+                labourList.forEach(labour -> {
+                    pw.println(labour.getId() + "," + labour.getName() + "," + labour.getSalary());
+                });
+            }
     
         } catch (FileNotFoundException ex) {
             Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ex);

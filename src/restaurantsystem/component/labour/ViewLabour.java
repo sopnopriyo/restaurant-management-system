@@ -6,7 +6,10 @@
 package restaurantsystem.component.labour;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import restaurantsystem.model.Labour;
 
 /**
@@ -102,7 +105,7 @@ public class ViewLabour extends javax.swing.JFrame {
         StringBuilder stringBuilder = new StringBuilder();
         
          try {
-                Scanner scanner = new Scanner(new FileInputStream("labour.txt"));
+            try (Scanner scanner = new Scanner(new FileInputStream("labour.txt"))) {
                 while (scanner.hasNextLine()) {
                   
                     String labourLine = scanner.nextLine();
@@ -111,11 +114,17 @@ public class ViewLabour extends javax.swing.JFrame {
                   
                     Labour labour = new Labour(labourInfo[0], labourInfo[1],Double.parseDouble(labourInfo[0]));
                   
-                    stringBuilder.append(labour.getId() + "\t" + labour.getName() + "\t" + labour.getSalary() + "\n");
+                    stringBuilder.append(labour.getId())
+                            .append("\t")
+                            .append(labour.getName())
+                            .append("\t")
+                            .append(labour.getSalary())
+                            .append("\n");
                 }
-                
-             scanner.close();
-         } catch (Exception e) {
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(ViewLabour.class.getName()).log(Level.SEVERE, null, ex);
+            }
+         } catch (NumberFormatException e) {
              System.out.println(e);
          }
          

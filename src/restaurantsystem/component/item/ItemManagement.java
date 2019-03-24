@@ -6,10 +6,6 @@
 package restaurantsystem.component.item;
 
 import restaurantsystem.MainMenu;
-import restaurantsystem.component.item.AddItem;
-import restaurantsystem.component.item.ViewItem;
-import restaurantsystem.component.item.UpdateItem;
-import restaurantsystem.component.item.DeleteItem;
 
 /**
  *

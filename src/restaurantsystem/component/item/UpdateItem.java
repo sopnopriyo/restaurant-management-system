@@ -59,7 +59,12 @@ public class UpdateItem extends javax.swing.JFrame {
                 Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
                         Integer.parseInt(itemInfo[2]));
                 
-                fullnames.append(item.getName() + "\t" + item.getPrice() + " \t" + item.getQuantity() + "\n");
+                fullnames.append(item.getName())
+                        .append("\t")
+                        .append(item.getPrice())
+                        .append(" \t")
+                        .append(item.getQuantity())
+                        .append("\n");
             }
             text.setText(fullnames.toString());
             scanner.close();
@@ -206,7 +211,7 @@ public class UpdateItem extends javax.swing.JFrame {
         try {
             // Read all the items
             Scanner scanner = new Scanner(new FileInputStream("item.txt"));
-            List<Item> itemList = new ArrayList<Item>();
+            List<Item> itemList = new ArrayList<>();
             
             while(scanner.hasNextLine()) {
                  String itemLine =  scanner.nextLine();
@@ -228,13 +233,11 @@ public class UpdateItem extends javax.swing.JFrame {
             
             Files.delete(Paths.get("item.txt"));
             
-            PrintWriter pw = new PrintWriter(new FileOutputStream("item.txt"));
-            
-            itemList.forEach(item -> {
-                pw.println(item.getName() + "," + item.getPrice() + "," + item.getQuantity());
-            });
-            
-            pw.close();
+            try (PrintWriter pw = new PrintWriter(new FileOutputStream("item.txt"))) {
+                itemList.forEach(item -> {
+                    pw.println(item.getName() + "," + item.getPrice() + "," + item.getQuantity());
+                });
+            }
     
         } catch (FileNotFoundException ex) {
             Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ex);

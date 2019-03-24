@@ -362,9 +362,9 @@ public class OrderManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void billingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_billingButtonActionPerformed
-        b = new BillingManagement();
-        b.setVisible(true);
-        this.dispose();
+//        b = new BillingManagement();
+//        b.setVisible(true);
+//        this.dispose();
 
     }//GEN-LAST:event_billingButtonActionPerformed
 
@@ -414,7 +414,7 @@ public class OrderManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_clearCartButtonActionPerformed
     private List<Item> getAllItems() {
     
-        List<Item> items = new ArrayList<>();
+        List<Item> allItems = new ArrayList<>();
         
         Scanner scanner;
         try {
@@ -427,14 +427,14 @@ public class OrderManagement extends javax.swing.JFrame {
                 Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
                         Integer.parseInt(itemInfo[2]));
                 
-                items.add(item);
+                allItems.add(item);
             }
             scanner.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ViewItem.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return items;
+        return allItems;
     }
     
     private Item getItemById(int index) {
@@ -451,14 +451,14 @@ public class OrderManagement extends javax.swing.JFrame {
         
         StringBuilder stringBuilder = new StringBuilder();
         
-        for (CartItem item : items) {
+        items.forEach((item) -> {
             stringBuilder.append(item.getItem().getName())
-                        .append(" \t")
-                        .append(item.getQuantity())
-                        .append("\t")
-                        .append(item.getPrice())
-                        .append("\n");
-        }
+                    .append(" \t")
+                    .append(item.getQuantity())
+                    .append("\t")
+                    .append(item.getPrice())
+                    .append("\n");
+        });
         
         return stringBuilder.toString();
     }
