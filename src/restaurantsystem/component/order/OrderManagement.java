@@ -327,7 +327,7 @@ public class OrderManagement extends javax.swing.JFrame {
 
         StringBuilder stringBuilder = new StringBuilder();
         try {
-            Scanner scanner = new Scanner(new File("item.txt"));
+            Scanner scanner = new Scanner(new File("storage/item.txt"));
             int num = 1;
             while (scanner.hasNextLine()) {
                 String itemLine = scanner.nextLine();
@@ -361,7 +361,7 @@ public class OrderManagement extends javax.swing.JFrame {
         int lastOrderNumber = 0;
         
         // Scan the order file and get the last order number
-        try (Scanner scanner = new Scanner(new FileInputStream("orderLine.txt"))) {
+        try (Scanner scanner = new Scanner(new FileInputStream("storage/orderLine.txt"))) {
             while (scanner.hasNextLine()) {
                 String orderLine = scanner.nextLine();
                 if (orderLine.length() > 0) {
@@ -377,7 +377,7 @@ public class OrderManagement extends javax.swing.JFrame {
         int orderNumber = ++lastOrderNumber;
         
         // create order line line with unique order number - incremental
-        try (PrintWriter pw = new PrintWriter(new FileOutputStream("orderLine.txt", true))) {
+        try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/orderLine.txt", true))) {
             for (int i = 0; i < cart.getCartItems().size(); i++) {
                 CartItem cartItem = cart.getCartItems().get(i);
                 pw.println((orderNumber) + "," + cartItem.getItem().getName() + "," + cartItem.getQuantity() + "," + cartItem.getPrice());
@@ -387,7 +387,7 @@ public class OrderManagement extends javax.swing.JFrame {
         }
         
         // create order with the same order number as order line
-        try (PrintWriter pw = new PrintWriter(new FileOutputStream("order.txt", true))) {
+        try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/order.txt", true))) {
            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date date = new Date();
            pw.println((orderNumber + ",") + cart.getTotalPrice() + "," + sdf.format(date));
@@ -469,7 +469,7 @@ public class OrderManagement extends javax.swing.JFrame {
 
         Scanner scanner;
         try {
-            scanner = new Scanner(new FileInputStream("item.txt"));
+            scanner = new Scanner(new FileInputStream("storage/item.txt"));
             while (scanner.hasNextLine()) {
                 String itemLine = scanner.nextLine();
 
@@ -520,7 +520,7 @@ public class OrderManagement extends javax.swing.JFrame {
         try {
             List<Item> itemList;
             // Read all the items
-            try (Scanner scanner = new Scanner(new FileInputStream("item.txt"))) {
+            try (Scanner scanner = new Scanner(new FileInputStream("storage/item.txt"))) {
                 itemList = new ArrayList<>();
                 while(scanner.hasNextLine()) {
                     String itemLine =  scanner.nextLine();
@@ -543,9 +543,9 @@ public class OrderManagement extends javax.swing.JFrame {
                 }
             }
             
-            Files.delete(Paths.get("item.txt"));
+            Files.delete(Paths.get("storage/item.txt"));
             
-            try (PrintWriter pw = new PrintWriter(new FileOutputStream("item.txt"))) {
+            try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/item.txt"))) {
                 itemList.forEach(item -> {
                     pw.println(item.getName() + "," + item.getPrice() + "," + item.getQuantity());
                 });

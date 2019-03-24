@@ -162,7 +162,7 @@ public class UpdateLabour extends javax.swing.JFrame {
         StringBuilder stringBuilder = new StringBuilder();
         
          try {
-            try (Scanner scanner = new Scanner(new FileInputStream("labour.txt"))) {
+            try (Scanner scanner = new Scanner(new FileInputStream("storage/labour.txt"))) {
                 while (scanner.hasNextLine()) {
                   
                     String labourLine = scanner.nextLine();
@@ -197,7 +197,7 @@ public class UpdateLabour extends javax.swing.JFrame {
         
         try {
             // Read all the items
-            Scanner scanner = new Scanner(new FileInputStream("labour.txt"));
+            Scanner scanner = new Scanner(new FileInputStream("storage/labour.txt"));
             List<Labour> labourList = new ArrayList<>();
             
             while(scanner.hasNextLine()) {
@@ -218,9 +218,9 @@ public class UpdateLabour extends javax.swing.JFrame {
                 }
             }
             
-            Files.delete(Paths.get("labour.txt"));
+            Files.delete(Paths.get("storage/labour.txt"));
             
-            try (PrintWriter pw = new PrintWriter(new FileOutputStream("labour.txt"))) {
+            try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/labour.txt"))) {
                 labourList.forEach(labour -> {
                     pw.println(labour.getId() + "," + labour.getName() + "," + labour.getSalary());
                 });

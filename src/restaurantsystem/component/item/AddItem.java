@@ -127,7 +127,7 @@ public class AddItem extends javax.swing.JFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         try {
-            try (PrintWriter pw = new PrintWriter(new FileOutputStream("item.txt", true))) {
+            try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/item.txt", true))) {
                 Item item = new Item(itemNameField.getText(),
                         Double.parseDouble(itemPriceField.getText()),
                         Integer.parseInt(itemQuantityField.getText()));

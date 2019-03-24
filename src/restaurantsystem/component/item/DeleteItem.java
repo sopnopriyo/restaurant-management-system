@@ -165,7 +165,7 @@ public class DeleteItem extends javax.swing.JFrame {
     private void performFileRelatedTask() {
         Scanner scanner;
         try {
-            scanner = new Scanner(new FileInputStream("item.txt"));
+            scanner = new Scanner(new FileInputStream("storage/item.txt"));
             StringBuilder fullnames = new StringBuilder();
             while (scanner.hasNextLine()) {
                 String itemLine =  scanner.nextLine();
@@ -187,7 +187,7 @@ public class DeleteItem extends javax.swing.JFrame {
         dltName = dlttext.getText();      
         try {
             // Read all the items
-            Scanner scanner = new Scanner(new FileInputStream("item.txt"));
+            Scanner scanner = new Scanner(new FileInputStream("storage/item.txt"));
             List<Item> itemList = new ArrayList<>();
             
             while(scanner.hasNextLine()) {
@@ -210,10 +210,10 @@ public class DeleteItem extends javax.swing.JFrame {
             }
             
             // Delete the entire file
-            Files.delete(Paths.get("item.txt"));
+            Files.delete(Paths.get("storage/item.txt"));
             
             // Create a new file and write new data into the file
-            try (PrintWriter pw = new PrintWriter(new FileOutputStream("item.txt"))) {
+            try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/item.txt"))) {
                 itemList.forEach(item -> {
                     pw.println(item.getName() + "," + item.getPrice() + "," + item.getQuantity());
                 });

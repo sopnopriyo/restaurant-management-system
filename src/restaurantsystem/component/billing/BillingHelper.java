@@ -43,7 +43,7 @@ public class BillingHelper {
         double totalPrice = 0;
 
         try {
-            scan = new Scanner(new FileInputStream("order.txt"));
+            scan = new Scanner(new FileInputStream("storage/order.txt"));
             while (scan.hasNextLine()) {
                 scan.nextLine();
                 scan.nextLine();
@@ -58,7 +58,7 @@ public class BillingHelper {
 
     private void openFile() {
         try {
-            scan = new Scanner(new File("order.txt"));
+            scan = new Scanner(new File("storage/order.txt"));
             System.out.println("File found!");
         } catch (Exception e) {
             System.out.println("File not found");

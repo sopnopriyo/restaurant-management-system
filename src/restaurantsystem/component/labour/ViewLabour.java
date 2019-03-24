@@ -105,7 +105,7 @@ public class ViewLabour extends javax.swing.JFrame {
         StringBuilder stringBuilder = new StringBuilder();
         
          try {
-            try (Scanner scanner = new Scanner(new FileInputStream("labour.txt"))) {
+            try (Scanner scanner = new Scanner(new FileInputStream("storage/labour.txt"))) {
                 while (scanner.hasNextLine()) {
                   
                     String labourLine = scanner.nextLine();

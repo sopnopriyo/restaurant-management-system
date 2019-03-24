@@ -132,7 +132,7 @@ public class AddLabour extends javax.swing.JFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
    
-        try (PrintWriter pw = new PrintWriter(new FileOutputStream("labour.txt", true))) {
+        try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/labour.txt", true))) {
             String id = labourIdField.getText();
                 
             String name = labourNameField.getText();

@@ -186,7 +186,7 @@ public class BillingManagement extends javax.swing.JFrame {
         this.dispose();
         try {
             PrintWriter pw1 = new PrintWriter(new FileOutputStream("temp.txt"));
-            PrintWriter pw2 = new PrintWriter(new FileOutputStream("order.txt"));
+            PrintWriter pw2 = new PrintWriter(new FileOutputStream("storage/order.txt"));
             PrintWriter pw3 = new PrintWriter(new FileOutputStream("totalBill.txt", true));
             pw3.println(t.getFullNames() + "\t");
 

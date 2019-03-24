@@ -49,7 +49,7 @@ public class UpdateItem extends javax.swing.JFrame {
     private void performFileRelatedTask() {
         Scanner scanner;
         try {
-            scanner = new Scanner(new FileInputStream("item.txt"));
+            scanner = new Scanner(new FileInputStream("storage/item.txt"));
             StringBuilder fullnames = new StringBuilder();
             while (scanner.hasNextLine()) {
                 String itemLine =  scanner.nextLine();
@@ -211,7 +211,7 @@ public class UpdateItem extends javax.swing.JFrame {
         try {
             List<Item> itemList;
             // Read all the items
-            try (Scanner scanner = new Scanner(new FileInputStream("item.txt"))) {
+            try (Scanner scanner = new Scanner(new FileInputStream("storage/item.txt"))) {
                 itemList = new ArrayList<>();
                 while(scanner.hasNextLine()) {
                     String itemLine =  scanner.nextLine();
@@ -232,9 +232,9 @@ public class UpdateItem extends javax.swing.JFrame {
                 }
             }
             
-            Files.delete(Paths.get("item.txt"));
+            Files.delete(Paths.get("storage/item.txt"));
             
-            try (PrintWriter pw = new PrintWriter(new FileOutputStream("item.txt"))) {
+            try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/item.txt"))) {
                 itemList.forEach(item -> {
                     pw.println(item.getName() + "," + item.getPrice() + "," + item.getQuantity());
                 });

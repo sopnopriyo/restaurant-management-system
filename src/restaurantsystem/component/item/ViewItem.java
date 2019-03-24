@@ -27,7 +27,7 @@ public class ViewItem extends javax.swing.JFrame {
     private void performFileRelatedTask() {
         Scanner scanner;
         try {
-            scanner = new Scanner(new FileInputStream("item.txt"));
+            scanner = new Scanner(new FileInputStream("storage/item.txt"));
             StringBuilder fullnames = new StringBuilder();
             while (scanner.hasNextLine()) {
                 String itemLine =  scanner.nextLine();
