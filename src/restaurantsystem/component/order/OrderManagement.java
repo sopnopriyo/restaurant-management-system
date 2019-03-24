@@ -28,6 +28,8 @@ import restaurantsystem.component.item.ViewItem;
 import restaurantsystem.model.Cart;
 import restaurantsystem.model.CartItem;
 import restaurantsystem.model.Item;
+import restaurantsystem.model.Order;
+import restaurantsystem.model.OrderLine;
 
 /**
  *
@@ -68,7 +70,6 @@ public class OrderManagement extends javax.swing.JFrame {
         text = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
         backButton = new javax.swing.JButton();
-        billingButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         itemOrderQuantityField = new javax.swing.JTextField();
@@ -106,13 +107,6 @@ public class OrderManagement extends javax.swing.JFrame {
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
-            }
-        });
-
-        billingButton.setText("Bill");
-        billingButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                billingButtonActionPerformed(evt);
             }
         });
 
@@ -189,9 +183,7 @@ public class OrderManagement extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(backButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(billingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(201, 201, 201))
+                        .addGap(201, 492, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(12, Short.MAX_VALUE))))
@@ -202,9 +194,7 @@ public class OrderManagement extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(billingButton)
-                    .addComponent(backButton))
+                .addComponent(backButton)
                 .addGap(23, 23, 23))
         );
 
@@ -357,8 +347,7 @@ public class OrderManagement extends javax.swing.JFrame {
     }
 
     private void orderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderButtonActionPerformed
-        
-        
+                
         if (cart.getCartItems().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Opps, You haven't added any "
                     + "item to cart. Please add item to the cart");
@@ -373,7 +362,14 @@ public class OrderManagement extends javax.swing.JFrame {
                 String orderLine = scanner.nextLine();
                 if (orderLine.length() > 0) {
                     String orderParts[] = orderLine.split(",");
-                    lastOrderNumber = Integer.parseInt(orderParts[0]);
+                    
+                    OrderLine orderLineObj = new OrderLine(
+                            Integer.parseInt(orderParts[0]),
+                            orderParts[1],
+                            Integer.parseInt(orderParts[2]),
+                            Double.parseDouble(orderParts[3]));
+                    
+                    lastOrderNumber = orderLineObj.getOrderID();
                 }
             }
         } catch (FileNotFoundException ex) {
@@ -387,7 +383,14 @@ public class OrderManagement extends javax.swing.JFrame {
         try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/orderLine.txt", true))) {
             for (int i = 0; i < cart.getCartItems().size(); i++) {
                 CartItem cartItem = cart.getCartItems().get(i);
-                pw.println((orderNumber) + "," + cartItem.getItem().getName() + "," + cartItem.getQuantity() + "," + cartItem.getPrice());
+                
+                OrderLine orderLine = new OrderLine(
+                        orderNumber,
+                        cartItem.getItem().getName(),
+                        cartItem.getQuantity(),
+                        cartItem.getPrice());
+                
+                pw.println(orderLine.getOrderID() + "," + orderLine.getName() + "," + orderLine.getQuantity() + "," + orderLine.getPrice());
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(OrderManagement.class.getName()).log(Level.SEVERE, null, ex);
@@ -395,19 +398,26 @@ public class OrderManagement extends javax.swing.JFrame {
         
         // create order with the same order number as order line
         try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/order.txt", true))) {
-           SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date date = new Date();
-           pw.println((orderNumber + ",") + cart.getTotalPrice() + "," + sdf.format(date));
+            
+            Order order = new Order(orderNumber, cart.getTotalPrice(), sdf.format(date));
+            
+           pw.println((order.getOrderID() + ",") + order.getPrice()+ "," + order.getDate());
+           
         } catch (FileNotFoundException ex) {
             Logger.getLogger(OrderManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+       
+        // Reduce the quantity from item file
         items.forEach((item) -> {
             reduceItemQuantityByItemName(item.getItem().getName(), item.getQuantity());
         });
         
-        // Reduce the quantity from item file
+        // Clear the cart
         this.clearCartButtonActionPerformed(evt);
+        
+        // Reinitilize the cart area
         this.performFileRelatedTask();
         JOptionPane.showMessageDialog(this, "Order has been created successfully !");
 
@@ -418,13 +428,6 @@ public class OrderManagement extends javax.swing.JFrame {
         im.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_backButtonActionPerformed
-
-    private void billingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_billingButtonActionPerformed
-//        b = new BillingManagement();
-//        b.setVisible(true);
-//        this.dispose();
-
-    }//GEN-LAST:event_billingButtonActionPerformed
 
     private void addToCartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartButtonActionPerformed
 
@@ -603,7 +606,6 @@ public class OrderManagement extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addToCartButton;
     private javax.swing.JButton backButton;
-    private javax.swing.JButton billingButton;
     private javax.swing.JButton clearCartButton;
     private javax.swing.JTextField itemIDToOrderField;
     private javax.swing.JTextField itemOrderQuantityField;
