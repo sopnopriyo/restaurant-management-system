@@ -358,6 +358,13 @@ public class OrderManagement extends javax.swing.JFrame {
 
     private void orderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderButtonActionPerformed
         
+        
+        if (cart.getCartItems().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Opps, You haven't added any "
+                    + "item to cart. Please add item to the cart");
+            return;
+        }
+        
         int lastOrderNumber = 0;
         
         // Scan the order file and get the last order number
