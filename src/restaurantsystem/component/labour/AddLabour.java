@@ -131,14 +131,23 @@ public class AddLabour extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-   
+
+        String id = labourIdField.getText();
+        String name = labourNameField.getText();
+        String salary = labourSalaryField.getText();
+        
+        if (id.isEmpty() || name.isEmpty() || salary.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Field(s) cannot be empty");
+            return;
+        }
+        
+        if(!salary.chars().allMatch( Character::isDigit) || Double.parseDouble(salary) <= 0) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid salary");
+            return;
+        }
+                
         try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/labour.txt", true))) {
-            String id = labourIdField.getText();
-                
-            String name = labourNameField.getText();
-                
-            String salary = labourSalaryField.getText();
-                
+           
             Labour labour = new Labour(id, id, Double.parseDouble(salary));
                 
             pw.println(labour.getId() + "," + labour.getName() + "," +labour.getSalary());
