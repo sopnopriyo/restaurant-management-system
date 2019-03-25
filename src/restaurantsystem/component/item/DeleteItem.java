@@ -26,7 +26,7 @@ import javax.swing.JOptionPane;
  */
 public class DeleteItem extends javax.swing.JFrame {
     
-    private String dltName;
+    private String deleteId;
 
     /**
      * Creates new form DeleteItem
@@ -184,7 +184,14 @@ public class DeleteItem extends javax.swing.JFrame {
         }
     }
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        dltName = dlttext.getText();      
+        deleteId = dlttext.getText();
+        
+        if(deleteId.isEmpty() || !deleteId.chars().allMatch( Character::isDigit)) {
+            dlttext.setText("");
+            JOptionPane.showMessageDialog(this, "Please eneter a valid ID to delete");
+            return;
+        }
+        
         try {
             // Read all the items
             Scanner scanner = new Scanner(new FileInputStream("storage/item.txt"));
@@ -200,14 +207,22 @@ public class DeleteItem extends javax.swing.JFrame {
                 itemList.add(item);
             }
             
+            int indexToBeDeleted = -1;
             // find the item to be deleted
             for (int i = 0; i < itemList.size(); i++) {
                 Item item = itemList.get(i);
                 
-                if (item.getName().equalsIgnoreCase(dltName)) {
-                    itemList.remove(i);
+                if (item.getName().equalsIgnoreCase(deleteId)) {
+                    indexToBeDeleted = i;
                 }
             }
+            
+            if (indexToBeDeleted == -1) {
+                dlttext.setText("");
+                JOptionPane.showMessageDialog(this, "No Item has been found to delete");
+                return;
+            }
+            itemList.remove(indexToBeDeleted);
             
             // Delete the entire file
             Files.delete(Paths.get("storage/item.txt"));

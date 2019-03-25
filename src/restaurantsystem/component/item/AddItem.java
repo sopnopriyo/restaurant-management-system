@@ -126,19 +126,40 @@ public class AddItem extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        try {
-            try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/item.txt", true))) {
-                Item item = new Item(itemNameField.getText(),
-                        Double.parseDouble(itemPriceField.getText()),
-                        Integer.parseInt(itemQuantityField.getText()));
-                
-                pw.println(item.getName() + ","+ item.getPrice() +"," +item.getQuantity());
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(AddItem.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (NumberFormatException e) {
-            Logger.getLogger(AddItem.class.getName()).log(Level.SEVERE, null, e);
+       
+        String name = itemNameField.getText();
+        String price = itemPriceField.getText();
+        String quantity = itemQuantityField.getText();
+        
+        if(name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Item name cannot be empty");
+            return;
         }
+       
+        if(price.isEmpty() || !price.chars().allMatch( Character::isDigit) ||
+                Double.parseDouble(price) <= 0) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid price for the item");
+            return;
+        }
+        
+        if(quantity.isEmpty() || !quantity.chars().allMatch( Character::isDigit) 
+                || Integer.parseInt(quantity) <=0) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid quantity for the item");
+            return;
+        }
+        
+        
+        
+        try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/item.txt", true))) {
+            Item item = new Item(name,
+                    Double.parseDouble(itemPriceField.getText()),
+                    Integer.parseInt(itemQuantityField.getText()));
+                
+            pw.println(item.getName() + ","+ item.getPrice() +"," +item.getQuantity());
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(AddItem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
         itemNameField.setText("");
         itemPriceField.setText("");
         itemQuantityField.setText("");
