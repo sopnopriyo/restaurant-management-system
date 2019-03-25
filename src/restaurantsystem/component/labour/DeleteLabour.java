@@ -150,6 +150,12 @@ public class DeleteLabour extends javax.swing.JFrame {
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         deleteLabourID = labourIDField.getText();
         
+         if(deleteLabourID.isEmpty()) {
+            labourIDField.setText("");
+            JOptionPane.showMessageDialog(this, "Please eneter a valid ID to delete");
+            return;
+        }
+        
         try {
             // Read all the items
             Scanner scanner = new Scanner(new FileInputStream("storage/labour.txt"));

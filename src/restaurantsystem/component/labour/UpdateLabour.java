@@ -192,6 +192,16 @@ public class UpdateLabour extends javax.swing.JFrame {
         id = newLabourIDField.getText();
         name = newLabourNameField.getText();
         salary = Double.parseDouble(newLabourSalaryField.getText());
+        
+        if (sourceId.isEmpty() || id.isEmpty() || name.isEmpty() || newLabourSalaryField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Field(s) cannot be left empty");
+            return;
+        }
+        
+        if(!newLabourSalaryField.getText().chars().allMatch( Character::isDigit)) {
+            JOptionPane.showMessageDialog(this, "Please enter valid salary");
+            return;
+        }
        
         Labour updatedLabour = new Labour(id, name, salary);
         
@@ -210,13 +220,21 @@ public class UpdateLabour extends javax.swing.JFrame {
                 labourList.add(labour);
             }
             
+            int indexToUpdate = -1;
             for (int i = 0; i < labourList.size(); i++) {
                 Labour labour = labourList.get(i);
                 
                 if (labour.getId().equalsIgnoreCase(sourceId)) {
-                    labourList.set(i, updatedLabour);
+                    indexToUpdate = i;
                 }
             }
+            
+            if(indexToUpdate == -1) {
+                JOptionPane.showConfirmDialog(this, "No labour found to update");
+                return;
+            }
+            
+            labourList.set(indexToUpdate, updatedLabour);
             
             Files.delete(Paths.get("storage/labour.txt"));
             

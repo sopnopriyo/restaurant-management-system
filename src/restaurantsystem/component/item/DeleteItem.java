@@ -26,7 +26,7 @@ import javax.swing.JOptionPane;
  */
 public class DeleteItem extends javax.swing.JFrame {
     
-    private String deleteId;
+    private String deleteName;
 
     /**
      * Creates new form DeleteItem
@@ -184,11 +184,11 @@ public class DeleteItem extends javax.swing.JFrame {
         }
     }
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        deleteId = dlttext.getText();
+        deleteName = dlttext.getText();
         
-        if(deleteId.isEmpty() || !deleteId.chars().allMatch( Character::isDigit)) {
+        if(deleteName.isEmpty() || !deleteName.chars().allMatch( Character::isDigit)) {
             dlttext.setText("");
-            JOptionPane.showMessageDialog(this, "Please eneter a valid ID to delete");
+            JOptionPane.showMessageDialog(this, "Please eneter a valid name to delete");
             return;
         }
         
@@ -212,7 +212,7 @@ public class DeleteItem extends javax.swing.JFrame {
             for (int i = 0; i < itemList.size(); i++) {
                 Item item = itemList.get(i);
                 
-                if (item.getName().equalsIgnoreCase(deleteId)) {
+                if (item.getName().equalsIgnoreCase(deleteName)) {
                     indexToBeDeleted = i;
                 }
             }
