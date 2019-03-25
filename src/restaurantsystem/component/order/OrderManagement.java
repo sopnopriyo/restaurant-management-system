@@ -516,8 +516,6 @@ public class OrderManagement extends javax.swing.JFrame {
 
         return null;
     }
-
-    ;
     
     public String getReciptStringByCart() {
 
@@ -525,7 +523,7 @@ public class OrderManagement extends javax.swing.JFrame {
 
         items.forEach((item) -> {
             stringBuilder.append(item.getItem().getName())
-                    .append(" \t")
+                    .append("\t")
                     .append(item.getQuantity())
                     .append("\t")
                     .append(item.getPrice())
