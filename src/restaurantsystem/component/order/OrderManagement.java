@@ -36,11 +36,7 @@ import restaurantsystem.model.OrderLine;
  * @author Shahin
  */
 public class OrderManagement extends javax.swing.JFrame {
-
-    private String newItemId;
-    private int newItemQuantity;
-    protected BillingManagement b;
-
+  
     private Cart cart;
     private List<CartItem> items;
     private double totalPrice;
@@ -432,11 +428,24 @@ public class OrderManagement extends javax.swing.JFrame {
     private void addToCartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartButtonActionPerformed
 
         // new item index
-        newItemId = itemIDToOrderField.getText();
+        String newItemId = itemIDToOrderField.getText();
+        String newItemQuantityAsString = itemOrderQuantityField.getText();
+   
+        
+        if (newItemId.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter item id to add to cart");
+            return;
+        }
+
+        if (newItemQuantityAsString.isEmpty() ||
+                !newItemQuantityAsString.chars().allMatch( Character::isDigit)) {
+            JOptionPane.showMessageDialog(this, "Please enter valid quantity to add to cart");
+            return;
+        }
 
         // new item quantity
-        newItemQuantity = Integer.parseInt(itemOrderQuantityField.getText());
-
+        int newItemQuantity = Integer.parseInt(newItemQuantityAsString);
+        
         Item newItem = getItemById(Integer.parseInt(newItemId));
 
         if (newItem == null) {

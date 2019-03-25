@@ -183,6 +183,7 @@ public class DeleteItem extends javax.swing.JFrame {
             Logger.getLogger(ViewItem.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         deleteName = dlttext.getText();
         
