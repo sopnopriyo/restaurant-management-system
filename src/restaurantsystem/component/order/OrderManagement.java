@@ -35,7 +35,7 @@ import restaurantsystem.model.OrderLine;
  * @author Shahin
  */
 public class OrderManagement extends javax.swing.JFrame {
-  
+
     private Cart cart;
     private List<CartItem> items;
     private double totalPrice;
@@ -311,8 +311,7 @@ public class OrderManagement extends javax.swing.JFrame {
     private void performFileRelatedTask() {
 
         StringBuilder stringBuilder = new StringBuilder();
-        try {
-            Scanner scanner = new Scanner(new File("storage/item.txt"));
+        try (Scanner scanner = new Scanner(new File("storage/item.txt"))) {
             int num = 1;
             while (scanner.hasNextLine()) {
                 String itemLine = scanner.nextLine();
@@ -334,7 +333,6 @@ public class OrderManagement extends javax.swing.JFrame {
                         .append("\n");
                 num++;
             }
-            scanner.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(OrderManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -342,76 +340,76 @@ public class OrderManagement extends javax.swing.JFrame {
     }
 
     private void orderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderButtonActionPerformed
-                
+
         if (cart.getCartItems().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Opps, You haven't added any "
                     + "item to cart. Please add item to the cart");
             return;
         }
-        
+
         int lastOrderNumber = 0;
-        
+
         // Scan the order file and get the last order number
         try (Scanner scanner = new Scanner(new FileInputStream("storage/orderLine.txt"))) {
             while (scanner.hasNextLine()) {
                 String orderLine = scanner.nextLine();
                 if (orderLine.length() > 0) {
                     String orderParts[] = orderLine.split(",");
-                    
+
                     OrderLine orderLineObj = new OrderLine(
                             Integer.parseInt(orderParts[0]),
                             orderParts[1],
                             Integer.parseInt(orderParts[2]),
                             Double.parseDouble(orderParts[3]));
-                    
+
                     lastOrderNumber = orderLineObj.getOrderID();
                 }
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(OrderManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
-      
+
         // new order number
         int orderNumber = ++lastOrderNumber;
-        
+
         // create order line line with unique order number - incremental
         try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/orderLine.txt", true))) {
             for (int i = 0; i < cart.getCartItems().size(); i++) {
                 CartItem cartItem = cart.getCartItems().get(i);
-                
+
                 OrderLine orderLine = new OrderLine(
                         orderNumber,
                         cartItem.getItem().getName(),
                         cartItem.getQuantity(),
                         cartItem.getPrice());
-                
+
                 pw.println(orderLine.getOrderID() + "," + orderLine.getName() + "," + orderLine.getQuantity() + "," + orderLine.getPrice());
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(OrderManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         // create order with the same order number as order line
         try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/order.txt", true))) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date date = new Date();
-            
+
             Order order = new Order(orderNumber, cart.getTotalPrice(), sdf.format(date));
-            
-           pw.println((order.getOrderID() + ",") + order.getPrice()+ "," + order.getDate());
-           
+
+            pw.println((order.getOrderID() + ",") + order.getPrice() + "," + order.getDate());
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger(OrderManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+
         // Reduce the quantity from item file
         items.forEach((item) -> {
             reduceItemQuantityByItemName(item.getItem().getName(), item.getQuantity());
         });
-        
+
         // Clear the cart
         this.clearCartButtonActionPerformed(evt);
-        
+
         // Reinitilize the cart area
         this.performFileRelatedTask();
         JOptionPane.showMessageDialog(this, "Order has been created successfully !");
@@ -429,22 +427,21 @@ public class OrderManagement extends javax.swing.JFrame {
         // new item index
         String newItemId = itemIDToOrderField.getText();
         String newItemQuantityAsString = itemOrderQuantityField.getText();
-   
-        
+
         if (newItemId.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter item id to add to cart");
             return;
         }
 
-        if (newItemQuantityAsString.isEmpty() ||
-                !newItemQuantityAsString.chars().allMatch( Character::isDigit)) {
+        if (newItemQuantityAsString.isEmpty()
+                || !newItemQuantityAsString.chars().allMatch(Character::isDigit)) {
             JOptionPane.showMessageDialog(this, "Please enter valid quantity to add to cart");
             return;
         }
 
         // new item quantity
         int newItemQuantity = Integer.parseInt(newItemQuantityAsString);
-        
+
         Item newItem = getItemById(Integer.parseInt(newItemId));
 
         if (newItem == null) {
@@ -515,7 +512,7 @@ public class OrderManagement extends javax.swing.JFrame {
 
         return null;
     }
-    
+
     public String getReciptStringByCart() {
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -531,45 +528,45 @@ public class OrderManagement extends javax.swing.JFrame {
 
         return stringBuilder.toString();
     }
-    
+
     private void reduceItemQuantityByItemName(String itemName, int reduceNumber) {
         try {
             List<Item> itemList;
             // Read all the items
             try (Scanner scanner = new Scanner(new FileInputStream("storage/item.txt"))) {
                 itemList = new ArrayList<>();
-                while(scanner.hasNextLine()) {
-                    String itemLine =  scanner.nextLine();
-                    
+                while (scanner.hasNextLine()) {
+                    String itemLine = scanner.nextLine();
+
                     String itemInfo[] = itemLine.split(",");
-                    
+
                     Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
                             Integer.parseInt(itemInfo[2]));
                     itemList.add(item);
                 }
             }
-            
+
             for (int i = 0; i < itemList.size(); i++) {
-                
+
                 Item item = itemList.get(i);
-                
+
                 if (item.getName().equalsIgnoreCase(itemName)) {
                     item.setQuantity(Math.max(0, item.getQuantity() - reduceNumber));
                     itemList.set(i, item);
                 }
             }
-            
+
             Files.delete(Paths.get("storage/item.txt"));
-            
+
             try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/item.txt"))) {
                 itemList.forEach(item -> {
                     pw.println(item.getName() + "," + item.getPrice() + "," + item.getQuantity());
                 });
             }
-    
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ex);
-        } catch(IOException ioe) {
+        } catch (IOException ioe) {
             Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ioe);
         }
     }
