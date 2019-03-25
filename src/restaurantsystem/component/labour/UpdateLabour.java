@@ -27,11 +27,6 @@ import restaurantsystem.model.Labour;
  */
 public class UpdateLabour extends javax.swing.JFrame {
 
-    private String sourceId;
-    private String id;
-    private String name;
-    private double salary;
-
     /**
      * Creates new form ModifyLabour
      */
@@ -187,11 +182,11 @@ public class UpdateLabour extends javax.swing.JFrame {
     }
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         
-        sourceId = oldLabourIdField.getText();
+        String sourceId = oldLabourIdField.getText();
         
-        id = newLabourIDField.getText();
-        name = newLabourNameField.getText();
-        salary = Double.parseDouble(newLabourSalaryField.getText());
+        String id = newLabourIDField.getText();
+        String name = newLabourNameField.getText();
+        double salary = Double.parseDouble(newLabourSalaryField.getText());
         
         if (sourceId.isEmpty() || id.isEmpty() || name.isEmpty() || newLabourSalaryField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Field(s) cannot be left empty");

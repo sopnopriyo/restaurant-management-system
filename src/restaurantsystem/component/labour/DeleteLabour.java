@@ -26,8 +26,6 @@ import restaurantsystem.model.Labour;
  * @author Shahin
  */
 public class DeleteLabour extends javax.swing.JFrame {
-    
-    private String deleteLabourID;
 
     /**
      * Creates new form DeleteLabour
@@ -148,7 +146,8 @@ public class DeleteLabour extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        deleteLabourID = labourIDField.getText();
+        
+        String deleteLabourID = labourIDField.getText();
         
          if(deleteLabourID.isEmpty()) {
             labourIDField.setText("");

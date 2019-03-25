@@ -25,8 +25,6 @@ import javax.swing.JOptionPane;
  * @author Shahin
  */
 public class DeleteItem extends javax.swing.JFrame {
-    
-    private String deleteName;
 
     /**
      * Creates new form DeleteItem
@@ -185,7 +183,7 @@ public class DeleteItem extends javax.swing.JFrame {
     }
     
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        deleteName = dlttext.getText();
+        String deleteName = dlttext.getText();
         
         if(deleteName.isEmpty() || !deleteName.chars().allMatch( Character::isDigit)) {
             dlttext.setText("");

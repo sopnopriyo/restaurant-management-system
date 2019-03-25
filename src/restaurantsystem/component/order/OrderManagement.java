@@ -21,7 +21,6 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import restaurantsystem.component.billing.BillingManagement;
 import restaurantsystem.MainMenu;
 import restaurantsystem.component.item.UpdateItem;
 import restaurantsystem.component.item.ViewItem;
@@ -47,7 +46,7 @@ public class OrderManagement extends javax.swing.JFrame {
     public OrderManagement() {
         this.initComponents();
         this.performFileRelatedTask();
-        this.items = new ArrayList<CartItem>();
+        this.items = new ArrayList<>();
         this.totalPrice = 0;
         this.cart = new Cart(items, totalPrice);
     }

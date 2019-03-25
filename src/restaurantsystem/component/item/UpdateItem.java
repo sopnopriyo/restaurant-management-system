@@ -26,12 +26,6 @@ import javax.swing.JOptionPane;
  */
 public class UpdateItem extends javax.swing.JFrame {
 
-    
-    private String srcName;
-    private String modName;
-    private String modPrice;
-    private String modQuantity;
-
     /**
      * Creates new form ModifyItem
      */
@@ -201,10 +195,10 @@ public class UpdateItem extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        srcName = modText.getText();
-        modName = mName.getText();
-        modPrice = mPrice.getText();
-        modQuantity = mQuantity.getText();
+        String srcName = modText.getText();
+        String modName = mName.getText();
+        String modPrice = mPrice.getText();
+        String modQuantity = mQuantity.getText();
         
         if (srcName.isEmpty() || modName.isEmpty() || modPrice.isEmpty() || modQuantity.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Field(s) cannot be left empty");
