@@ -30,7 +30,7 @@ public class UpdateItem extends javax.swing.JFrame {
     private String srcName;
     private String modName;
     private String modPrice;
-    private String ModQuantity;
+    private String modQuantity;
 
     /**
      * Creates new form ModifyItem
@@ -204,9 +204,26 @@ public class UpdateItem extends javax.swing.JFrame {
         srcName = modText.getText();
         modName = mName.getText();
         modPrice = mPrice.getText();
-        ModQuantity = mQuantity.getText();
+        modQuantity = mQuantity.getText();
         
-        Item updatedItem = new Item(modName, Double.parseDouble(modPrice), Integer.parseInt(ModQuantity));
+        if (srcName.isEmpty() || modName.isEmpty() || modPrice.isEmpty() || modQuantity.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Field(s) cannot be left empty");
+            return;
+        }
+        
+        if(!modPrice.chars().allMatch( Character::isDigit) ||
+                Double.parseDouble(modPrice) <= 0) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid price for the item");
+            return;
+        }
+        
+        if(!modQuantity.chars().allMatch( Character::isDigit) 
+                || Integer.parseInt(modQuantity) <=0) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid quantity for the item");
+            return;
+        }
+        
+        Item updatedItem = new Item(modName, Double.parseDouble(modPrice), Integer.parseInt(modQuantity));
         
         try {
             List<Item> itemList;
@@ -224,13 +241,22 @@ public class UpdateItem extends javax.swing.JFrame {
                 }
             }
             
+            int itemIndexToUpdate = -1;
+            
             for (int i = 0; i < itemList.size(); i++) {
                 Item item = itemList.get(i);
                 
                 if (item.getName().equalsIgnoreCase(srcName)) {
-                    itemList.set(i, updatedItem);
+                    itemIndexToUpdate = i;
                 }
             }
+            
+            if(itemIndexToUpdate == -1) {
+                JOptionPane.showMessageDialog(this, "No item name was found to updated.");
+                return;
+            }
+            
+            itemList.set(itemIndexToUpdate, updatedItem);
             
             Files.delete(Paths.get("storage/item.txt"));
             
