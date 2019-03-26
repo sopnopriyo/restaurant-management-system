@@ -5,20 +5,8 @@
  */
 package restaurantsystem.component.item;
 
-import restaurantsystem.model.Item;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import restaurantsystem.service.ItemService;
 
 /**
  *
@@ -26,11 +14,14 @@ import javax.swing.JOptionPane;
  */
 public class DeleteItem extends javax.swing.JFrame {
 
+    private final ItemService itemService;
+
     /**
      * Creates new form DeleteItem
      */
     public DeleteItem() {
         initComponents();
+        this.itemService = new ItemService();
         performFileRelatedTask();
     }
 
@@ -161,90 +152,43 @@ public class DeleteItem extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     private void performFileRelatedTask() {
-        Scanner scanner;
-        try {
-            scanner = new Scanner(new FileInputStream("storage/item.txt"));
-            StringBuilder fullnames = new StringBuilder();
-            while (scanner.hasNextLine()) {
-                String itemLine =  scanner.nextLine();
-                
-                String itemInfo[] = itemLine.split(",");
-               
-                Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
-                        Integer.parseInt(itemInfo[2]));
-                
-                fullnames.append(item.getName() + "\t" + item.getPrice() + " \t" + item.getQuantity() + "\n");
-            }
-            text.setText(fullnames.toString());
-            scanner.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ViewItem.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        StringBuilder fullnames = new StringBuilder();
+
+        itemService.getAll().forEach((item) -> {
+            fullnames.append(item.getName())
+                    .append("\t")
+                    .append(item.getPrice())
+                    .append("\t")
+                    .append(item.getQuantity())
+                    .append("\n");
+        });
+
+        text.setText(fullnames.toString());
     }
-    
+
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        String deleteName = dlttext.getText();
-        
-        if(deleteName.isEmpty() || !deleteName.chars().allMatch( Character::isDigit)) {
+        String name = dlttext.getText();
+
+        if (name.isEmpty()) {
             dlttext.setText("");
-            JOptionPane.showMessageDialog(this, "Please eneter a valid name to delete");
+            JOptionPane.showMessageDialog(this, "Please enter a valid name to delete");
             return;
         }
-        
-        try {
-            // Read all the items
-            Scanner scanner = new Scanner(new FileInputStream("storage/item.txt"));
-            List<Item> itemList = new ArrayList<>();
-            
-            while(scanner.hasNextLine()) {
-                 String itemLine =  scanner.nextLine();
-                
-                String itemInfo[] = itemLine.split(",");
-               
-                Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
-                        Integer.parseInt(itemInfo[2]));
-                itemList.add(item);
-            }
-            
-            int indexToBeDeleted = -1;
-            // find the item to be deleted
-            for (int i = 0; i < itemList.size(); i++) {
-                Item item = itemList.get(i);
-                
-                if (item.getName().equalsIgnoreCase(deleteName)) {
-                    indexToBeDeleted = i;
-                }
-            }
-            
-            if (indexToBeDeleted == -1) {
-                dlttext.setText("");
-                JOptionPane.showMessageDialog(this, "No Item has been found to delete");
-                return;
-            }
-            itemList.remove(indexToBeDeleted);
-            
-            // Delete the entire file
-            Files.delete(Paths.get("storage/item.txt"));
-            
-            // Create a new file and write new data into the file
-            try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/item.txt"))) {
-                itemList.forEach(item -> {
-                    pw.println(item.getName() + "," + item.getPrice() + "," + item.getQuantity());
-                });
-            }
-    
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ex);
-        } catch(IOException ioe) {
-            
+
+        boolean isDeleted = itemService.delete(name);
+
+        if (!isDeleted) {
+            dlttext.setText("");
+            JOptionPane.showMessageDialog(this, "No Item has been found to delete");
+            return;
         }
-        
+
         // Show confirmation pop up
         JOptionPane.showMessageDialog(this, "Item has been removed");
-        
+
         // Reset the deleted text field
         dlttext.setText("");
-        
+
         // Reinitilize the form with updated data
         performFileRelatedTask();
     }//GEN-LAST:event_deleteButtonActionPerformed
@@ -284,10 +228,8 @@ public class DeleteItem extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DeleteItem().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new DeleteItem().setVisible(true);
         });
     }
 

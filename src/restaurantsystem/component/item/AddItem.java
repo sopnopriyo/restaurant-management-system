@@ -5,25 +5,24 @@
  */
 package restaurantsystem.component.item;
 
-import java.io.FileNotFoundException;
-import restaurantsystem.model.Item;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
+import restaurantsystem.model.Item;
+import restaurantsystem.service.ItemService;
 
 /**
  *
  * @author Shahin
  */
 public class AddItem extends javax.swing.JFrame {
+    
+    private final ItemService itemService; 
 
     /**
      * Creates new form InsertItem
      */
     public AddItem() {
         initComponents();
+        this.itemService = new ItemService();
     }
 
     /**
@@ -148,17 +147,11 @@ public class AddItem extends javax.swing.JFrame {
             return;
         }
         
-        
-        
-        try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/item.txt", true))) {
-            Item item = new Item(name,
+        Item item = new Item(name,
                     Double.parseDouble(itemPriceField.getText()),
                     Integer.parseInt(itemQuantityField.getText()));
-                
-            pw.println(item.getName() + ","+ item.getPrice() +"," +item.getQuantity());
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(AddItem.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+        itemService.create(item);
       
         itemNameField.setText("");
         itemPriceField.setText("");

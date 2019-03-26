@@ -5,20 +5,9 @@
  */
 package restaurantsystem.component.item;
 
-import restaurantsystem.model.Item;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import restaurantsystem.model.Item;
+import restaurantsystem.service.ItemService;
 
 /**
  *
@@ -26,11 +15,14 @@ import javax.swing.JOptionPane;
  */
 public class UpdateItem extends javax.swing.JFrame {
 
+    private final ItemService itemService;
+
     /**
      * Creates new form ModifyItem
      */
     public UpdateItem() {
         initComponents();
+        this.itemService = new ItemService();
         performFileRelatedTask();
     }
 
@@ -41,30 +33,18 @@ public class UpdateItem extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     private void performFileRelatedTask() {
-        Scanner scanner;
-        try {
-            scanner = new Scanner(new FileInputStream("storage/item.txt"));
-            StringBuilder fullnames = new StringBuilder();
-            while (scanner.hasNextLine()) {
-                String itemLine =  scanner.nextLine();
-                
-                String itemInfo[] = itemLine.split(",");
-               
-                Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
-                        Integer.parseInt(itemInfo[2]));
-                
-                fullnames.append(item.getName())
-                        .append("\t")
-                        .append(item.getPrice())
-                        .append(" \t")
-                        .append(item.getQuantity())
-                        .append("\n");
-            }
-            text.setText(fullnames.toString());
-            scanner.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ViewItem.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        StringBuilder fullnames = new StringBuilder();
+
+        itemService.getAll().forEach((item) -> {
+            fullnames.append(item.getName())
+                    .append("\t")
+                    .append(item.getPrice())
+                    .append("\t")
+                    .append(item.getQuantity())
+                    .append("\n");
+        });
+
+        text.setText(fullnames.toString());
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -199,84 +179,44 @@ public class UpdateItem extends javax.swing.JFrame {
         String modName = mName.getText();
         String modPrice = mPrice.getText();
         String modQuantity = mQuantity.getText();
-        
+
         if (srcName.isEmpty() || modName.isEmpty() || modPrice.isEmpty() || modQuantity.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Field(s) cannot be left empty");
             return;
         }
-        
-        if(!modPrice.chars().allMatch( Character::isDigit) ||
-                Double.parseDouble(modPrice) <= 0) {
+
+        if (!modPrice.chars().allMatch(Character::isDigit)
+                || Double.parseDouble(modPrice) <= 0) {
             JOptionPane.showMessageDialog(this, "Please enter a valid price for the item");
             return;
         }
-        
-        if(!modQuantity.chars().allMatch( Character::isDigit) 
-                || Integer.parseInt(modQuantity) <=0) {
+
+        if (!modQuantity.chars().allMatch(Character::isDigit)
+                || Integer.parseInt(modQuantity) <= 0) {
             JOptionPane.showMessageDialog(this, "Please enter a valid quantity for the item");
             return;
         }
-        
+
         Item updatedItem = new Item(modName, Double.parseDouble(modPrice), Integer.parseInt(modQuantity));
-        
-        try {
-            List<Item> itemList;
-            // Read all the items
-            try (Scanner scanner = new Scanner(new FileInputStream("storage/item.txt"))) {
-                itemList = new ArrayList<>();
-                while(scanner.hasNextLine()) {
-                    String itemLine =  scanner.nextLine();
-                    
-                    String itemInfo[] = itemLine.split(",");
-                    
-                    Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
-                            Integer.parseInt(itemInfo[2]));
-                    itemList.add(item);
-                }
-            }
-            
-            int itemIndexToUpdate = -1;
-            
-            for (int i = 0; i < itemList.size(); i++) {
-                Item item = itemList.get(i);
-                
-                if (item.getName().equalsIgnoreCase(srcName)) {
-                    itemIndexToUpdate = i;
-                }
-            }
-            
-            if(itemIndexToUpdate == -1) {
-                JOptionPane.showMessageDialog(this, "No item name was found to updated.");
-                return;
-            }
-            
-            itemList.set(itemIndexToUpdate, updatedItem);
-            
-            Files.delete(Paths.get("storage/item.txt"));
-            
-            try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/item.txt"))) {
-                itemList.forEach(item -> {
-                    pw.println(item.getName() + "," + item.getPrice() + "," + item.getQuantity());
-                });
-            }
-    
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ex);
-        } catch(IOException ioe) {
-            Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ioe);
+
+        boolean isUpdated = itemService.update(srcName, updatedItem);
+
+        if (!isUpdated) {
+            JOptionPane.showMessageDialog(this, "No item name was found to updated.");
+            return;
         }
-        
+
         // Reset the modify fields
         modText.setText("");
         mName.setText("");
         mPrice.setText("");
         mQuantity.setText("");
-        
+
         // Show confirmation pop up
         JOptionPane.showMessageDialog(this, "Item has been Modified");
-        
+
         // Update display information
-         performFileRelatedTask();
+        performFileRelatedTask();
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -314,10 +254,8 @@ public class UpdateItem extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new UpdateItem().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new UpdateItem().setVisible(true);
         });
     }
 

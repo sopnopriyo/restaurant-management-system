@@ -5,13 +5,8 @@
  */
 package restaurantsystem.component.item;
 
-import restaurantsystem.model.Item;
 import java.awt.event.ActionEvent;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import restaurantsystem.service.ItemService;
 
 /**
  *
@@ -19,36 +14,27 @@ import java.util.logging.Logger;
  */
 public class ViewItem extends javax.swing.JFrame {
 
+    private final ItemService itemService;
+
     public ViewItem() {
         initComponents();
+        this.itemService = new ItemService();
         performFileRelatedTask();
     }
 
     private void performFileRelatedTask() {
-        Scanner scanner;
-        try {
-            scanner = new Scanner(new FileInputStream("storage/item.txt"));
-            StringBuilder fullnames = new StringBuilder();
-            while (scanner.hasNextLine()) {
-                String itemLine =  scanner.nextLine();
-                
-                String itemInfo[] = itemLine.split(",");
-               
-                Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
-                        Integer.parseInt(itemInfo[2]));
-                
-                fullnames.append(item.getName())
-                        .append("\t")
-                        .append(item.getPrice())
-                        .append(" \t")
-                        .append(item.getQuantity())
-                        .append("\n");
-            }
-            text.setText(fullnames.toString());
-            scanner.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ViewItem.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        StringBuilder fullnames = new StringBuilder();
+
+        itemService.getAll().forEach((item) -> {
+            fullnames.append(item.getName())
+                    .append("\t")
+                    .append(item.getPrice())
+                    .append(" \t")
+                    .append(item.getQuantity())
+                    .append("\n");
+        });
+
+        text.setText(fullnames.toString());
     }
 
     /**
@@ -163,10 +149,8 @@ public class ViewItem extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ViewItem().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new ViewItem().setVisible(true);
         });
     }
 

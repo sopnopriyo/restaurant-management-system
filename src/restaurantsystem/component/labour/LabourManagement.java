@@ -5,11 +5,7 @@
  */
 package restaurantsystem.component.labour;
 
-import restaurantsystem.component.labour.DeleteLabour;
-import restaurantsystem.component.labour.AddLabour;
-import restaurantsystem.component.labour.UpdateLabour;
 import restaurantsystem.MainMenu;
-import restaurantsystem.component.labour.ViewLabour;
 
 /**
  *
@@ -220,10 +216,8 @@ public class LabourManagement extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LabourManagement().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new LabourManagement().setVisible(true);
         });
     }
 

@@ -155,107 +155,105 @@ public class UpdateLabour extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void performFileRelatedTask() {
         StringBuilder stringBuilder = new StringBuilder();
-        
-         try {
-            try (Scanner scanner = new Scanner(new FileInputStream("storage/labour.txt"))) {
-                while (scanner.hasNextLine()) {
-                  
-                    String labourLine = scanner.nextLine();
-                  
-                    String labourInfo[] = labourLine.split(",");
-                  
-                    Labour labour = new Labour(labourInfo[0], labourInfo[1],Double.parseDouble(labourInfo[2]));
-                  
-                    stringBuilder.append(labour.getId())
-                            .append("\t")
-                            .append(labour.getName())
-                            .append("\t")
-                            .append(labour.getSalary())
-                            .append("\n");
-                }
+
+        try (Scanner scanner = new Scanner(new FileInputStream("storage/labour.txt"))) {
+            while (scanner.hasNextLine()) {
+
+                String labourLine = scanner.nextLine();
+
+                String labourInfo[] = labourLine.split(",");
+
+                Labour labour = new Labour(labourInfo[0], labourInfo[1], Double.parseDouble(labourInfo[2]));
+
+                stringBuilder.append(labour.getId())
+                        .append("\t")
+                        .append(labour.getName())
+                        .append("\t")
+                        .append(labour.getSalary())
+                        .append("\n");
             }
-         } catch (Exception e) {
-             System.out.println(e);
-         }
-         
-         text.setText(stringBuilder.toString());
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(UpdateLabour.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        text.setText(stringBuilder.toString());
     }
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        
+
         String sourceId = oldLabourIdField.getText();
-        
+
         String id = newLabourIDField.getText();
         String name = newLabourNameField.getText();
         double salary = Double.parseDouble(newLabourSalaryField.getText());
-        
+
         if (sourceId.isEmpty() || id.isEmpty() || name.isEmpty() || newLabourSalaryField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Field(s) cannot be left empty");
             return;
         }
-        
-        if(!newLabourSalaryField.getText().chars().allMatch( Character::isDigit)) {
+
+        if (!newLabourSalaryField.getText().chars().allMatch(Character::isDigit)) {
             JOptionPane.showMessageDialog(this, "Please enter valid salary");
             return;
         }
-       
+
         Labour updatedLabour = new Labour(id, name, salary);
-        
+
         try {
             // Read all the items
             Scanner scanner = new Scanner(new FileInputStream("storage/labour.txt"));
             List<Labour> labourList = new ArrayList<>();
-            
-            while(scanner.hasNextLine()) {
-                String labourLine =  scanner.nextLine();
-                
+
+            while (scanner.hasNextLine()) {
+                String labourLine = scanner.nextLine();
+
                 String labourInfo[] = labourLine.split(",");
-               
+
                 Labour labour = new Labour(labourInfo[0], labourInfo[1],
                         Double.parseDouble(labourInfo[2]));
                 labourList.add(labour);
             }
-            
+
             int indexToUpdate = -1;
             for (int i = 0; i < labourList.size(); i++) {
                 Labour labour = labourList.get(i);
-                
+
                 if (labour.getId().equalsIgnoreCase(sourceId)) {
                     indexToUpdate = i;
                 }
             }
-            
-            if(indexToUpdate == -1) {
+
+            if (indexToUpdate == -1) {
                 JOptionPane.showConfirmDialog(this, "No labour found to update");
                 return;
             }
-            
+
             labourList.set(indexToUpdate, updatedLabour);
-            
+
             Files.delete(Paths.get("storage/labour.txt"));
-            
+
             try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/labour.txt"))) {
                 labourList.forEach(labour -> {
                     pw.println(labour.getId() + "," + labour.getName() + "," + labour.getSalary());
                 });
             }
-    
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ex);
-        } catch(IOException ioe) {
-            
+        } catch (IOException ioe) {
+
         }
-        
+
         // Reset the modify fields
         oldLabourIdField.setText("");
         newLabourIDField.setText("");
         newLabourNameField.setText("");
         newLabourSalaryField.setText("");
-        
+
         // Show confirmation pop up
         JOptionPane.showMessageDialog(this, "Labour info has been Updated");
-        
+
         // Update display information
-         performFileRelatedTask();
+        performFileRelatedTask();
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -293,10 +291,8 @@ public class UpdateLabour extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new UpdateLabour().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new UpdateLabour().setVisible(true);
         });
     }
 

@@ -37,8 +37,6 @@ import restaurantsystem.model.OrderLine;
 public class OrderManagement extends javax.swing.JFrame {
 
     private Cart cart;
-    private List<CartItem> items;
-    private double totalPrice;
 
     /**
      * Creates new form OrderManagement
@@ -46,9 +44,8 @@ public class OrderManagement extends javax.swing.JFrame {
     public OrderManagement() {
         this.initComponents();
         this.performFileRelatedTask();
-        this.items = new ArrayList<>();
-        this.totalPrice = 0;
-        this.cart = new Cart(items, totalPrice);
+        //this.totalPrice = 0;
+        this.cart = new Cart(new ArrayList<>(), 0);
     }
 
     /**
@@ -403,7 +400,7 @@ public class OrderManagement extends javax.swing.JFrame {
         }
 
         // Reduce the quantity from item file
-        items.forEach((item) -> {
+        cart.getCartItems().forEach((item) -> {
             reduceItemQuantityByItemName(item.getItem().getName(), item.getQuantity());
         });
 
@@ -471,9 +468,7 @@ public class OrderManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_addToCartButtonActionPerformed
 
     private void clearCartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearCartButtonActionPerformed
-        this.items = new ArrayList<CartItem>();
-        this.totalPrice = 0;
-        this.cart = new Cart(items, totalPrice);
+        this.cart = new Cart(new ArrayList<>(), 0);
         this.reciptArea.setText("");
         this.totalPriceField.setText("");
 
@@ -517,7 +512,7 @@ public class OrderManagement extends javax.swing.JFrame {
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        items.forEach((item) -> {
+        this.cart.getCartItems().forEach((item) -> {
             stringBuilder.append(item.getItem().getName())
                     .append("\t")
                     .append(item.getQuantity())
@@ -599,10 +594,8 @@ public class OrderManagement extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new OrderManagement().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new OrderManagement().setVisible(true);
         });
     }
 
