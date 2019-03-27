@@ -5,23 +5,22 @@
  */
 package restaurantsystem.component.labour;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import restaurantsystem.model.Labour;
+import restaurantsystem.service.LabourService;
 
 /**
  *
  * @author Shahin
  */
 public class ViewLabour extends javax.swing.JFrame {
+
+    private final LabourService labourService;
+
     /**
      * Creates new form ViewLabour
      */
     public ViewLabour() {
         initComponents();
+        this.labourService = new LabourService();
         performFileRelatedTask();
     }
 
@@ -101,34 +100,19 @@ public class ViewLabour extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
      private void performFileRelatedTask() {
-         
+
         StringBuilder stringBuilder = new StringBuilder();
         
-         try {
-            try (Scanner scanner = new Scanner(new FileInputStream("storage/labour.txt"))) {
-                while (scanner.hasNextLine()) {
-                  
-                    String labourLine = scanner.nextLine();
-                  
-                    String labourInfo[] = labourLine.split(",");
-                  
-                    Labour labour = new Labour(labourInfo[0], labourInfo[1],Double.parseDouble(labourInfo[0]));
-                  
-                    stringBuilder.append(labour.getId())
-                            .append("\t")
-                            .append(labour.getName())
-                            .append("\t")
-                            .append(labour.getSalary())
-                            .append("\n");
-                }
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(ViewLabour.class.getName()).log(Level.SEVERE, null, ex);
-            }
-         } catch (NumberFormatException e) {
-             System.out.println(e);
-         }
-         
-         text.setText(stringBuilder.toString());
+        labourService.getAll().forEach((labour) -> {
+            stringBuilder.append(labour.getId())
+                    .append("\t")
+                    .append(labour.getName())
+                    .append("\t")
+                    .append(labour.getSalary())
+                    .append("\n");
+        });
+        
+        text.setText(stringBuilder.toString());
     }
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         LabourManagement lm = new LabourManagement();

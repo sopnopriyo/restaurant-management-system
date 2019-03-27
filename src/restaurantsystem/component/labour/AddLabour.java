@@ -5,13 +5,9 @@
  */
 package restaurantsystem.component.labour;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import restaurantsystem.model.Labour;
+import restaurantsystem.service.LabourService;
 
 /**
  *
@@ -19,11 +15,14 @@ import restaurantsystem.model.Labour;
  */
 public class AddLabour extends javax.swing.JFrame {
 
+    private final LabourService labourService;
+
     /**
      * Creates new form InserLabour
      */
     public AddLabour() {
         initComponents();
+        this.labourService = new LabourService();
     }
 
     /**
@@ -134,28 +133,23 @@ public class AddLabour extends javax.swing.JFrame {
         String id = labourIdField.getText();
         String name = labourNameField.getText();
         String salary = labourSalaryField.getText();
-        
+
         if (id.isEmpty() || name.isEmpty() || salary.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Field(s) cannot be empty");
             return;
         }
-        
-        if(!salary.chars().allMatch( Character::isDigit) || Double.parseDouble(salary) <= 0) {
+
+        if (!salary.chars().allMatch(Character::isDigit) || Double.parseDouble(salary) <= 0) {
             JOptionPane.showMessageDialog(this, "Please enter a valid salary");
             return;
         }
-                
-        try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/labour.txt", true))) {
-           
-            Labour labour = new Labour(id, id, Double.parseDouble(salary));
-                
-            pw.println(labour.getId() + "," + labour.getName() + "," +labour.getSalary());
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(AddLabour.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+        Labour labour = new Labour(id, name, Double.parseDouble(salary));
+
+        labourService.create(labour);
 
         JOptionPane.showMessageDialog(this, "Item has been added");
-        
+
         // Reset input fields
         labourIdField.setText("");
         labourNameField.setText("");

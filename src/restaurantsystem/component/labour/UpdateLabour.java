@@ -5,21 +5,10 @@
  */
 package restaurantsystem.component.labour;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.swing.JOptionPane;
-import restaurantsystem.component.item.UpdateItem;
 import restaurantsystem.model.Labour;
+import restaurantsystem.service.LabourService;
 
 /**
  *
@@ -27,11 +16,14 @@ import restaurantsystem.model.Labour;
  */
 public class UpdateLabour extends javax.swing.JFrame {
 
+    private final LabourService labourService;
+
     /**
      * Creates new form ModifyLabour
      */
     public UpdateLabour() {
         initComponents();
+        this.labourService = new LabourService();
         performFileRelatedTask();
     }
 
@@ -156,25 +148,14 @@ public class UpdateLabour extends javax.swing.JFrame {
     private void performFileRelatedTask() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        try (Scanner scanner = new Scanner(new FileInputStream("storage/labour.txt"))) {
-            while (scanner.hasNextLine()) {
-
-                String labourLine = scanner.nextLine();
-
-                String labourInfo[] = labourLine.split(",");
-
-                Labour labour = new Labour(labourInfo[0], labourInfo[1], Double.parseDouble(labourInfo[2]));
-
-                stringBuilder.append(labour.getId())
-                        .append("\t")
-                        .append(labour.getName())
-                        .append("\t")
-                        .append(labour.getSalary())
-                        .append("\n");
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(UpdateLabour.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        labourService.getAll().forEach((labour) -> {
+            stringBuilder.append(labour.getId())
+                    .append("\t")
+                    .append(labour.getName())
+                    .append("\t")
+                    .append(labour.getSalary())
+                    .append("\n");
+        });
 
         text.setText(stringBuilder.toString());
     }
@@ -198,49 +179,11 @@ public class UpdateLabour extends javax.swing.JFrame {
 
         Labour updatedLabour = new Labour(id, name, salary);
 
-        try {
-            // Read all the items
-            Scanner scanner = new Scanner(new FileInputStream("storage/labour.txt"));
-            List<Labour> labourList = new ArrayList<>();
-
-            while (scanner.hasNextLine()) {
-                String labourLine = scanner.nextLine();
-
-                String labourInfo[] = labourLine.split(",");
-
-                Labour labour = new Labour(labourInfo[0], labourInfo[1],
-                        Double.parseDouble(labourInfo[2]));
-                labourList.add(labour);
-            }
-
-            int indexToUpdate = -1;
-            for (int i = 0; i < labourList.size(); i++) {
-                Labour labour = labourList.get(i);
-
-                if (labour.getId().equalsIgnoreCase(sourceId)) {
-                    indexToUpdate = i;
-                }
-            }
-
-            if (indexToUpdate == -1) {
-                JOptionPane.showConfirmDialog(this, "No labour found to update");
-                return;
-            }
-
-            labourList.set(indexToUpdate, updatedLabour);
-
-            Files.delete(Paths.get("storage/labour.txt"));
-
-            try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/labour.txt"))) {
-                labourList.forEach(labour -> {
-                    pw.println(labour.getId() + "," + labour.getName() + "," + labour.getSalary());
-                });
-            }
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ioe) {
-
+        boolean isUpdated = labourService.update(sourceId, updatedLabour);
+        
+        if (!isUpdated) {
+            JOptionPane.showConfirmDialog(this, "No labour found to update");
+            return;
         }
 
         // Reset the modify fields

@@ -5,62 +5,37 @@
  */
 package restaurantsystem.component.labour;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import restaurantsystem.component.item.UpdateItem;
-import restaurantsystem.model.Labour;
+import restaurantsystem.service.LabourService;
 
 /**
  *
  * @author Shahin
  */
 public class DeleteLabour extends javax.swing.JFrame {
+    
+    private final LabourService labourService;
 
     /**
      * Creates new form DeleteLabour
      */
     public DeleteLabour() {
         initComponents();
+        this.labourService = new LabourService();
         performFileRelatedTask();
     }
-
+    
     private void performFileRelatedTask() {
-          StringBuilder stringBuilder = new StringBuilder();
-        
-      
-              try (Scanner scanner = new Scanner(new FileInputStream("storage/labour.txt"))) {
-                  while (scanner.hasNextLine()) {
-                      
-                      String labourLine = scanner.nextLine();
-                      
-                      String labourInfo[] = labourLine.split(",");
-                      
-                      Labour labour = new Labour(labourInfo[0], labourInfo[1],Double.parseDouble(labourInfo[0]));
-                      
-                      stringBuilder.append(labour.getId())
-                              .append("\t")
-                              .append(labour.getName())
-                              .append("\t")
-                              .append(labour.getSalary())
-                              .append("\n");
-                  }
-              } catch (FileNotFoundException ex) {
-            Logger.getLogger(DeleteLabour.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-         
-         text.setText(stringBuilder.toString());
+        StringBuilder stringBuilder = new StringBuilder();
+        labourService.getAll().forEach((labour) -> {
+            stringBuilder.append(labour.getId())
+                    .append("\t")
+                    .append(labour.getName())
+                    .append("\t")
+                    .append(labour.getSalary())
+                    .append("\n");
+        });
+        text.setText(stringBuilder.toString());
     }
 
     /**
@@ -149,59 +124,20 @@ public class DeleteLabour extends javax.swing.JFrame {
         
         String deleteLabourID = labourIDField.getText();
         
-         if(deleteLabourID.isEmpty()) {
+        if (deleteLabourID.isEmpty()) {
             labourIDField.setText("");
             JOptionPane.showMessageDialog(this, "Please eneter a valid ID to delete");
             return;
         }
         
-        try {
-            // Read all the items
-            Scanner scanner = new Scanner(new FileInputStream("storage/labour.txt"));
-            List<Labour> labourList = new ArrayList<>();
-            
-            while(scanner.hasNextLine()) {
-                String labourLine =  scanner.nextLine();
-                
-                String labourInfo[] = labourLine.split(",");
-               
-                Labour labour = new Labour(labourInfo[0], labourInfo[1],
-                        Double.parseDouble(labourInfo[2]));
-                labourList.add(labour);
-            }
-            
-            // find the labour to be deleted
-            for (int i = 0; i < labourList.size(); i++) {
-                
-                Labour labour = labourList.get(i);
-                
-                if (labour.getId().equalsIgnoreCase(deleteLabourID)) {
-                    labourList.remove(labour);
-                }
-            }
-            
-            // Delete the entire file
-            Files.delete(Paths.get("storage/labour.txt"));
-            
-            // Create a new file and write new data into the file
-            try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/labour.txt"))) {
-                labourList.forEach(labour -> {
-                    pw.println(labour.getId() + "," + labour.getName() + "," + labour.getSalary());
-                });
-            }
-    
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ex);
-        } catch(IOException ioe) {
-            
-        }
-        
+        labourService.delete(deleteLabourID);
+
         // Show confirmation pop up
         JOptionPane.showMessageDialog(this, "Labour has been deleted");
-        
+
         // Reset the deleted text field
         labourIDField.setText("");
-        
+
         // Reinitilize the form with updated data
         performFileRelatedTask();
 
