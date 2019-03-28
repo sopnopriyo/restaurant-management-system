@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import restaurantsystem.component.item.UpdateItem;
 import restaurantsystem.model.Item;
 
@@ -47,6 +46,16 @@ public class ItemService {
             Logger.getLogger(ItemService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return items;
+    }
+
+    public Item getItemByIndex(int index) {
+        List<Item> listOfItem = getAll();
+
+        if (listOfItem.size() >= index) {
+            return listOfItem.get(index - 1);
+        }
+
+        return null;
     }
 
     public void create(Item item) {
@@ -97,7 +106,7 @@ public class ItemService {
 
     public boolean update(String srcName, Item updatedItem) {
         List<Item> itemList = new ArrayList<>();
-        
+
         // Read all the items
         try (Scanner scanner = new Scanner(new FileInputStream("storage/item.txt"))) {
             while (scanner.hasNextLine()) {
@@ -146,4 +155,31 @@ public class ItemService {
         return true;
     }
 
+    public void reduceItemQuantityByItemName(String itemName, int reduceNumber) {
+        List<Item> itemList = getAll();
+
+        for (int i = 0; i < itemList.size(); i++) {
+
+            Item item = itemList.get(i);
+
+            if (item.getName().equalsIgnoreCase(itemName)) {
+                item.setQuantity(Math.max(0, item.getQuantity() - reduceNumber));
+                itemList.set(i, item);
+            }
+        }
+
+        try {
+            Files.delete(Paths.get("storage/item.txt"));
+        } catch (IOException ex) {
+            Logger.getLogger(ItemService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/item.txt"))) {
+            itemList.forEach(item -> {
+                pw.println(item.getName() + "," + item.getPrice() + "," + item.getQuantity());
+            });
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ItemService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

@@ -5,7 +5,6 @@
  */
 package restaurantsystem.component.order;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -29,6 +28,7 @@ import restaurantsystem.model.CartItem;
 import restaurantsystem.model.Item;
 import restaurantsystem.model.Order;
 import restaurantsystem.model.OrderLine;
+import restaurantsystem.service.ItemService;
 
 /**
  *
@@ -36,6 +36,7 @@ import restaurantsystem.model.OrderLine;
  */
 public class OrderManagement extends javax.swing.JFrame {
 
+    private final ItemService itemService;
     private Cart cart;
 
     /**
@@ -43,8 +44,8 @@ public class OrderManagement extends javax.swing.JFrame {
      */
     public OrderManagement() {
         this.initComponents();
+        this.itemService = new ItemService();
         this.performFileRelatedTask();
-        //this.totalPrice = 0;
         this.cart = new Cart(new ArrayList<>(), 0);
     }
 
@@ -306,32 +307,18 @@ public class OrderManagement extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     private void performFileRelatedTask() {
-
         StringBuilder stringBuilder = new StringBuilder();
-        try (Scanner scanner = new Scanner(new File("storage/item.txt"))) {
-            int num = 1;
-            while (scanner.hasNextLine()) {
-                String itemLine = scanner.nextLine();
-                String itemInfo[] = itemLine.split(",");
-
-                String name = itemInfo[0];
-                double price = Double.parseDouble(itemInfo[1]);
-                int quantity = Integer.parseInt(itemInfo[2]);
-
-                Item item = new Item(name, price, quantity);
-
-                stringBuilder.append(num)
-                        .append("\t")
-                        .append(item.getName())
-                        .append(" \t")
-                        .append(item.getPrice())
-                        .append(" \t")
-                        .append(item.getQuantity())
-                        .append("\n");
-                num++;
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(OrderManagement.class.getName()).log(Level.SEVERE, null, ex);
+        int num = 1;
+        for (Item item : itemService.getAll()) {
+            stringBuilder.append(num)
+                    .append("\t")
+                    .append(item.getName())
+                    .append(" \t")
+                    .append(item.getPrice())
+                    .append(" \t")
+                    .append(item.getQuantity())
+                    .append("\n");
+            num++;
         }
         text.setText(stringBuilder.toString());
     }
@@ -439,7 +426,7 @@ public class OrderManagement extends javax.swing.JFrame {
         // new item quantity
         int newItemQuantity = Integer.parseInt(newItemQuantityAsString);
 
-        Item newItem = getItemById(Integer.parseInt(newItemId));
+        Item newItem = itemService.getItemByIndex(Integer.parseInt(newItemId));
 
         if (newItem == null) {
             JOptionPane.showMessageDialog(this, "Sorry , Please enter a valid Item ID");
@@ -473,40 +460,6 @@ public class OrderManagement extends javax.swing.JFrame {
         this.totalPriceField.setText("");
 
     }//GEN-LAST:event_clearCartButtonActionPerformed
-    private List<Item> getAllItems() {
-
-        List<Item> allItems = new ArrayList<>();
-
-        Scanner scanner;
-        try {
-            scanner = new Scanner(new FileInputStream("storage/item.txt"));
-            while (scanner.hasNextLine()) {
-                String itemLine = scanner.nextLine();
-
-                String itemInfo[] = itemLine.split(",");
-
-                Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
-                        Integer.parseInt(itemInfo[2]));
-
-                allItems.add(item);
-            }
-            scanner.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ViewItem.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return allItems;
-    }
-
-    private Item getItemById(int index) {
-        List<Item> listOfItem = getAllItems();
-
-        if (listOfItem.size() >= index) {
-            return listOfItem.get(index - 1);
-        }
-
-        return null;
-    }
 
     public String getReciptStringByCart() {
 
