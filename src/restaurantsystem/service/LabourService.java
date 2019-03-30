@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import restaurantsystem.component.labour.AddLabour;
 import restaurantsystem.component.labour.DeleteLabour;
 import restaurantsystem.component.labour.UpdateLabour;
@@ -59,7 +58,7 @@ public class LabourService {
         }
     }
 
-    public boolean update(String sourceId, Labour updatedLabour) {
+    public synchronized boolean update(String sourceId, Labour updatedLabour) {
         // Read all the items
         List<Labour> labourList = getAll();
 
@@ -95,7 +94,7 @@ public class LabourService {
         return true;
     }
 
-    public void delete(String labourID) {
+    public synchronized void delete(String labourID) {
         List<Labour> labourList = getAll();
 
         // find the labour to be deleted

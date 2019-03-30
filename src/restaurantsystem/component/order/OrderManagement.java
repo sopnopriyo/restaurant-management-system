@@ -8,10 +8,7 @@ package restaurantsystem.component.order;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,14 +18,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import restaurantsystem.MainMenu;
-import restaurantsystem.component.item.UpdateItem;
-import restaurantsystem.component.item.ViewItem;
 import restaurantsystem.model.Cart;
 import restaurantsystem.model.CartItem;
 import restaurantsystem.model.Item;
 import restaurantsystem.model.Order;
 import restaurantsystem.model.OrderLine;
 import restaurantsystem.service.ItemService;
+import restaurantsystem.service.OrderService;
 
 /**
  *
@@ -37,7 +33,8 @@ import restaurantsystem.service.ItemService;
 public class OrderManagement extends javax.swing.JFrame {
 
     private final ItemService itemService;
-    private Cart cart;
+    private final OrderService orderService;
+    //private Cart cart;
 
     /**
      * Creates new form OrderManagement
@@ -45,8 +42,9 @@ public class OrderManagement extends javax.swing.JFrame {
     public OrderManagement() {
         this.initComponents();
         this.itemService = new ItemService();
+        this.orderService = new OrderService();
         this.performFileRelatedTask();
-        this.cart = new Cart(new ArrayList<>(), 0);
+        //this.cart = new Cart(new ArrayList<>(), 0);
     }
 
     /**
@@ -325,6 +323,8 @@ public class OrderManagement extends javax.swing.JFrame {
 
     private void orderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderButtonActionPerformed
 
+        Cart cart = orderService.getCart();
+        
         if (cart.getCartItems().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Opps, You haven't added any "
                     + "item to cart. Please add item to the cart");
@@ -388,7 +388,7 @@ public class OrderManagement extends javax.swing.JFrame {
 
         // Reduce the quantity from item file
         cart.getCartItems().forEach((item) -> {
-            reduceItemQuantityByItemName(item.getItem().getName(), item.getQuantity());
+            itemService.reduceItemQuantityByItemName(item.getItem().getName(), item.getQuantity());
         });
 
         // Clear the cart
@@ -442,10 +442,10 @@ public class OrderManagement extends javax.swing.JFrame {
         } else {
 
             CartItem cartItem = new CartItem(newItem, newItemQuantity, newItem.getPrice() * newItemQuantity);
-            this.cart.addItemToCart(cartItem);
+            orderService.addToCart(cartItem);
 
             reciptArea.setText(getReciptStringByCart());
-            totalPriceField.setText(String.valueOf(this.cart.getTotalPrice()));
+            totalPriceField.setText(String.valueOf(orderService.getCart().getTotalPrice()));
 
             JOptionPane.showMessageDialog(this, "Item has been added to cart");
 
@@ -455,17 +455,19 @@ public class OrderManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_addToCartButtonActionPerformed
 
     private void clearCartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearCartButtonActionPerformed
-        this.cart = new Cart(new ArrayList<>(), 0);
+        orderService.clearCart();
         this.reciptArea.setText("");
         this.totalPriceField.setText("");
 
     }//GEN-LAST:event_clearCartButtonActionPerformed
 
     public String getReciptStringByCart() {
+        
+        List<CartItem> cartItems = orderService.getCart().getCartItems();
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        this.cart.getCartItems().forEach((item) -> {
+        cartItems.forEach((item) -> {
             stringBuilder.append(item.getItem().getName())
                     .append("\t")
                     .append(item.getQuantity())
@@ -476,49 +478,7 @@ public class OrderManagement extends javax.swing.JFrame {
 
         return stringBuilder.toString();
     }
-
-    private void reduceItemQuantityByItemName(String itemName, int reduceNumber) {
-        try {
-            List<Item> itemList;
-            // Read all the items
-            try (Scanner scanner = new Scanner(new FileInputStream("storage/item.txt"))) {
-                itemList = new ArrayList<>();
-                while (scanner.hasNextLine()) {
-                    String itemLine = scanner.nextLine();
-
-                    String itemInfo[] = itemLine.split(",");
-
-                    Item item = new Item(itemInfo[0], Double.parseDouble(itemInfo[1]),
-                            Integer.parseInt(itemInfo[2]));
-                    itemList.add(item);
-                }
-            }
-
-            for (int i = 0; i < itemList.size(); i++) {
-
-                Item item = itemList.get(i);
-
-                if (item.getName().equalsIgnoreCase(itemName)) {
-                    item.setQuantity(Math.max(0, item.getQuantity() - reduceNumber));
-                    itemList.set(i, item);
-                }
-            }
-
-            Files.delete(Paths.get("storage/item.txt"));
-
-            try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/item.txt"))) {
-                itemList.forEach(item -> {
-                    pw.println(item.getName() + "," + item.getPrice() + "," + item.getQuantity());
-                });
-            }
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ioe) {
-            Logger.getLogger(UpdateItem.class.getName()).log(Level.SEVERE, null, ioe);
-        }
-    }
-
+    
     /**
      * @param args the command line arguments
      */

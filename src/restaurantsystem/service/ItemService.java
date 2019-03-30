@@ -66,7 +66,7 @@ public class ItemService {
         }
     }
 
-    public boolean delete(String name) {
+    public synchronized boolean delete(String name) {
 
         List<Item> itemList = getAll();
 
@@ -104,7 +104,7 @@ public class ItemService {
         return true;
     }
 
-    public boolean update(String srcName, Item updatedItem) {
+    public synchronized boolean update(String srcName, Item updatedItem) {
         List<Item> itemList = new ArrayList<>();
 
         // Read all the items
@@ -155,7 +155,7 @@ public class ItemService {
         return true;
     }
 
-    public void reduceItemQuantityByItemName(String itemName, int reduceNumber) {
+    public synchronized void reduceItemQuantityByItemName(String itemName, int reduceNumber) {
         List<Item> itemList = getAll();
 
         for (int i = 0; i < itemList.size(); i++) {
