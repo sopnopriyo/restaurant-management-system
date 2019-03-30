@@ -32,11 +32,4 @@ public class OrderService {
     public Cart getCart() {
         return this.cart;
     }
-    
-    
-    
-    
-    
-    
-    
 }
