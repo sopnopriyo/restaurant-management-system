@@ -26,11 +26,12 @@ import restaurantsystem.model.Labour;
  *
  * @author Sopnopriyo
  */
-public class LabourService {
+public class LabourService implements ManageService<Labour>{
 
     public LabourService() {
     }
 
+    @Override
     public List<Labour> getAll() {
         List<Labour> labourList = new ArrayList<>();
         try (Scanner scanner = new Scanner(new FileInputStream("storage/labour.txt"))) {
@@ -50,6 +51,7 @@ public class LabourService {
         return labourList;
     }
 
+    @Override
     public void create(Labour labour) {
         try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/labour.txt", true))) {
             pw.println(labour.getId() + "," + labour.getName() + "," + labour.getSalary());
@@ -58,6 +60,7 @@ public class LabourService {
         }
     }
 
+    @Override
     public synchronized boolean update(String sourceId, Labour updatedLabour) {
         // Read all the items
         List<Labour> labourList = getAll();
@@ -94,9 +97,10 @@ public class LabourService {
         return true;
     }
 
-    public synchronized void delete(String labourID) {
+    @Override
+    public synchronized boolean delete(String labourID) {
         List<Labour> labourList = getAll();
-
+        boolean j = false;
         // find the labour to be deleted
         for (int i = 0; i < labourList.size(); i++) {
 
@@ -104,7 +108,9 @@ public class LabourService {
 
             if (labour.getId().equalsIgnoreCase(labourID)) {
                 labourList.remove(labour);
+                return true;
             }
+
         }
 
         try {
@@ -122,5 +128,6 @@ public class LabourService {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(LabourService.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return j;
     }
 }

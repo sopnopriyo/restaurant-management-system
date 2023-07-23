@@ -7,7 +7,11 @@ package restaurantsystem.component.labour;
 
 import javax.swing.JOptionPane;
 import restaurantsystem.model.Labour;
+import restaurantsystem.service.ConcreteFactory;
+import restaurantsystem.service.Factory;
 import restaurantsystem.service.LabourService;
+import restaurantsystem.service.ManageService;
+import restaurantsystem.service.ServiceType;
 
 /**
  *
@@ -15,14 +19,15 @@ import restaurantsystem.service.LabourService;
  */
 public class AddLabour extends javax.swing.JFrame {
 
-    private final LabourService labourService;
+    private final ManageService labourService;
 
     /**
      * Creates new form InserLabour
      */
     public AddLabour() {
         initComponents();
-        this.labourService = new LabourService();
+        Factory fct = new ConcreteFactory();
+        this.labourService = fct.createService(ServiceType.LABOUR_SERVICE);
     }
 
     /**

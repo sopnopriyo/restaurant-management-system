@@ -24,11 +24,12 @@ import restaurantsystem.model.Item;
  *
  * @author Sopnopriyo
  */
-public class ItemService {
+public class ItemService implements ManageService<Item>{
 
     public ItemService() {
     }
 
+    @Override
     public List<Item> getAll() {
         List<Item> items = new ArrayList<>();
         try (Scanner scanner = new Scanner(new FileInputStream("storage/item.txt"))) {
@@ -58,6 +59,7 @@ public class ItemService {
         return null;
     }
 
+    @Override
     public void create(Item item) {
         try (PrintWriter pw = new PrintWriter(new FileOutputStream("storage/item.txt", true))) {
             pw.println(item.getName() + "," + item.getPrice() + "," + item.getQuantity());
@@ -66,6 +68,7 @@ public class ItemService {
         }
     }
 
+    @Override
     public synchronized boolean delete(String name) {
 
         List<Item> itemList = getAll();

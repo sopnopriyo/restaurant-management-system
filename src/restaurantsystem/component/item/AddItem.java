@@ -7,7 +7,10 @@ package restaurantsystem.component.item;
 
 import javax.swing.*;
 import restaurantsystem.model.Item;
-import restaurantsystem.service.ItemService;
+import restaurantsystem.service.ConcreteFactory;
+import restaurantsystem.service.Factory;
+import restaurantsystem.service.ManageService;
+import restaurantsystem.service.ServiceType;
 
 /**
  *
@@ -15,14 +18,15 @@ import restaurantsystem.service.ItemService;
  */
 public class AddItem extends javax.swing.JFrame {
     
-    private final ItemService itemService; 
+    private final ManageService itemService; 
 
     /**
      * Creates new form InsertItem
      */
     public AddItem() {
         initComponents();
-        this.itemService = new ItemService();
+        Factory fct = new ConcreteFactory();
+        this.itemService = fct.createService(ServiceType.ITEM_SERVICE);
     }
 
     /**
