@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Sopnopriyo
  */
-public class Cart {
+public class Cart implements IterableCollection{
     
    private List<CartItem> cartItems;
    private double totalPrice;
@@ -35,13 +35,19 @@ public class Cart {
 
     public double getTotalPrice() {
         totalPrice = 0;
-        cartItems.forEach((cartItem) -> {
-            totalPrice += cartItem.getPrice();
-        });
+        CartIterator it = (CartIterator) createIterator();
+        while(it.hasNext()){
+            totalPrice += it.next().getPrice();
+        }
         return totalPrice;
     }
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     } 
+
+    @Override
+    public Iterator createIterator() {
+        return new CartIterator(this);
+    }
 }
